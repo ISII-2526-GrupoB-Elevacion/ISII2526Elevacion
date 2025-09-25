@@ -1,24 +1,21 @@
 project:
-  name: 'ISII-2526-GrupoX-Team'
-  owner: 'GrupoX'
-  teamId: 'Team'
+  name: 'ISII-2526-GrupoB-Elevacion'
+  owner: 'GrupoB'
+  teamId: 'TeaElevacion'
   identities: {}
   notifications:
-    email: 'member1@alu.uclm.es,member2@alu.uclm.es,member3@alu.uclm.es,member4@alu.uclm.es'
+    email: 'David.Gomez38@alu.uclm.es,Fco.Diaz10@alu.uclm.es,Carlos.Guia@alu.uclm.es'
   members:
     member1:
-      name: 'Name1'
-      surname: 'Surname1' 
-      githubUsername: 'Name1gitUserName1'
+      name: 'David'
+      surname: 'Gómez Aniorte' 
+      githubUsername: 'DavidGomezAniorte'
     member2:
-      name: 'Name2'
-      surname: 'Surname2' 
-      githubUsername: 'Name1gitUserName2'
+      name: 'Francisco'
+      surname: 'Díaz-Hellín Escribano' 
+      githubUsername: 'Francisco3004'
     member3:
-      name: 'Name3'
-      surname: 'Surname3' 
-      githubUsername: 'Name1gitUserName3'
-    member4:
-      name: 'Name4'
-      surname: 'Surname4' 
-      githubUsername: 'Name1gitUserName4'
+      name: 'Carlos'
+      surname: 'de la Guía Martínez-Meco' 
+      githubUsername: 'carlosguia05'
+    
