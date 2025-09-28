@@ -1,5 +1,8 @@
 using Microsoft.Data.Sqlite;
 using System.Data.Common;
+using Microsoft.EntityFrameworkCore;
+using AppForSEII2526.API;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +14,10 @@ builder.Services.AddControllers()
     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
 
+// Add service for managing a sqlserver database that will be managed using ApplicationDBContext
+// the connection to the database was defined in appsettings
+builder.Services.AddDbContext<ApplicationDbContext>(opt =>
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 // Add service for managing a sqlserver database that will be managed using ApplicationDBContext
 // the connection to the database was defined in appsettings
 
