@@ -1,7 +1,7 @@
 project:
   name: 'ISII-2526-GrupoB-Elevacion'
   owner: 'GrupoB'
-  teamId: 'TeamElevacion'
+  teamId: 'Elevacion'
   identities: {}
   notifications:
     email: 'David.Gomez38@alu.uclm.es,Fco.Diaz10@alu.uclm.es,Carlos.Guia@alu.uclm.es'
