@@ -13,5 +13,10 @@
         public int RentalItems { get; set; }
         public float RentingPrice { get; set; }
         public int ReviewItems { get; set; }
+        public string EngDisplacement { get; set; }
+        public string FuelType { get; set; }
+        public string MaintenanceTypes { get; set; }
+        public int PurchaseItems { get; set; }
+        public float RimSize { get; set; }
     }
 }
