@@ -17,6 +17,6 @@
         public string FuelType { get; set; }
         public string MaintenanceTypes { get; set; }
         public int PurchaseItems { get; set; }
-        public int RimSize { get; set; }
+        public float RimSize { get; set; }
     }
 }
