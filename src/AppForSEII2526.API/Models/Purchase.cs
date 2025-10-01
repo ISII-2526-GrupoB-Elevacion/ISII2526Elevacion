@@ -3,6 +3,7 @@
     public class Purchase
     {
         public string DeliveryCarDealer { get; set; }
+        [Key]
         public int Id { get; set; }
         public string PaymentMethod { get; set; }
         public DateTime PurchasingDate { get; set; }
