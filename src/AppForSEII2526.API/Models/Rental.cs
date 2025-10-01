@@ -4,6 +4,7 @@
     {
         public string DeliveryCarDealer { get; set; }
         public DateTime EndDate { get; set; }
+        [Key]
         public int Id { get; set; }
         public string PaymentMethod { get; set; }
         public DateTime RentingDate { get; set; }
