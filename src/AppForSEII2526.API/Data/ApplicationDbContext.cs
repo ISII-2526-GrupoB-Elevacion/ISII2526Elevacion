@@ -12,5 +12,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<Purchase> Purchase { get; set; }
     public DbSet<PurchaseItem> PurchaseItem { get; set; }
     public DbSet<ApplicationUser> ApplicationUser { get; set; }
+    public DbSet<Review> Review { get; set; }
+    public DbSet<ReviewItem> ReviewItem { get; set; }
 }
 
