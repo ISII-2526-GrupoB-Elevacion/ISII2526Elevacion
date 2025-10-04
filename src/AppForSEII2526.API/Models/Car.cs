@@ -28,9 +28,6 @@
         [Range(1, int.MaxValue, ErrorMessage = "Minimum quantity for Renting is 1")]
         public int QuantityForRenting { get; set; }
 
-        [Range(1, int.MaxValue, ErrorMessage = "Minimum Rental Items is 1")]
-        public int RentalItems { get; set; }
-
         [DataType(System.ComponentModel.DataAnnotations.DataType.Currency)]
         [Range(30, 200, ErrorMessage = "Minimum Renting Prices is 30 and maximum 200")]
         public float RentingPrice { get; set; }
@@ -50,8 +47,11 @@
         [Range(1, int.MaxValue, ErrorMessage = "Minimum Purchase Items is 1")]
         public int PurchaseItems { get; set; }
 
-
         [Range(20, 60, ErrorMessage = "Minimum Rim size is 20 and maximum 60")]
         public float RimSize { get; set; }
+        
+        public Model Model { get; set; }
+
+        public IList<RentalItem> RentalItems { get; set; }
     }
 }
