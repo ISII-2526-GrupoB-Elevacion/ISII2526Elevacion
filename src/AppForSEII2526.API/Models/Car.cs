@@ -44,14 +44,13 @@
         [StringLength(20, ErrorMessage = "MainteannceType cannot be any longer than 20 characters, neither shorter than 1.", MinimumLength = 1)]
         public string MaintenanceTypes { get; set; }
 
-        [Range(1, int.MaxValue, ErrorMessage = "Minimum Purchase Items is 1")]
-        public int PurchaseItems { get; set; }
-
         [Range(20, 60, ErrorMessage = "Minimum Rim size is 20 and maximum 60")]
         public float RimSize { get; set; }
         
         public Model Model { get; set; }
 
         public IList<RentalItem> RentalItems { get; set; }
+
+        public IList<PurchaseItem> PurchaseItems { get; set; }
     }
 }

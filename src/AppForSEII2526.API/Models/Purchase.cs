@@ -17,5 +17,8 @@
         [DataType(System.ComponentModel.DataAnnotations.DataType.Currency)]
         [Range(3000, 100000, ErrorMessage = "Minimum is 3000 and maximum 100000")]
         public float PurchasingPrice { get; set; }
+
+        public IList<PurchaseItem> PurchaseItems { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
     }
 }
