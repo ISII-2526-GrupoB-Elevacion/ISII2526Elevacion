@@ -11,6 +11,7 @@
     </ShowAsAssociation>
     <ShowAsCollectionAssociation>
       <Property Name="ReviewItems" />
+      <Property Name="PurchaseItems" />
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="AppForSEII2526.API.Models.Model">
@@ -24,7 +25,7 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="AppForSEII2526.API.Models.Review">
-    <Position X="13.25" Y="0.75" Width="2.5" />
+    <Position X="17.25" Y="0.75" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAACAAAAAQAAAAAAAAAAIAAAQAAAAAABAAAAA=</HashCode>
       <FileName>Models\Review.cs</FileName>
@@ -37,7 +38,7 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="AppForSEII2526.API.Models.ReviewItem">
-    <Position X="8.75" Y="0.75" Width="1.75" />
+    <Position X="10.5" Y="0.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAQgAAAAAAAAAACAAAAAAAEAEACAAAAAAAA=</HashCode>
       <FileName>Models\ReviewItem.cs</FileName>
@@ -48,11 +49,42 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="AppForSEII2526.API.Models.ApplicationUser">
-    <Position X="11" Y="3.5" Width="1.5" />
+    <Position X="18.25" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAQABAAAAAAAAQAAAAAAAAA=</HashCode>
       <FileName>Models\ApplicationUser.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="AppForSEII2526.API.Models.Purchase">
+    <Position X="9.75" Y="7.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAjAAAAAABAAAAQAAAAgAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Models\Purchase.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ApplicationUser" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="PurchaseItems" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="AppForSEII2526.API.Models.PurchaseItem">
+    <Position X="4.5" Y="8.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAABAQAAAAAAAAAAACAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Models\PurchaseItem.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Car" />
+      <Property Name="Purchase" />
+    </ShowAsAssociation>
+  </Class>
+  <Enum Name="AppForSEII2526.API.Models.PaymentMethodEnum">
+    <Position X="0.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAQAAAAAAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\PaymentMethodEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>
