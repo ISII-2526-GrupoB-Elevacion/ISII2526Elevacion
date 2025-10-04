@@ -32,9 +32,6 @@
         [Range(30, 200, ErrorMessage = "Minimum Renting Prices is 30 and maximum 200")]
         public float RentingPrice { get; set; }
 
-        [Range(1, int.MaxValue, ErrorMessage = "Minimum Review Items is 1")]
-        public int ReviewItems { get; set; }
-
         [StringLength(10, ErrorMessage = "EngDisplacement cannot be any longer than 10 characters, neither shorter than 1.", MinimumLength = 1)]
         public string EngDisplacement { get; set; }
 
@@ -52,5 +49,7 @@
         public IList<RentalItem> RentalItems { get; set; }
 
         public IList<PurchaseItem> PurchaseItems { get; set; }
+
+        public IList<ReviewItem> ReviewItems { get; set; }
     }
 }
