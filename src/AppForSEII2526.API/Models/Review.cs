@@ -14,5 +14,8 @@
 
         [Key]
         public int Id { get; set; }
+
+        public IList<ReviewItem> ReviewItems { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
     }
 }
