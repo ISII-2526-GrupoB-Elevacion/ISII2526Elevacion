@@ -2,6 +2,11 @@
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
   <Class Name="AppForSEII2526.API.Models.Car">
     <Position X="4" Y="0.75" Width="2.5" />
+    <AssociationLine Name="RentalItems" Type="AppForSEII2526.API.Models.RentalItem">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="-0.174" Y="0.06" Height="0.182" Width="2.269" />
+      </MemberNameLabel>
+    </AssociationLine>
     <TypeIdentifier>
       <HashCode>AAgiCAgIAABgACABAAACAACAAAAAAAAAEAgAgBAAAAQ=</HashCode>
       <FileName>Models\Car.cs</FileName>
@@ -10,8 +15,9 @@
       <Property Name="Model" />
     </ShowAsAssociation>
     <ShowAsCollectionAssociation>
-      <Property Name="ReviewItems" />
       <Property Name="PurchaseItems" />
+      <Property Name="ReviewItems" />
+      <Property Name="RentalItems" />
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="AppForSEII2526.API.Models.Model">
@@ -26,6 +32,11 @@
   </Class>
   <Class Name="AppForSEII2526.API.Models.Review">
     <Position X="17.25" Y="0.75" Width="2.5" />
+    <AssociationLine Name="ApplicationUser" Type="AppForSEII2526.API.Models.ApplicationUser">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.327" Y="0.11" />
+      </MemberNameLabel>
+    </AssociationLine>
     <TypeIdentifier>
       <HashCode>AAACAAAAACAAAAAQAAAAAAAAAAIAAAQAAAAAABAAAAA=</HashCode>
       <FileName>Models\Review.cs</FileName>
@@ -56,7 +67,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="AppForSEII2526.API.Models.Purchase">
-    <Position X="9.75" Y="7.75" Width="3" />
+    <Position X="9.75" Y="6.75" Width="3" />
     <TypeIdentifier>
       <HashCode>AAAjAAAAAABAAAAQAAAAgAAAAAAAAAAAAAAABAAAAAA=</HashCode>
       <FileName>Models\Purchase.cs</FileName>
@@ -69,7 +80,7 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="AppForSEII2526.API.Models.PurchaseItem">
-    <Position X="4.5" Y="8.25" Width="1.75" />
+    <Position X="4.5" Y="6.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAQAAAAABAQAAAAAAAAAAACAAAAAAAAAAAAAgAAAAAA=</HashCode>
       <FileName>Models\PurchaseItem.cs</FileName>
@@ -79,8 +90,37 @@
       <Property Name="Purchase" />
     </ShowAsAssociation>
   </Class>
+  <Class Name="AppForSEII2526.API.Models.Rental">
+    <Position X="12.75" Y="3.25" Width="3" />
+    <AssociationLine Name="ApplicationUser" Type="AppForSEII2526.API.Models.ApplicationUser">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.557" Y="1.453" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAADCAAAAAAAAAAQAAAAgAAgAAAAQAAAAAAAAEAAAAE=</HashCode>
+      <FileName>Models\Rental.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ApplicationUser" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="RentalItems" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="AppForSEII2526.API.Models.RentalItem">
+    <Position X="8.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAACAAAAACAAAAAAAAAAAAAgQAAAAA=</HashCode>
+      <FileName>Models\RentalItem.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Car" />
+      <Property Name="Rental" />
+    </ShowAsAssociation>
+  </Class>
   <Enum Name="AppForSEII2526.API.Models.PaymentMethodEnum">
-    <Position X="0.75" Y="2.75" Width="1.5" />
+    <Position X="0.75" Y="2.75" Width="2" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAQAAAAAAAQAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\PaymentMethodEnum.cs</FileName>
