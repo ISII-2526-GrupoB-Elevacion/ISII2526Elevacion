@@ -15,9 +15,9 @@
       <Property Name="Model" />
     </ShowAsAssociation>
     <ShowAsCollectionAssociation>
+      <Property Name="RentalItems" />
       <Property Name="PurchaseItems" />
       <Property Name="ReviewItems" />
-      <Property Name="RentalItems" />
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="AppForSEII2526.API.Models.Model">
@@ -68,6 +68,13 @@
   </Class>
   <Class Name="AppForSEII2526.API.Models.Purchase">
     <Position X="9.75" Y="6.75" Width="3" />
+    <NestedTypes>
+      <Enum Name="AppForSEII2526.API.Models.Purchase.PaymentMethodEnum" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Models\Purchase.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
     <TypeIdentifier>
       <HashCode>AAAjAAAAAABAAAAQAAAAgAAAAAAAAAAAAAAABAAAAAA=</HashCode>
       <FileName>Models\Purchase.cs</FileName>
@@ -92,6 +99,13 @@
   </Class>
   <Class Name="AppForSEII2526.API.Models.Rental">
     <Position X="12.75" Y="3.25" Width="3" />
+    <NestedTypes>
+      <Enum Name="AppForSEII2526.API.Models.Rental.PaymentMethodEnum" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Models\Rental.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
     <AssociationLine Name="ApplicationUser" Type="AppForSEII2526.API.Models.ApplicationUser">
       <MemberNameLabel ManuallyPlaced="true">
         <Position X="0.557" Y="1.453" />
@@ -119,12 +133,5 @@
       <Property Name="Rental" />
     </ShowAsAssociation>
   </Class>
-  <Enum Name="AppForSEII2526.API.Models.PaymentMethodEnum">
-    <Position X="0.75" Y="2.75" Width="2" />
-    <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAQAAAAAAAQAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Models\PaymentMethodEnum.cs</FileName>
-    </TypeIdentifier>
-  </Enum>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>
