@@ -29,5 +29,12 @@
 
         public IList<RentalItem> RentalItems { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
+
+        public enum PaymentMethodEnum
+        {
+            Visa,
+            GooglePay,
+            PayPal
+        }
     }
 }
