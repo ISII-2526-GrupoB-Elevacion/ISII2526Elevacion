@@ -2,10 +2,18 @@
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
   <Class Name="AppForSEII2526.API.Models.ApplicationUser">
     <Position X="2" Y="6.25" Width="2.25" />
+    <AssociationLine Name="RentalList" Type="AppForSEII2526.API.Models.Rental">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-2.436" Y="0.102" />
+      </MemberNameLabel>
+    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQABAAAAAAAAQAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAABEAAAAQABAAIAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\ApplicationUser.cs</FileName>
     </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="RentalList" />
+    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="AppForSEII2526.API.Models.Car">
     <Position X="11.5" Y="1" Width="2.75" />
@@ -45,6 +53,11 @@
     <AssociationLine Name="RentalItems" Type="AppForSEII2526.API.Models.RentalItem">
       <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
         <Position X="0.275" Y="0.085" Height="0.182" Width="2.736" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="ApplicationUser" Type="AppForSEII2526.API.Models.ApplicationUser">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.718" Y="0.06" />
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
