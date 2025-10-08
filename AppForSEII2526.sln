@@ -20,6 +20,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "requirements", "requirements", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 	ProjectSection(SolutionItems) = preProject
 		requirements\Use Case - Purchase Cars.docx = requirements\Use Case - Purchase Cars.docx
+		requirements\Use Case - Rental Cars.docx = requirements\Use Case - Rental Cars.docx
 		requirements\Use Case - Review Cars.docx = requirements\Use Case - Review Cars.docx
 	EndProjectSection
 EndProject
