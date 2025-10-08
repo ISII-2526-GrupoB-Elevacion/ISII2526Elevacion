@@ -42,11 +42,11 @@
     </AssociationLine>
     <AssociationLine Name="ApplicationUser" Type="AppForSEII2526.API.Models.ApplicationUser" FixedToPoint="true">
       <Path>
-        <Point X="16.062" Y="4.338" />
-        <Point X="16.062" Y="5.25" />
+        <Point X="16.312" Y="4.338" />
+        <Point X="16.312" Y="5.25" />
       </Path>
       <MemberNameLabel ManuallyPlaced="true">
-        <Position X="0.039" Y="0.441" />
+        <Position X="-1.274" Y="0.214" />
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
@@ -67,16 +67,24 @@
       <FileName>Models\PurchaseItem.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="Purchase" />
       <Property Name="Car" />
+      <Property Name="Purchase" />
     </ShowAsAssociation>
   </Class>
   <Class Name="AppForSEII2526.API.Models.ApplicationUser">
-    <Position X="15.25" Y="5.25" Width="1.5" />
+    <Position X="15.5" Y="5.25" Width="1.5" />
+    <AssociationLine Name="PurchaseList" Type="AppForSEII2526.API.Models.Purchase">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.059" Y="0.372" />
+      </MemberNameLabel>
+    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQABAAAAAAAAQAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAABEAAAAQABAAIAAAAAQAAAAAAAAA=</HashCode>
       <FileName>Models\ApplicationUser.cs</FileName>
     </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="PurchaseList" />
+    </ShowAsCollectionAssociation>
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

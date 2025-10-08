@@ -11,7 +11,7 @@ public class ApplicationUser : IdentityUser {
     [StringLength(100, ErrorMessage = "Surname cannot be any longer than 100 characters, neither shorter than 4.", MinimumLength = 4)]
     public string Surname { get; set; }
 
-    [Key]
-    [StringLength(30, ErrorMessage = "UserName cannot be any longer than 30 characters, neither shorter than 9.", MinimumLength = 9)]
-    public string UserName { get; set; }
+    public IList<Rental> RentalList { get; set; }
+    public IList<Purchase> PurchaseList { get; set; }
+    public IList<Review> ReviewList { get; set; }
 }

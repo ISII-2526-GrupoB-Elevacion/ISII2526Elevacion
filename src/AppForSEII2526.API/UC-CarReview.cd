@@ -49,10 +49,18 @@
   </Class>
   <Class Name="AppForSEII2526.API.Models.ApplicationUser">
     <Position X="1" Y="4" Width="1.5" />
+    <AssociationLine Name="ReviewList" Type="AppForSEII2526.API.Models.Review">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.848" Y="1.552" />
+      </MemberNameLabel>
+    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQABAAAAAAAAQAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAABEAAAAQABAAIAAAAAQAAAAAAAAA=</HashCode>
       <FileName>Models\ApplicationUser.cs</FileName>
     </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="ReviewList" />
+    </ShowAsCollectionAssociation>
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>
