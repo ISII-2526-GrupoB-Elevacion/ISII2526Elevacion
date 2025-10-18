@@ -1,6 +1,8 @@
-﻿using AppForSEII2526.API.DTOs.CarDTO;
+using AppForSEII2526.API.DTOs.CarDTO;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace AppForSEII2526.API.Controllers
 {
@@ -21,16 +23,41 @@ namespace AppForSEII2526.API.Controllers
 
         [HttpGet]
         [Route("[action]")]
+        [ProducesResponseType(typeof(IList<CarForPurchaseDTO>), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult> GetCar_ForPurchase_DTO(string? filtroColor, string? modelo)
+        {
+            var cars = await _context.Car
+                .Include(c => c.Model)
+                .Where(c => (c.Color.Contains(filtroColor) || filtroColor == null) && (c.Model.Name.Contains(modelo) || modelo == null))
+                .Select(c => new CarForPurchaseDTO(c.Id, c.Model.Name, c.Color, c.FuelType, c.Manufacturer, c.PurchasingPrice))
+                .ToListAsync();
+            return Ok(cars);
+        }
+        
+        [HttpGet]
+        [Route("[action]")]
+        [ProducesResponseType(typeof(IList<CarForRentalDTO>),(int)HttpStatusCode.OK)]
+        public async Task<ActionResult> GetCars_ForRenting_DTO(string? modelname, float? rentingprice)
+        {
+            var cars = await _context.Car
+                .Include(c=>c.Model)
+                .Where(c => (c.Model.Name.Contains(modelname) || modelname == null )&&( c.RentingPrice < rentingprice || rentingprice == null))
+                .Select(c=>new CarForRentalDTO(c.Id,c.Model.Name,c.FuelType,c.Manufacturer,c.RentingPrice,c.Color))
+                .ToListAsync();
+            return Ok(cars);
+        }
+        
+        [HttpGet]
+        [Route("[action]")]
         [ProducesResponseType(typeof(IList<CarForReviewDTO>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult> GetCars_ForReview_DTO(string? filtroManufacturer, string? filtroFuelType)
         {
-            var car = await _context.Car
+            var cars = await _context.Car
                 .Include(c => c.Model)
                 .Where(c => (c.Manufacturer.Contains(filtroManufacturer) || filtroManufacturer == null) && (c.FuelType.Contains(filtroFuelType) || (filtroFuelType == null)))
                 .Select(c => new CarForReviewDTO(c.Id, c.Model.Name, c.CarClass, c.Manufacturer, c.FuelType, c.Color)) 
                 .ToListAsync();
-            return Ok(car);
+            return Ok(cars);
         }
-
     }
 }
