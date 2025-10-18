@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
+
 namespace AppForSEII2526.API.Controllers
 {
     [Route("api/[controller]")]
@@ -38,10 +39,23 @@ namespace AppForSEII2526.API.Controllers
         [ProducesResponseType(typeof(IList<CarForRentalDTO>),(int)HttpStatusCode.OK)]
         public async Task<ActionResult> GetCars_ForRenting_DTO(string? modelname, float? rentingprice)
         {
-            IList<CarForRentalDTO> cars = await _context.Car
+            var cars = await _context.Car
                 .Include(c=>c.Model)
                 .Where(c => (c.Model.Name.Contains(modelname) || modelname == null )&&( c.RentingPrice < rentingprice || rentingprice == null))
                 .Select(c=>new CarForRentalDTO(c.Id,c.Model.Name,c.FuelType,c.Manufacturer,c.RentingPrice,c.Color))
+                .ToListAsync();
+            return Ok(cars);
+        }
+        
+        [HttpGet]
+        [Route("[action]")]
+        [ProducesResponseType(typeof(IList<CarForReviewDTO>), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult> GetCars_ForReview_DTO(string? filtroManufacturer, string? filtroFuelType)
+        {
+            var cars = await _context.Car
+                .Include(c => c.Model)
+                .Where(c => (c.Manufacturer.Contains(filtroManufacturer) || filtroManufacturer == null) && (c.FuelType.Contains(filtroFuelType) || (filtroFuelType == null)))
+                .Select(c => new CarForReviewDTO(c.Id, c.Model.Name, c.CarClass, c.Manufacturer, c.FuelType, c.Color)) 
                 .ToListAsync();
             return Ok(cars);
         }
