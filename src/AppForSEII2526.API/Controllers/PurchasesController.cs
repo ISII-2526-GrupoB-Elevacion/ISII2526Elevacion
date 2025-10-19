@@ -42,7 +42,7 @@ namespace AppForSEII2526.API.Controllers
 
             if (purchase == null)
             {
-                _logger.LogError($"Error: Rental with id {id} does not exist");
+                _logger.LogError($"Error: Purchase with id {id} does not exist");
                 return NotFound();
             }
 
