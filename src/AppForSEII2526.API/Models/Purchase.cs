@@ -8,7 +8,7 @@
         [Key]
         public int Id { get; set; }
 
-        public PaymentMethodEnum PaymentMethod { get; set; }
+        public PurchasePaymentMethodEnum PaymentMethod { get; set; }
 
         [DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
@@ -21,13 +21,10 @@
         public IList<PurchaseItem> PurchaseItems { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
 
-        public enum PaymentMethodEnum
+        public enum PurchasePaymentMethodEnum
         {
             GooglePay,
             Visa
         }
-
     }
-
-    
 }
