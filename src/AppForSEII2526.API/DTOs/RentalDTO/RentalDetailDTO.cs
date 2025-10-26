@@ -5,14 +5,14 @@ namespace AppForSEII2526.API.DTOs.RentalDTO
     {
         public string Name { get; set; }
         public string Surname { get; set; }
-        public Rental.PaymentMethodEnum PaymentMethod { get; set; }
+        public Rental.RentalPaymentMethodEnum PaymentMethod { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public DateTime RentingDate { get; set; }
         public float TotalPrice { get; set; }
         public IList<RentalItemDTO> RentalItems { get; set; }
 
-        public RentalDetailDTO(string name, string surname, Rental.PaymentMethodEnum paymentMethod, DateTime startDate, DateTime endDate, DateTime rentingDate, float totalPrice, IList<RentalItemDTO> rentalItems)
+        public RentalDetailDTO(string name, string surname, Rental.RentalPaymentMethodEnum paymentMethod, DateTime startDate, DateTime endDate, DateTime rentingDate, float totalPrice, IList<RentalItemDTO> rentalItems)
         {
             Name = name;
             Surname = surname;
