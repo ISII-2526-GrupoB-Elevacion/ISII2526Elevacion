@@ -12,5 +12,13 @@
         public int RentalId { get; set; }
         public Rental Rental { get; set; }
 
+        public RentalItem() { }
+
+        public RentalItem(int carId, int quantity, Rental rental)
+        {
+            CarId = carId;
+            Quantity = quantity;
+            Rental = rental;
+        }
     }
 }
