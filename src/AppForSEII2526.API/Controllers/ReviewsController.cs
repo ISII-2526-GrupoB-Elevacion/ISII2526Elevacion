@@ -1,5 +1,4 @@
-﻿using AppForSEII2526.API.DTOs.PurchaseDTO;
-using AppForSEII2526.API.DTOs.ReviewDTO;
+﻿using AppForSEII2526.API.DTOs.ReviewDTO;
 using AppForSEII2526.API.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -54,7 +53,7 @@ namespace AppForSEII2526.API.Controllers
 
         [HttpPost] //operación de creación
         [Route("[action]")] //operación de tipo acción
-        [ProducesResponseType(typeof(PurchaseDetailDTO), (int)HttpStatusCode.Created)] //devuelve OK cuando consigue meter en la base de datos el código
+        [ProducesResponseType(typeof(ReviewDetailDTO), (int)HttpStatusCode.Created)] //devuelve OK cuando consigue meter en la base de datos el código
         [ProducesResponseType(typeof(ValidationProblemDetails), (int)HttpStatusCode.BadRequest)] //devuelve BadRequest cuando hay un error durante la comprobación de la petición
         [ProducesResponseType(typeof(string), (int)HttpStatusCode.Conflict)] //devuelve Conflict cuando hay un error al añadir a la base de datos
         public async Task<ActionResult> Create_Review(ReviewForCreateDTO reviewForCreate)
@@ -72,7 +71,7 @@ namespace AppForSEII2526.API.Controllers
             var user = _context.ApplicationUser.FirstOrDefault(au => au.UserName == reviewForCreate.UserName); //compruebo que el usuario que compra existe en la base de datos
             if (user == null)
             {
-                ModelState.AddModelError("PurchaseApplicationUser", "Error! UserName is not registered");
+                ModelState.AddModelError("ReviewApplicationUser", "Error! UserName is not registered");
             }
 
             if (ModelState.ErrorCount > 0) //si tengo algún error acumulado, devuelve BadRequest
