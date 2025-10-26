@@ -2,7 +2,7 @@
 {
     public class Purchase
     {
-        [StringLength(20, ErrorMessage = "DeliveryCarDealer cannot be any longer than 20 characters, neither shorter than 1.", MinimumLength = 1)]
+        [StringLength(50, ErrorMessage = "DeliveryCarDealer cannot be any longer than 50 characters, neither shorter than 1.", MinimumLength = 1)]
         public string DeliveryCarDealer { get; set; }
 
         [Key]

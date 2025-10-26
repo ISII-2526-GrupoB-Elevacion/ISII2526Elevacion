@@ -3,19 +3,40 @@ namespace AppForSEII2526.API.DTOs.RentalDTO
 {
     public class RentalDetailDTO
     {
+        [StringLength(20, ErrorMessage = "Name cannot be any longer than 20 characters, neither shorter than 2.", MinimumLength = 2)]
         public string Name { get; set; }
+
+        [StringLength(100, ErrorMessage = "Surname cannot be any longer than 100 characters, neither shorter than 4.", MinimumLength = 4)]
         public string Surname { get; set; }
+
+        [StringLength(50, ErrorMessage = "DeliveryCarDealer cannot be any longer than 50 characters, neither shorter than 1.", MinimumLength = 1)]
+        public string DeliveryCarDealer { get; set; }
+
         public Rental.RentalPaymentMethodEnum PaymentMethod { get; set; }
+
+        [DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }
+
+        [DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime EndDate { get; set; }
+
+        [DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime RentingDate { get; set; }
+
+        [DataType(System.ComponentModel.DataAnnotations.DataType.Currency)]
+        [Range(30, 2000, ErrorMessage = "Minimum is 300 and maximum 2000")]
         public float TotalPrice { get; set; }
+
         public IList<RentalItemDTO> RentalItems { get; set; }
 
-        public RentalDetailDTO(string name, string surname, Rental.RentalPaymentMethodEnum paymentMethod, DateTime startDate, DateTime endDate, DateTime rentingDate, float totalPrice, IList<RentalItemDTO> rentalItems)
+        public RentalDetailDTO(string name, string surname, string deliveryCarDealer, Rental.RentalPaymentMethodEnum paymentMethod, DateTime startDate, DateTime endDate, DateTime rentingDate, float totalPrice, IList<RentalItemDTO> rentalItems)
         {
             Name = name;
             Surname = surname;
+            DeliveryCarDealer = deliveryCarDealer;
             PaymentMethod = paymentMethod;
             StartDate = startDate;
             EndDate = endDate;
