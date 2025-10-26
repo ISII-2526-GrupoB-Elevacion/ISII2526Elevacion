@@ -21,6 +21,20 @@
         public IList<PurchaseItem> PurchaseItems { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
 
+        public Purchase()
+        {
+
+        }
+
+        public Purchase(string deliveryCarDealer, PurchasePaymentMethodEnum paymentMethod, DateTime purchasingDate, IList<PurchaseItem> purchaseItems, ApplicationUser applicationUser)
+        {
+            DeliveryCarDealer = deliveryCarDealer;
+            PaymentMethod = paymentMethod;
+            PurchasingDate = purchasingDate;
+            PurchaseItems = purchaseItems;
+            ApplicationUser = applicationUser;
+        }
+
         public enum PurchasePaymentMethodEnum
         {
             GooglePay,
