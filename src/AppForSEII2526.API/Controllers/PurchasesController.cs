@@ -22,7 +22,7 @@ namespace AppForSEII2526.API.Controllers
         [Route("[action]")]
         [ProducesResponseType(typeof(PurchaseDetailDTO), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public async Task<ActionResult> Get_Details_Purchase_DTO(int id)
+        public async Task<ActionResult> Get_Details_Purchase(int id)
         {
             if (_context.Purchase == null)
             {
@@ -36,7 +36,7 @@ namespace AppForSEII2526.API.Controllers
                  .Include(p => p.PurchaseItems) //join table PurchaseItem
                     .ThenInclude(pi => pi.Car) //then join table Car
                         .ThenInclude(c => c.Model) //then join table Model     
-             .Select(p => new PurchaseDetailDTO(p.ApplicationUser.Name, p.ApplicationUser.Surname, p.PurchasingDate, p.PurchasingPrice, p.PurchaseItems
+             .Select(p => new PurchaseDetailDTO(p.ApplicationUser.Name, p.ApplicationUser.Surname, p.DeliveryCarDealer, p.PurchasingDate, p.PurchasingPrice, p.PurchaseItems
                         .Select(pi => new PurchaseItemDTO(pi.Car.Model.Name, pi.Quantity, pi.Car.PurchasingPrice, pi.Car.Color)).ToList<PurchaseItemDTO>()))
              .FirstOrDefaultAsync();
 
@@ -60,7 +60,7 @@ namespace AppForSEII2526.API.Controllers
         {
             if (purchaseForCreate.PurchaseItems.Count == 0) //compruebo que he seleccionado algún coche para comprar.
             {
-                ModelState.AddModelError("PurchaseItems", "Error! You must include at least one movie to be purchased");
+                ModelState.AddModelError("PurchaseItems", "Error! You must include at least one car to be purchased");
             }
 
             var user = _context.ApplicationUser.FirstOrDefault(au => au.UserName == purchaseForCreate.UserName); //compruebo que el usuario que compra existe en la base de datos
@@ -131,10 +131,10 @@ namespace AppForSEII2526.API.Controllers
                 return Conflict("Error" + ex.Message);
             }
 
-            var purchaseDetail = new PurchaseDetailDTO(purchase.ApplicationUser.Name, purchase.ApplicationUser.Surname, purchase.PurchasingDate,
+            var purchaseDetail = new PurchaseDetailDTO(purchase.ApplicationUser.Name, purchase.ApplicationUser.Surname, purchase.DeliveryCarDealer, purchase.PurchasingDate,
                 purchase.PurchasingPrice, purchaseForCreate.PurchaseItems);
 
-            return CreatedAtAction("Get_Details_Purchase_DTO", new { id = purchase.Id }, purchaseDetail);
+            return CreatedAtAction("Get_Details_Purchase", new { id = purchase.Id }, purchaseDetail);
         }
     }
 }

@@ -8,8 +8,7 @@
 
         public string? Description { get; set; }
 
-        [DataType(System.ComponentModel.DataAnnotations.DataType.Currency)]
-        [Range(0, 10, ErrorMessage = "Minimum is 0 and maximum 10")]
+        [Range(1, 5, ErrorMessage = "Minimum is 1 and maximum 5")]
         public float Rating { get; set; }
 
         public int ReviewId { get; set; }

@@ -22,7 +22,7 @@ namespace AppForSEII2526.API.Controllers
         [Route("[action]")]
         [ProducesResponseType(typeof(RentalDetailDTO), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public async Task<ActionResult> Get_Details_Rental_DTO(int id)
+        public async Task<ActionResult> Get_Details_Rental(int id)
         {
             if (_context.Rental == null)
             {
@@ -36,7 +36,7 @@ namespace AppForSEII2526.API.Controllers
                  .Include(r => r.RentalItems) //join table RentalItem
                     .ThenInclude(ri => ri.Car) //then join table Car
                         .ThenInclude(c => c.Model) //then join table Model     
-             .Select(r => new RentalDetailDTO(r.ApplicationUser.Name, r.ApplicationUser.Surname,r.PaymentMethod,r.StartDate,r.EndDate,r.RentingDate,r.TotalPrice,r.RentalItems
+             .Select(r => new RentalDetailDTO(r.ApplicationUser.Name, r.ApplicationUser.Surname, r.DeliveryCarDealer, r.PaymentMethod,r.StartDate,r.EndDate,r.RentingDate,r.TotalPrice,r.RentalItems
                         .Select(ri => new RentalItemDTO(ri.Car.Model.Name, ri.Car.Manufacturer, ri.Car.RentingPrice, ri.Quantity)).ToList<RentalItemDTO>()))
              .FirstOrDefaultAsync();
 
@@ -133,9 +133,9 @@ namespace AppForSEII2526.API.Controllers
 
             }
 
-            var rentalDetail = new RentalDetailDTO(rental.ApplicationUser.Name, rental.ApplicationUser.Surname,rental.PaymentMethod,rental.StartDate,rental.EndDate,rental.RentingDate,rental.TotalPrice,rentalForCreate.RentalItems);
+            var rentalDetail = new RentalDetailDTO(rental.ApplicationUser.Name, rental.ApplicationUser.Surname, rental.DeliveryCarDealer, rental.PaymentMethod,rental.StartDate,rental.EndDate,rental.RentingDate,rental.TotalPrice,rentalForCreate.RentalItems);
 
-            return CreatedAtAction("Get_Details_Rental_DTO", new { id = rental.Id }, rentalDetail);
+            return CreatedAtAction("Get_Details_Rental", new { id = rental.Id }, rentalDetail);
         }
 
     }
