@@ -12,7 +12,7 @@
         [Key]
         public int Id { get; set; }
         
-        public PaymentMethodEnum PaymentMethod { get; set; }
+        public RentalPaymentMethodEnum PaymentMethod { get; set; }
         
         [DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
@@ -30,7 +30,7 @@
         public IList<RentalItem> RentalItems { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
 
-        public enum PaymentMethodEnum
+        public enum RentalPaymentMethodEnum
         {
             Visa,
             GooglePay,

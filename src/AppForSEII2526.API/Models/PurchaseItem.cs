@@ -11,5 +11,17 @@
 
         public int PurchaseId { get; set; }
         public Purchase Purchase { get; set; }
+
+        public PurchaseItem()
+        {
+
+        }
+
+        public PurchaseItem(int carId, int quantity, Purchase purchase)
+        {
+            CarId = carId;
+            Quantity = quantity;
+            Purchase = purchase;
+        }
     }
 }
