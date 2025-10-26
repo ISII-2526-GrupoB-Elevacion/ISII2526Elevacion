@@ -14,5 +14,15 @@
 
         public int ReviewId { get; set; }
         public Review Review { get; set; }
+
+        public ReviewItem() { }
+
+        public ReviewItem(int carId, string? description, float rating, Review review)
+        {
+            CarId = carId;
+            Description = description;
+            Rating = rating;
+            Review = review;
+        }
     }
 }
