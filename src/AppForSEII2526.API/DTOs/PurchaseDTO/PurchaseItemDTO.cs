@@ -29,6 +29,7 @@ namespace AppForSEII2526.API.DTOs.PurchaseDTO
             PurchasingPrice = purchasingPrice;
             Color = color;
             Quantity = quantity;
+            Description = "description";
         }
 
         public PurchaseItemDTO(string model, float purchasingPrice, string color, int quantity, string description)
