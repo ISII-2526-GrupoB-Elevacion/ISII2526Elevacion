@@ -28,7 +28,8 @@
             Manufacturer = manufacturer;
             Color = color;
             Rating = rating;
-            Description = description;
+            Description = description ?? "No se ha escrito ninguna descripción";
+            FuelType = "fuelType";
         }
 
         public ReviewItemDTO(string model, string fuelType, string manufacturer, string color, float rating, string? description)
