@@ -4,7 +4,8 @@ using Microsoft.Identity.Client;
 namespace AppForSEII2526.API.Models;
 
 // Add profile data for application users by adding properties to the ApplicationUser class
-public class ApplicationUser : IdentityUser {
+public class ApplicationUser : IdentityUser
+{
     [StringLength(20, ErrorMessage = "Name cannot be any longer than 20 characters, neither shorter than 2.", MinimumLength = 2)]
     public string Name { get; set; }
 
@@ -14,4 +15,16 @@ public class ApplicationUser : IdentityUser {
     public IList<Rental> RentalList { get; set; }
     public IList<Purchase> PurchaseList { get; set; }
     public IList<Review> ReviewList { get; set; }
+
+    public ApplicationUser(string id,string name, string surname, string email)
+    {
+        Id = id;
+        Name = name;
+        Surname = surname;
+        Email = email;
+    }
+    public ApplicationUser()
+    {
+
+    }
 }

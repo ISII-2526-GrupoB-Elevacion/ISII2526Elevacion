@@ -19,5 +19,16 @@
             FuelType = fuelType;
             Color = color;
         }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is CarForReviewDTO dTO &&
+                   Id == dTO.Id &&
+                   Model == dTO.Model &&
+                   CarClass == dTO.CarClass &&
+                   Manufacturer == dTO.Manufacturer &&
+                   FuelType == dTO.FuelType &&
+                   Color == dTO.Color;
+        }
     }
 }

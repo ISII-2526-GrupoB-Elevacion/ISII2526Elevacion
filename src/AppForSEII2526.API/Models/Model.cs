@@ -8,5 +8,13 @@
         public string Name { get; set; }
 
         public IList<Car> Cars { get; set; }
+        public Model(string name)
+        {
+            Name = name;
+        }
+        public Model()
+        {
+
+        }
     }
 }
