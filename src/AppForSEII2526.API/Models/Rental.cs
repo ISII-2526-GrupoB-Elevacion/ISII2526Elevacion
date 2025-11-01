@@ -12,7 +12,7 @@
         [Key]
         public int Id { get; set; }
         
-        public PaymentMethodEnum PaymentMethod { get; set; }
+        public RentalPaymentMethodEnum PaymentMethod { get; set; }
         
         [DataType(System.ComponentModel.DataAnnotations.DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
@@ -30,28 +30,24 @@
         public IList<RentalItem> RentalItems { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
 
-        public enum PaymentMethodEnum
+        public enum RentalPaymentMethodEnum
         {
             Visa,
             GooglePay,
             PayPal
         }
-        public Rental()
-        {
 
-        }
+        public Rental() { }
 
-        public Rental(string deliveryCarDealer, DateTime endDate, PaymentMethodEnum paymentMethod, DateTime rentingDate, DateTime startDate, float totalPrice, IList<RentalItem> rentalItems,ApplicationUser applicationUser)
+        public Rental(string deliveryCarDealer, DateTime endDate, RentalPaymentMethodEnum paymentMethod, DateTime rentingDate, DateTime startDate, IList<RentalItem> rentalItems, ApplicationUser applicationUser)
         {
             DeliveryCarDealer = deliveryCarDealer;
             EndDate = endDate;
             PaymentMethod = paymentMethod;
             RentingDate = rentingDate;
             StartDate = startDate;
-            TotalPrice = totalPrice;
             RentalItems = rentalItems;
             ApplicationUser = applicationUser;
         }
-
     }
 }

@@ -17,5 +17,16 @@
 
         public IList<ReviewItem> ReviewItems { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
+
+        public Review() { }
+      
+        public Review(string country, DateTime created, string driverType, IList<ReviewItem> reviewItems, ApplicationUser applicationUser)
+        {
+            Country = country;
+            Created = created;
+            DriverType = driverType;
+            ReviewItems = reviewItems;
+            ApplicationUser = applicationUser;
+        }
     }
 }

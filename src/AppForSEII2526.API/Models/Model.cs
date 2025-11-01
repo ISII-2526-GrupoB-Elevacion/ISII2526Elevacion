@@ -7,13 +7,15 @@
         [StringLength(20, ErrorMessage = "Name cannot be any longer than 20 characters, neither shorter than 1.", MinimumLength = 1)]
         public string Name { get; set; }
         public IList<Car> Cars { get; set; }
-        public Model()
-        {
-        }
 
         public Model(string name)
         {
             Name = name;
+        }
+      
+        public Model()
+        {
+
         }
     }
 }

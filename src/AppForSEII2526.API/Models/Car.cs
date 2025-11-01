@@ -43,7 +43,7 @@
 
         [Range(20, 60, ErrorMessage = "Minimum Rim size is 20 and maximum 60")]
         public float RimSize { get; set; }
-        
+
         public Model Model { get; set; }
 
         public IList<RentalItem> RentalItems { get; set; }
@@ -54,6 +54,7 @@
 
         public Car()
         {
+
         }
 
         public Car(string carClass, string color, string description, string manufacturer, float purchasingPrice, int quantityForPurchasing, int quantityForRenting, float rentingPrice, string engDisplacement, string fuelType, string maintenanceTypes, float rimSize, Model model)
@@ -72,7 +73,5 @@
             RimSize = rimSize;
             Model = model;
         }
-
-
     }
 }
