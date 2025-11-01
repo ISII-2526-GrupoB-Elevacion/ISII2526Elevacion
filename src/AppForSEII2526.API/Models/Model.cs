@@ -12,5 +12,9 @@
         {
             Name = name;
         }
+        public Model()
+        {
+
+        }
     }
 }

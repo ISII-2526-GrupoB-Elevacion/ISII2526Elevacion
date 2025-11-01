@@ -19,6 +19,7 @@
         public ApplicationUser ApplicationUser { get; set; }
 
         public Review() { }
+      
         public Review(string country, DateTime created, string driverType, IList<ReviewItem> reviewItems, ApplicationUser applicationUser)
         {
             Country = country;
