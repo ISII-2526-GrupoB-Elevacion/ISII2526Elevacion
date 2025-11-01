@@ -9,9 +9,9 @@ using AppForSEII2526.API.DTOs.CarDTO;
 
 namespace AppForSEII2526.UT.CarsController_test
 {
-    public class GetCars_ForRenting_DTO_test : AppForSEII25264SqliteUT
+    public class GetCars_ForRenting_test : AppForSEII25264SqliteUT
     {
-        public GetCars_ForRenting_DTO_test()
+        public GetCars_ForRenting_test()
         {
             var models = new List<Model>
             {
@@ -31,7 +31,7 @@ namespace AppForSEII2526.UT.CarsController_test
 
             ApplicationUser user = new ApplicationUser("1","Elena", "Navarro Martinez","elena@navarro");
 
-            var rental = new Rental("Madrid Center", DateTime.Now.AddDays(7), Rental.PaymentMethodEnum.Visa, DateTime.Now, DateTime.Now.AddDays(1), 350, new List<RentalItem>(),user);
+            var rental = new Rental("Madrid Center", DateTime.Now.AddDays(7), Rental.RentalPaymentMethodEnum.Visa, DateTime.Now, DateTime.Now.AddDays(1), new List<RentalItem>(),user);
             var rentalItems = new RentalItem(1,1,rental);
             rental.RentalItems.Add(rentalItems);
 
@@ -79,7 +79,7 @@ namespace AppForSEII2526.UT.CarsController_test
             var controller = new CarsController(_context, null);
 
             // Act
-            var result = await controller.GetCars_ForRenting_DTO(filtroModel,filtroRentingprice);
+            var result = await controller.GetCars_ForRenting(filtroModel,filtroRentingprice);
 
             //Assert
             //we check that the response type is OK 
