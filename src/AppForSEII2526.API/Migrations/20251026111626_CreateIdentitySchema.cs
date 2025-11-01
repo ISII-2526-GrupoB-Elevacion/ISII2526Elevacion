@@ -177,7 +177,7 @@ namespace AppForSEII2526.API.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DeliveryCarDealer = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    DeliveryCarDealer = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     PaymentMethod = table.Column<int>(type: "int", nullable: false),
                     PurchasingDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PurchasingPrice = table.Column<float>(type: "real", nullable: false),
