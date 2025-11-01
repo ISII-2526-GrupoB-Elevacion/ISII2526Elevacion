@@ -197,8 +197,8 @@ namespace AppForSEII2526.API.Migrations
 
                     b.Property<string>("DeliveryCarDealer")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("PaymentMethod")
                         .HasColumnType("int");

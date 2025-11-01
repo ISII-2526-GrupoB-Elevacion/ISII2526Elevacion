@@ -16,15 +16,16 @@ public class ApplicationUser : IdentityUser
     public IList<Purchase> PurchaseList { get; set; }
     public IList<Review> ReviewList { get; set; }
 
-    public ApplicationUser(string id,string name, string surname, string email)
+    public ApplicationUser()
+    {
+
+    }
+
+    public ApplicationUser(string id, string name, string surname, string email)
     {
         Id = id;
         Name = name;
         Surname = surname;
         Email = email;
-    }
-    public ApplicationUser()
-    {
-
     }
 }
