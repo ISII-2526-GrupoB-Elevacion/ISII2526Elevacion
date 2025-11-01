@@ -31,5 +31,15 @@
             Color = color;
         }
 
+        public override bool Equals(object? obj)
+        {
+            return obj is CarForRentalDTO dTO &&
+                   Id == dTO.Id &&
+                   Model == dTO.Model &&
+                   FuelType == dTO.FuelType &&
+                   Manufacturer == dTO.Manufacturer &&
+                   RentingPrice == dTO.RentingPrice &&
+                   Color == dTO.Color;
+        }
     }
 }
