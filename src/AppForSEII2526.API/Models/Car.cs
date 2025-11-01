@@ -51,5 +51,28 @@
         public IList<PurchaseItem> PurchaseItems { get; set; }
 
         public IList<ReviewItem> ReviewItems { get; set; }
+
+        public Car()
+        {
+        }
+
+        public Car(string carClass, string color, string description, string manufacturer, float purchasingPrice, int quantityForPurchasing, int quantityForRenting, float rentingPrice, string engDisplacement, string fuelType, string maintenanceTypes, float rimSize, Model model)
+        {
+            CarClass = carClass;
+            Color = color;
+            Description = description;
+            Manufacturer = manufacturer;
+            PurchasingPrice = purchasingPrice;
+            QuantityForPurchasing = quantityForPurchasing;
+            QuantityForRenting = quantityForRenting;
+            RentingPrice = rentingPrice;
+            EngDisplacement = engDisplacement;
+            FuelType = fuelType;
+            MaintenanceTypes = maintenanceTypes;
+            RimSize = rimSize;
+            Model = model;
+        }
+
+
     }
 }

@@ -36,5 +36,22 @@
             GooglePay,
             PayPal
         }
+        public Rental()
+        {
+
+        }
+
+        public Rental(string deliveryCarDealer, DateTime endDate, PaymentMethodEnum paymentMethod, DateTime rentingDate, DateTime startDate, float totalPrice, IList<RentalItem> rentalItems,ApplicationUser applicationUser)
+        {
+            DeliveryCarDealer = deliveryCarDealer;
+            EndDate = endDate;
+            PaymentMethod = paymentMethod;
+            RentingDate = rentingDate;
+            StartDate = startDate;
+            TotalPrice = totalPrice;
+            RentalItems = rentalItems;
+            ApplicationUser = applicationUser;
+        }
+
     }
 }
