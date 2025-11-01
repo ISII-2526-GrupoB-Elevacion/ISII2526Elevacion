@@ -80,7 +80,7 @@ namespace AppForSEII2526.UT.CarsController_test
             // Arrange
             var controller = new CarsController(_context, null);
             // Act
-            var result = await controller.GetCars_ForReview_DTO(filtroManufacturer, filtroFuelType);
+            var result = await controller.GetCars_ForReview(filtroManufacturer, filtroFuelType);
             //Assert
             //we check that the response type is OK 
             var okResult = Assert.IsType<OkObjectResult>(result);

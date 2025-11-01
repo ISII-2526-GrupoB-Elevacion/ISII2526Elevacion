@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace AppForSEII2526.UT.CarsController_test
 {
-    public class GetCar_ForPurchase_DTO_test : AppForSEII25264SqliteUT
+    public class GetCars_ForPurchase_test : AppForSEII25264SqliteUT
     {
-        public GetCar_ForPurchase_DTO_test()
+        public GetCars_ForPurchase_test()
         {
             var models = new List<Model>()
             {
@@ -30,7 +30,7 @@ namespace AppForSEII2526.UT.CarsController_test
 
             ApplicationUser user = new ApplicationUser("1", "Elena", "Navarro Martinez", "elena@uclm.es");
 
-            var purchase = new Purchase("C/Prim nº 7", Purchase.PaymentMethodEnum.Visa, DateTime.Now, new List<PurchaseItem>(), user);
+            var purchase = new Purchase("C/Prim nº 7", Purchase.PurchasePaymentMethodEnum.Visa, DateTime.Now, new List<PurchaseItem>(), user);
             var purchaseItems = new PurchaseItem(1, 1, purchase);
             purchase.PurchaseItems.Add(purchaseItems);
 
@@ -76,7 +76,7 @@ namespace AppForSEII2526.UT.CarsController_test
             // Arrange
             var controller = new CarsController(_context, null);
             // Act
-            var result = await controller.GetCar_ForPurchase_DTO(filtroColor, modelo);
+            var result = await controller.GetCars_ForPurchase(filtroColor, modelo);
             //Assert
             //we check that the response type is OK 
             var okResult = Assert.IsType<OkObjectResult>(result);
