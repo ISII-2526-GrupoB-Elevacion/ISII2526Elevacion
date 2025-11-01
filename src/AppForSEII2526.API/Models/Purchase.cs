@@ -27,7 +27,18 @@
             Visa
         }
 
-    }
+        public Purchase()
+        {
 
-    
+        }
+
+        public Purchase(string deliveryCarDealer, PaymentMethodEnum paymentMethod, DateTime purchasingDate, IList<PurchaseItem> purchaseItems, ApplicationUser applicationUser)
+        {
+            DeliveryCarDealer = deliveryCarDealer;
+            PaymentMethod = paymentMethod;
+            PurchasingDate = purchasingDate;
+            PurchaseItems = purchaseItems;
+            ApplicationUser = applicationUser;
+        }
+    }
 }
