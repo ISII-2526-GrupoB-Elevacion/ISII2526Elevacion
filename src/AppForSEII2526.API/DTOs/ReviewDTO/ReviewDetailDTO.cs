@@ -31,5 +31,16 @@ namespace AppForSEII2526.API.DTOs.ReviewDTO
             Created = created;
             ReviewItems = reviewItems;
         }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is ReviewDetailDTO dTO &&
+                   Name == dTO.Name &&
+                   Surname == dTO.Surname &&
+                   Country == dTO.Country &&
+                   DriverType == dTO.DriverType &&
+                   Created == dTO.Created &&
+                   ReviewItems.SequenceEqual(dTO.ReviewItems);
+        }
     }
 }

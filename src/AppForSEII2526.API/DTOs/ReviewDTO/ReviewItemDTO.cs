@@ -41,5 +41,16 @@
             Rating = rating;
             Description = description;
         }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is ReviewItemDTO dTO &&
+                   Model == dTO.Model &&
+                   FuelType == dTO.FuelType &&
+                   Manufacturer == dTO.Manufacturer &&
+                   Color == dTO.Color &&
+                   Rating == dTO.Rating &&
+                   Description == dTO.Description;
+        }
     }
 }
