@@ -30,7 +30,7 @@ namespace AppForSEII2526.UT.CarsController_test
 
             ApplicationUser user = new ApplicationUser("1", "Elena", "Navarro Martinez", "elena@uclm.es");
 
-            var purchase = new Purchase("C/Prim nº 7", Purchase.PurchasePaymentMethodEnum.Visa, DateTime.Now, new List<PurchaseItem>(), user);
+            var purchase = new Purchase("C/Prim nº 7", Purchase.PurchasePaymentMethodEnum.Visa, DateTime.Today, new List<PurchaseItem>(), user);
             var purchaseItems = new PurchaseItem(1, 1, purchase);
             purchase.PurchaseItems.Add(purchaseItems);
 
