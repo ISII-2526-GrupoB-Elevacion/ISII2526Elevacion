@@ -1,4 +1,5 @@
 ﻿using AppForSEII2526.API.Models;
+
 namespace AppForSEII2526.API.DTOs.RentalDTO
 {
     public class RentalDetailDTO
@@ -43,6 +44,21 @@ namespace AppForSEII2526.API.DTOs.RentalDTO
             RentingDate = rentingDate;
             TotalPrice = totalPrice;
             RentalItems = rentalItems;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is RentalDetailDTO dTO &&
+                   Name == dTO.Name &&
+                   Surname == dTO.Surname &&
+                   DeliveryCarDealer == dTO.DeliveryCarDealer &&
+                   PaymentMethod == dTO.PaymentMethod &&
+                   StartDate == dTO.StartDate &&
+                   EndDate == dTO.EndDate &&
+                   RentingDate == dTO.RentingDate &&
+                   TotalPrice == dTO.TotalPrice &&
+                   RentalItems.SequenceEqual(dTO.RentalItems);
+
         }
     }
 }

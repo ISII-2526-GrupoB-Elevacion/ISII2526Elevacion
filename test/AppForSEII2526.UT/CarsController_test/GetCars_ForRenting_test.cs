@@ -31,7 +31,7 @@ namespace AppForSEII2526.UT.CarsController_test
 
             ApplicationUser user = new ApplicationUser("1","Elena", "Navarro Martinez","elena@navarro");
 
-            var rental = new Rental("Madrid Center", DateTime.Now.AddDays(7), Rental.RentalPaymentMethodEnum.Visa, DateTime.Now, DateTime.Now.AddDays(1), new List<RentalItem>(),user);
+            var rental = new Rental("Madrid Center", DateTime.Today.AddDays(7), Rental.RentalPaymentMethodEnum.Visa, DateTime.Today, DateTime.Today.AddDays(1), new List<RentalItem>(),user);
             var rentalItems = new RentalItem(1,1,rental);
             rental.RentalItems.Add(rentalItems);
 

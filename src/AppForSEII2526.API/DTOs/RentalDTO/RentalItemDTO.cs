@@ -20,5 +20,14 @@
             RentingPrice = rentingPrice;
             Quantity = quantity;
         }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is RentalItemDTO dTO &&
+                   Model == dTO.Model &&
+                   Manufacturer == dTO.Manufacturer &&
+                   RentingPrice == dTO.RentingPrice &&
+                   Quantity == dTO.Quantity;
+        }
     }
 }
