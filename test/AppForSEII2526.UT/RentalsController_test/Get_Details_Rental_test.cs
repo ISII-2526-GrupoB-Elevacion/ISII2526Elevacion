@@ -65,7 +65,7 @@ namespace AppForSEII2526.UT.RentalsController_test
         [Fact]
         [Trait("LevelTesting", "Unit Testing")]
         [Trait("Database", "WithoutFixture")]
-        public async Task GetRental_Found_test()
+        public async Task GetDetailsRental_Found_test()
         {
             // Arrange
             var mock = new Mock<ILogger<RentalsController>>();

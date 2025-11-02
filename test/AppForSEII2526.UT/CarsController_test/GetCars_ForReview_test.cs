@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace AppForSEII2526.UT.CarsController_test
 {
-    public class GetCars_ForReview_DTO_test : AppForSEII25264SqliteUT
+    public class GetCars_ForReview_test : AppForSEII25264SqliteUT
     {
-        public GetCars_ForReview_DTO_test()
+        public GetCars_ForReview_test()
         {
             var models = new List<Model>()
             {
