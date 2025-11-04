@@ -21,11 +21,11 @@ public class ApplicationUser : IdentityUser
 
     }
 
-    public ApplicationUser(string id, string name, string surname, string email)
+    public ApplicationUser(string id, string name, string surname, string userName)
     {
         Id = id;
         Name = name;
         Surname = surname;
-        Email = email;
+        UserName = userName;
     }
 }
