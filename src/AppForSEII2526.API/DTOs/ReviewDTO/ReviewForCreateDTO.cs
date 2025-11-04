@@ -1,4 +1,6 @@
-﻿namespace AppForSEII2526.API.DTOs.ReviewDTO
+﻿using AppForSEII2526.API.DTOs.RentalDTO;
+
+namespace AppForSEII2526.API.DTOs.ReviewDTO
 {
     public class ReviewForCreateDTO
     {
@@ -19,13 +21,25 @@
         public IList<ReviewItemDTO> ReviewItems { get; set; }
 
 
-        public ReviewForCreateDTO(string name, string surname, string userName, string country, string driverType)
+        public ReviewForCreateDTO(string name, string surname, string userName, string country, string driverType, IList<ReviewItemDTO> reviewItems)
         {
             Name = name ?? throw new ArgumentNullException(nameof(Name));
             Surname = surname;
             UserName = userName ?? throw new ArgumentNullException(nameof(UserName));
             Country = country ?? throw new ArgumentNullException(nameof(Country));
             DriverType = driverType ?? throw new ArgumentNullException(nameof(DriverType));
+            ReviewItems = reviewItems ?? throw new ArgumentNullException(nameof(ReviewItems));
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is ReviewForCreateDTO dTO &&
+                   Name == dTO.Name &&
+                   Surname == dTO.Surname &&
+                   UserName == dTO.UserName &&
+                   Country == dTO.Country &&
+                   DriverType == dTO.DriverType &&
+                   ReviewItems.SequenceEqual(dTO.ReviewItems);
         }
     }
 }
