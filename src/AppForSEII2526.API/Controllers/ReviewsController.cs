@@ -91,7 +91,7 @@ namespace AppForSEII2526.API.Controllers
                 })
                 .ToList();
 
-            Review review = new Review(reviewForCreate.Country, DateTime.Now,reviewForCreate.DriverType, new List<ReviewItem>(), user);
+            Review review = new Review(reviewForCreate.Country, DateTime.Today,reviewForCreate.DriverType, new List<ReviewItem>(), user);
 
             foreach (var item in reviewForCreate.ReviewItems)
             {
