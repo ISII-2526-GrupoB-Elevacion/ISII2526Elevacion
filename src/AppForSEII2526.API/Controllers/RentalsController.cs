@@ -16,6 +16,7 @@ namespace AppForSEII2526.API.Controllers
         {
             _context = context;
             _logger = logger;
+            _logger.LogInformation("Controller 'RentalsController' inicializado");
         }
 
         [HttpGet]
@@ -26,7 +27,7 @@ namespace AppForSEII2526.API.Controllers
         {
             if (_context.Rental == null)
             {
-                _logger.LogError("Error: Rental table does not exist");
+                _logger.LogError("RentalsController || Error: Rental table does not exist");
                 return NotFound();
             }
 
@@ -43,7 +44,7 @@ namespace AppForSEII2526.API.Controllers
 
             if (rental == null)
             {
-                _logger.LogError($"Error: Rental with id {id} does not exist");
+                _logger.LogError($"RentalsController || Error: Rental with id {id} does not exist");
                 return NotFound();
             }
 
@@ -60,17 +61,21 @@ namespace AppForSEII2526.API.Controllers
         {
             if (rentalForCreate.StartDate<= DateTime.Today)
                 ModelState.AddModelError("RentalDateFrom", "Error! Your rental date must start later than today");
+                _logger.LogError($"RentalsController || Error! Your rental date must start later than today");
 
             if (rentalForCreate.StartDate >= rentalForCreate.EndDate)
                 ModelState.AddModelError("RentalDateFrom&RentalDateTo", "Error! Your rental must end later than it starts");
+                _logger.LogError($"RentalsController || Error! Your rental must end later than it starts");
 
             if (rentalForCreate.RentalItems.Count==0)
                 ModelState.AddModelError("RentalItems", "Error! You must include at least one car to be rented");
+                _logger.LogError($"RentalsController || Error! You must include at least one car to be rented");
 
             //if (!_context.ApplicationUser.Any(au=>au.UserName == rentalFromCreate.CustomerUserName)) Es lo mismo que lo de abajo pero de otra forma
             var user = _context.ApplicationUser.FirstOrDefault(au => au.UserName == rentalForCreate.UserName);
             if (user == null)
                 ModelState.AddModelError("RentalAplicationUser", "Error! UserName is not registered");
+                _logger.LogError($"RentalsController || Error! UserName is not registered");
 
             if (ModelState.ErrorCount > 0)
                 return BadRequest(new ValidationProblemDetails(ModelState));
@@ -103,6 +108,7 @@ namespace AppForSEII2526.API.Controllers
                 if ((car == null) || ((car.NumberOfRentedItems+item.Quantity) >= car.QuantityForRenting))
                 {
                     ModelState.AddModelError("RentalItems", $"Error! Car '{item.Model}' is not available for being rented from {rentalForCreate.StartDate.ToShortDateString()} to {rentalForCreate.EndDate.ToShortDateString()}");
+                    _logger.LogError($"RentalsController || Error! Car '{item.Model}' is not available for being rented from {rentalForCreate.StartDate.ToShortDateString()} to {rentalForCreate.EndDate.ToShortDateString()}");
                 }
                 else
                 {
@@ -127,14 +133,15 @@ namespace AppForSEII2526.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);
                 ModelState.AddModelError("Rental", $"Error! There was an error while saving your rental, plese, try again later");
+                _logger.LogError($"RentalsController || Error! {ex.Message}");
                 return Conflict("Error" + ex.Message);
 
             }
 
             var rentalDetail = new RentalDetailDTO(rental.ApplicationUser.Name, rental.ApplicationUser.Surname, rental.DeliveryCarDealer, rental.PaymentMethod,rental.StartDate,rental.EndDate,rental.RentingDate,rental.TotalPrice,rentalForCreate.RentalItems);
 
+            _logger.LogInformation($"RentalsController || El alquiler {rental.Id} se ha creado correctamente");
             return CreatedAtAction("Get_Details_Rental", new { id = rental.Id }, rentalDetail);
         }
 

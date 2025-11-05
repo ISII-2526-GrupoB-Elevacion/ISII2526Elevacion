@@ -16,6 +16,7 @@ namespace AppForSEII2526.API.Controllers
         {
             _context = context;
             _logger = logger;
+            _logger.LogInformation("Controller 'PurchasesController' inicializado");
         }
 
         [HttpGet]
@@ -26,7 +27,7 @@ namespace AppForSEII2526.API.Controllers
         {
             if (_context.Purchase == null)
             {
-                _logger.LogError("Error: Purchase table does not exist");
+                _logger.LogError("PurchasesController || Error: Purchase table does not exist");
                 return NotFound();
             }
 
@@ -43,7 +44,7 @@ namespace AppForSEII2526.API.Controllers
 
             if (purchase == null)
             {
-                _logger.LogError($"Error: Purchase with id {id} does not exist");
+                _logger.LogError($"PurchasesController || Error: Purchase with id {id} does not exist");
                 return NotFound();
             }
 
@@ -61,12 +62,14 @@ namespace AppForSEII2526.API.Controllers
             if (purchaseForCreate.PurchaseItems.Count == 0) //compruebo que he seleccionado algún coche para comprar.
             {
                 ModelState.AddModelError("PurchaseItems", "Error! You must include at least one car to be purchased");
+                _logger.LogError("PurchasesController || Error! You must include at least one car to be purchased");
             }
 
             var user = _context.ApplicationUser.FirstOrDefault(au => au.UserName == purchaseForCreate.UserName); //compruebo que el usuario que compra existe en la base de datos
             if (user == null)
             {
                 ModelState.AddModelError("PurchaseApplicationUser", "Error! UserName is not registered");
+                _logger.LogError("PurchasesController || Error! UserName is not registered");
             }
 
             if (ModelState.ErrorCount > 0) //si tengo algún error acumulado, devuelve BadRequest
@@ -100,10 +103,12 @@ namespace AppForSEII2526.API.Controllers
                 if (car == null)
                 {
                     ModelState.AddModelError("PurchaseItems", $"Error! The car {item.Model} is not for sale at the dealership");
+                    _logger.LogError($"PurchasesController || Error! The car {item.Model} is not for sale at the dealership");
                 }
                 else if ((car.NumberOfPurchaseItems + item.Quantity) > car.QuantityForPurchasing)
                 {
                     ModelState.AddModelError("PurchaseItems", $"Error! There are not enough units available to purchase the car {item.Model}");
+                    _logger.LogError($"PurchasesController || Error! There are not enough units available to purchase the car {item.Model}");
                 }
                 else
                 {
@@ -126,14 +131,15 @@ namespace AppForSEII2526.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);
                 ModelState.AddModelError("Purchase", $"Error! There was an error while saving your purchase, plese, try again later");
+                _logger.LogError($"PurchasesController || Error! {ex.Message}");
                 return Conflict("Error" + ex.Message);
             }
 
             var purchaseDetail = new PurchaseDetailDTO(purchase.ApplicationUser.Name, purchase.ApplicationUser.Surname, purchase.DeliveryCarDealer, purchase.PurchasingDate,
                 purchase.PurchasingPrice, purchaseForCreate.PurchaseItems);
 
+            _logger.LogInformation($"PurchasesController || La compra {purchase.Id} se ha realizado correctamente");
             return CreatedAtAction("Get_Details_Purchase", new { id = purchase.Id }, purchaseDetail);
         }
     }

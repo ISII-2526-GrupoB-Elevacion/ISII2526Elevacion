@@ -76,7 +76,9 @@ namespace AppForSEII2526.UT.CarsController_test
             IList<CarForRentalDTO> expectedCars)
         {
             // Arrange
-            var controller = new CarsController(_context, null);
+            var mock = new Mock<ILogger<CarsController>>();
+            ILogger<CarsController> logger = mock.Object;
+            var controller = new CarsController(_context, logger);
 
             // Act
             var result = await controller.GetCars_ForRenting(filtroModel,filtroRentingprice);
