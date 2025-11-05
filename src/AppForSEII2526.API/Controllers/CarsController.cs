@@ -2,6 +2,7 @@ using AppForSEII2526.API.DTOs.CarDTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 
 namespace AppForSEII2526.API.Controllers
@@ -19,6 +20,7 @@ namespace AppForSEII2526.API.Controllers
         {
             _context = context;
             _logger = logger;
+            _logger.LogInformation("Controller 'CarsController' inicializado");
         }
 
         [HttpGet]
@@ -31,6 +33,7 @@ namespace AppForSEII2526.API.Controllers
                 .Where(c => (c.Color.Contains(filtroColor) || filtroColor == null) && (c.Model.Name.Contains(modelo) || modelo == null))
                 .Select(c => new CarForPurchaseDTO(c.Id, c.Model.Name, c.Color, c.FuelType, c.Manufacturer, c.PurchasingPrice))
                 .ToListAsync();
+            _logger.LogInformation($"CarsController || Coches para compra encontrados con los parametros {filtroColor} y {modelo}");
             return Ok(cars);
         }
         
@@ -44,6 +47,7 @@ namespace AppForSEII2526.API.Controllers
                 .Where(c => (c.Model.Name.Contains(modelname) || modelname == null )&&( c.RentingPrice < rentingprice || rentingprice == null))
                 .Select(c=>new CarForRentalDTO(c.Id,c.Model.Name,c.FuelType,c.Manufacturer,c.RentingPrice,c.Color))
                 .ToListAsync();
+            _logger.LogInformation($"CarsController || Coches para alquiler encontrados con los parametros {modelname} y {rentingprice}");
             return Ok(cars);
         }
         
@@ -57,6 +61,7 @@ namespace AppForSEII2526.API.Controllers
                 .Where(c => (c.Manufacturer.Contains(filtroManufacturer) || filtroManufacturer == null) && (c.FuelType.Contains(filtroFuelType) || (filtroFuelType == null)))
                 .Select(c => new CarForReviewDTO(c.Id, c.Model.Name, c.CarClass, c.Manufacturer, c.FuelType, c.Color)) 
                 .ToListAsync();
+            _logger.LogInformation($"CarsController || Coches para reseñar encontrados con los parametros {filtroManufacturer} y {filtroFuelType}");
             return Ok(cars);
         }
     }

@@ -16,6 +16,7 @@ namespace AppForSEII2526.API.Controllers
         {
             _context = context;
             _logger = logger;
+            _logger.LogInformation("Controller 'ReviewsController' inicializado");
         }
 
         [HttpGet]
@@ -26,7 +27,7 @@ namespace AppForSEII2526.API.Controllers
         {
             if (_context.Review == null)
             {
-                _logger.LogError("Error: Review table does not exist");
+                _logger.LogError("ReviewsController || Error: Review table does not exist");
                 return NotFound();
             }
 
@@ -43,7 +44,7 @@ namespace AppForSEII2526.API.Controllers
 
             if (review == null)
             {
-                _logger.LogError($"Error: Review with id {id} does not exist");
+                _logger.LogError($"ReviewsController || Error: Review with id {id} does not exist");
                 return NotFound();
             }
 
@@ -61,17 +62,20 @@ namespace AppForSEII2526.API.Controllers
             if (reviewForCreate.ReviewItems.Count == 0) //compruebo que he seleccionado algún coche para comprar.
             {
                 ModelState.AddModelError("ReviewItems", "Error! You must include at least one car to be reviewed");
+                _logger.LogError($"ReviewsController || Error! You must include at least one car to be reviewed");
             }
 
             if (reviewForCreate.DriverType != "Novato" && reviewForCreate.DriverType != "Experto") //compruebo que el tipo de conductor es correcto
             {
                 ModelState.AddModelError("DriverType", "Error! DriverType must be 'Novato' or 'Experto'");
+                _logger.LogError($"ReviewsController || Error! DriverType must be 'Novato' or 'Experto'");
             }
 
             var user = _context.ApplicationUser.FirstOrDefault(au => au.UserName == reviewForCreate.UserName); //compruebo que el usuario que compra existe en la base de datos
             if (user == null)
             {
                 ModelState.AddModelError("ReviewApplicationUser", "Error! UserName is not registered");
+                _logger.LogError($"ReviewsController || Error! UserName is not registered'");
             }
 
             if (ModelState.ErrorCount > 0) //si tengo algún error acumulado, devuelve BadRequest
@@ -100,6 +104,7 @@ namespace AppForSEII2526.API.Controllers
                 if (car == null)
                 {
                     ModelState.AddModelError("ReviewItems", $"Error! The car {item.Model} does not exist, so you cannot create a review for this car");
+                    _logger.LogError($"ReviewsController || Error! The car {item.Model} does not exist, so you cannot create a review for this car");
                 }
                 else
                 {
@@ -120,13 +125,14 @@ namespace AppForSEII2526.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);
                 ModelState.AddModelError("Review", $"Error! There was an error while saving your review, plese, try again later");
+                _logger.LogError($"ReviewsController || Error! {ex.Message}");
                 return Conflict("Error" + ex.Message);
             }
 
             var reviewDetail = new ReviewDetailDTO(review.ApplicationUser.Name,review.ApplicationUser.Surname, review.Country, review.DriverType, review.Created, reviewForCreate.ReviewItems);
 
+            _logger.LogInformation($"ReviewsController || La reseña {review.Id} se ha guardado correctamente");
             return CreatedAtAction("Get_Details_Review", new { id = review.Id }, reviewDetail);
         }
     }

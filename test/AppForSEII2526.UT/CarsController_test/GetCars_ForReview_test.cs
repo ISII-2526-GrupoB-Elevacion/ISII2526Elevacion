@@ -78,7 +78,9 @@ namespace AppForSEII2526.UT.CarsController_test
         public async Task GetCarsForReview_OK_test(string? filtroManufacturer, string? filtroFuelType, IList<CarForReviewDTO> expectedCars)
         {
             // Arrange
-            var controller = new CarsController(_context, null);
+            var mock = new Mock<ILogger<CarsController>>();
+            ILogger<CarsController> logger = mock.Object;
+            var controller = new CarsController(_context, logger);
             // Act
             var result = await controller.GetCars_ForReview(filtroManufacturer, filtroFuelType);
             //Assert
