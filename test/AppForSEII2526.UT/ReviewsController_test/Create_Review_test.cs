@@ -103,7 +103,7 @@ namespace AppForSEII2526.UT.ReviewsController_test
         [Fact]
         [Trait("LevelTesting", "Unit Testing")]
         [Trait("Database", "WithoutFixture")]
-        public async Task CreateRental_Success_test()
+        public async Task CreateReview_Success_test()
         {
             // Arrange
             var mock = new Mock<ILogger<ReviewsController>>();

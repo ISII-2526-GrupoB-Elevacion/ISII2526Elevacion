@@ -31,5 +31,17 @@ namespace AppForSEII2526.API.DTOs.PurchaseDTO
             PaymentMethod = paymentMethod;
             PurchaseItems = purchaseItems ?? throw new ArgumentNullException(nameof(PurchaseItems));
         }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is PurchaseForCreateDTO dTO &&
+                   PurchasingPrice == dTO.PurchasingPrice &&
+                   Name == dTO.Name &&
+                   Surname == dTO.Surname &&
+                   UserName == dTO.UserName &&
+                   DeliveryCarDealer == dTO.DeliveryCarDealer &&
+                   PaymentMethod == dTO.PaymentMethod &&
+                   PurchaseItems.SequenceEqual(dTO.PurchaseItems);
+        }
     }
 }
