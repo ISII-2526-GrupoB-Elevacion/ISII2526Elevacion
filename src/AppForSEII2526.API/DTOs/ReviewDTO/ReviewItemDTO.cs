@@ -29,7 +29,7 @@
             Color = color;
             Rating = rating;
             Description = description ?? "No se ha escrito ninguna descripción";
-            FuelType = "fuelType";
+            FuelType = "G/D";
         }
 
         public ReviewItemDTO(string model, string fuelType, string manufacturer, string color, float rating, string? description)
