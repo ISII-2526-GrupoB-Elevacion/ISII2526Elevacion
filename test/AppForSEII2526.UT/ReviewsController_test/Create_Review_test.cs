@@ -21,7 +21,7 @@ namespace AppForSEII2526.UT.ReviewsController_test
 
         public Create_Review_test()
         {
-            var models = new List<Model>
+            var models = new List<Model> //creo una minibase de datos
             {
                 new Model(car1Model),
                 new Model(car2Model)
@@ -33,12 +33,13 @@ namespace AppForSEII2526.UT.ReviewsController_test
                 new Car("Sports","Yellow","A super fast sports car","Lamborghini",160000f,2,1,190f,"4.0L","GLP","Full Service",22,models[1]),
             };
 
-            ApplicationUser user = new ApplicationUser("1", Name, Surname, UserName);
+            ApplicationUser user = new ApplicationUser("1", Name, Surname, UserName); //creo un usuario ficticio
 
+            //creo una review y un reviewItems ficticio
             var review = new Review("Spain", DateTime.Today, "Experto", new List<ReviewItem>(), user);
             var reviewItems = new ReviewItem(1, "Amazing car", 4.5f, review);
 
-            review.ReviewItems.Add(reviewItems);
+            review.ReviewItems.Add(reviewItems); //lo añado todo
 
             _context.Add(user);
             _context.AddRange(models);
@@ -48,7 +49,7 @@ namespace AppForSEII2526.UT.ReviewsController_test
             _context.SaveChanges();
         }
 
-        public static IEnumerable<object[]> TestCasesFor_CreateReviews()
+        public static IEnumerable<object[]> TestCasesFor_CreateReviews() //creo los diferentes casos de prueba para mi caso de uso
         {
             var reviewNoITem = new ReviewForCreateDTO( Name, Surname, UserName,"Spain", "Experto", new List<ReviewItemDTO>());
 
@@ -61,7 +62,7 @@ namespace AppForSEII2526.UT.ReviewsController_test
             var reviewCarNotExist = new ReviewForCreateDTO( Name, Surname, UserName, "Spain","Experto", new List<ReviewItemDTO>() { new ReviewItemDTO("Citroen C15", "Citroen", "Esmeralda", 1f, "Muy malo")});
 
 
-            var allTests = new List<object[]>
+            var allTests = new List<object[]> //si hay algún error, dependiendo del caso de prueba devuelvo distintos errores
             {             //input for create review- Error expected
                 
                 new object[] { reviewNoITem, "Error! You must include at least one car to be reviewed",  },
@@ -114,6 +115,7 @@ namespace AppForSEII2526.UT.ReviewsController_test
             var reviewDTO = new ReviewForCreateDTO(Name, Surname, UserName, "Spain","Experto", new List<ReviewItemDTO>()
                 { new ReviewItemDTO(car2Model, "Lamborghini","Yellow",4.5f,"Muy bueno") });
 
+            //me creo el reviewDetail esperado
             var expectedReviewDetailDTO = new ReviewDetailDTO(Name, Surname, "Spain", "Experto", DateTime.Today,
                 new List<ReviewItemDTO> { new ReviewItemDTO(car2Model, "Lamborghini", "Yellow", 4.5f, "Muy bueno") });
 
@@ -125,6 +127,7 @@ namespace AppForSEII2526.UT.ReviewsController_test
             var createdResult = Assert.IsType<CreatedAtActionResult>(result);
             var actualReviewDetailDTO = Assert.IsType<ReviewDetailDTO>(createdResult.Value);
 
+            //lo comparo con el actual
             Assert.Equal(expectedReviewDetailDTO, actualReviewDetailDTO);
 
         }

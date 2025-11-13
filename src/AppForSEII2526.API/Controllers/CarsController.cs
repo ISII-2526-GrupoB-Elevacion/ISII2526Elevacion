@@ -23,6 +23,9 @@ namespace AppForSEII2526.API.Controllers
             _logger.LogInformation("Controller 'CarsController' inicializado");
         }
 
+        /*si no se le pasan parámetros imprime todos los coches, si se la pasa uno imprime aquellos
+        que cumplan con el requisito, igual que cuando se le pasan 2 parámetros*/
+
         [HttpGet]
         [Route("[action]")]
         [ProducesResponseType(typeof(IList<CarForPurchaseDTO>), (int)HttpStatusCode.OK)]

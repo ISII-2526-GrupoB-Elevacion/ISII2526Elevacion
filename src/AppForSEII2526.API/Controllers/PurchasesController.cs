@@ -25,13 +25,13 @@ namespace AppForSEII2526.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<ActionResult> Get_Details_Purchase(int id)
         {
-            if (_context.Purchase == null)
+            if (_context.Purchase == null) //si no existe la tabla purchase devuelve error NotFound()
             {
                 _logger.LogError("PurchasesController || Error: Purchase table does not exist");
                 return NotFound();
             }
 
-            var purchase = await _context.Purchase
+            var purchase = await _context.Purchase //si existe purchase, se va haciendo joins entre distintas tablas hasta juntar e imprimir todos los atributos necesarios
              .Where(p => p.Id == id)
                  .Include(p => p.ApplicationUser) //join table ApplicationUser
                  .Include(p => p.PurchaseItems) //join table PurchaseItem
@@ -42,7 +42,7 @@ namespace AppForSEII2526.API.Controllers
              .FirstOrDefaultAsync();
 
 
-            if (purchase == null)
+            if (purchase == null) //si no he obtenido ninguna compra con el id que le he pasado, entonces devuelve error NotFound()
             {
                 _logger.LogError($"PurchasesController || Error: Purchase with id {id} does not exist");
                 return NotFound();
@@ -77,9 +77,9 @@ namespace AppForSEII2526.API.Controllers
                 return BadRequest(new ValidationProblemDetails(ModelState));
             }
 
-            var purchaseCars = purchaseForCreate.PurchaseItems.Select(pi => pi.Model).ToList<string>();
+            var purchaseCars = purchaseForCreate.PurchaseItems.Select(pi => pi.Model).ToList<string>(); //saco todos los modelos de los coches que he pedido para comprar
 
-            var cars = _context.Car.Include(c => c.PurchaseItems)
+            var cars = _context.Car.Include(c => c.PurchaseItems) //cojo de la tabla coche los atributos necesarios de filas que ya están añadidas para después llevar a cabo distintas comprobaciones de compatibilidad a la hora de comprobar la posibilidad de añadir una nueva compra a la tabla Purchase
                 .ThenInclude(pi => pi.Purchase)
                 .Include(c => c.Model)
                 .Where(c => purchaseCars.Contains(c.Model.Name))
@@ -89,28 +89,28 @@ namespace AppForSEII2526.API.Controllers
                     c.Model.Name,
                     c.QuantityForPurchasing,
                     c.PurchasingPrice,
-                    NumberOfPurchaseItems = c.PurchaseItems.Sum(pi => pi.Quantity)
+                    NumberOfPurchaseItems = c.PurchaseItems.Sum(pi => pi.Quantity) //nº de coches que ya están vendidos del conjunto disponible para la compra
                 })
                 .ToList();
 
-            Purchase purchase = new Purchase(purchaseForCreate.DeliveryCarDealer, purchaseForCreate.PaymentMethod, DateTime.Today, new List<PurchaseItem>(), user);
-            purchase.PurchasingPrice = 0;
+            Purchase purchase = new Purchase(purchaseForCreate.DeliveryCarDealer, purchaseForCreate.PaymentMethod, DateTime.Today, new List<PurchaseItem>(), user); //creo la compra según los parámetros del DTO que le he pasado al método
+            purchase.PurchasingPrice = 0; //establezco el precio de la compra a 0, porque luego ese precio lo voy a ir calculando más abajo, es decir no se va a quedar así
 
             foreach (var item in purchaseForCreate.PurchaseItems)
             {
-                var car = cars.FirstOrDefault(c => c.Name == item.Model);
+                var car = cars.FirstOrDefault(c => c.Name == item.Model); //saco el modelo de coche que he pedido para comprar
 
-                if (car == null)
+                if (car == null) //si el modelo que he pedido no existe, añado un error
                 {
                     ModelState.AddModelError("PurchaseItems", $"Error! The car {item.Model} is not for sale at the dealership");
                     _logger.LogError($"PurchasesController || Error! The car {item.Model} is not for sale at the dealership");
                 }
-                else if ((car.NumberOfPurchaseItems + item.Quantity) > car.QuantityForPurchasing)
+                else if ((car.NumberOfPurchaseItems + item.Quantity) > car.QuantityForPurchasing) //si el nº de coches que ya están vendidos más los que yo quiero comprar superan las cantidades de aquellos que hay disponibles para comprar, devuelve un error. Es decir compruebo el Stock
                 {
                     ModelState.AddModelError("PurchaseItems", $"Error! There are not enough units available to purchase the car {item.Model}");
                     _logger.LogError($"PurchasesController || Error! There are not enough units available to purchase the car {item.Model}");
                 }
-                else
+                else //una vez todos los criterios han sido cumplidos, acabo de rellenar la compra con los atributos necesarios y voy calculando el precio total de la compra según los atributos de la tabla coche. Multiplico el precio de un coche por la cantidad de coches que quiero comprar
                 {
                     purchase.PurchaseItems.Add(new PurchaseItem(car.Id, item.Quantity, purchase));
                     item.PurchasingPrice = car.PurchasingPrice;
@@ -118,29 +118,29 @@ namespace AppForSEII2526.API.Controllers
                 }
             }
 
-            if (ModelState.ErrorCount > 0)
+            if (ModelState.ErrorCount > 0) //si tengo algún error acumulado devuelvo error BadRequest()
             {
                 return BadRequest(new ValidationProblemDetails(ModelState));
             }
 
-            _context.Add(purchase);
+            _context.Add(purchase); //añado la propia compra a la base de datos del programa
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(); //guardo los cambios
             }
             catch (Exception ex)
             {
                 ModelState.AddModelError("Purchase", $"Error! There was an error while saving your purchase, plese, try again later");
                 _logger.LogError($"PurchasesController || Error! {ex.Message}");
-                return Conflict("Error" + ex.Message);
+                return Conflict("Error" + ex.Message); //si ocurrió algún error inesperado, devuelvo un error Conflict()
             }
 
             var purchaseDetail = new PurchaseDetailDTO(purchase.ApplicationUser.Name, purchase.ApplicationUser.Surname, purchase.DeliveryCarDealer, purchase.PurchasingDate,
-                purchase.PurchasingPrice, purchaseForCreate.PurchaseItems);
+                purchase.PurchasingPrice, purchaseForCreate.PurchaseItems); //monto los detalles de la compra que acabo de realizar para posteriormente mostrarlos al cliente
 
             _logger.LogInformation($"PurchasesController || La compra {purchase.Id} se ha realizado correctamente");
-            return CreatedAtAction("Get_Details_Purchase", new { id = purchase.Id }, purchaseDetail);
+            return CreatedAtAction("Get_Details_Purchase", new { id = purchase.Id }, purchaseDetail); //devuelvo un return de CreatedAction indicando al usuario que el coche ya ha sido creado, a la misma vez que paso la referencia de la compra (id.) al método de detalles a la vez que la propia información que tienen que sacar por pantalla
         }
     }
 }

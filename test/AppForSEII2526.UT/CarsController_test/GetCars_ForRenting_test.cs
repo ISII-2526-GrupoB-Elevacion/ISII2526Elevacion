@@ -13,7 +13,7 @@ namespace AppForSEII2526.UT.CarsController_test
     {
         public GetCars_ForRenting_test()
         {
-            var models = new List<Model>
+            var models = new List<Model> //creo una lista de modelos
             {
                 new Model("Citroen c15"),
                 new Model("Ford F150"),
@@ -21,7 +21,7 @@ namespace AppForSEII2526.UT.CarsController_test
                 new Model("Peugot 305")
             };
 
-            var cars = new List<Car>
+            var cars = new List<Car> //creo la lista de coches con los respectivos modelos
             {
                 new Car("Furgoneta", "Blanco", "La furgoneta", "Citroen", 5000f, 10, 5, 50f, "1.4L", "Gasolina", "Oil Change", 16, models[0]),
                 new Car("Pickup", "Azul", "Pickup de gran capacidad", "Ford", 15000f, 8, 3, 80f, "3.5L", "Diesel", "Tire Rotation", 20, models[1]),
@@ -29,13 +29,13 @@ namespace AppForSEII2526.UT.CarsController_test
                 new Car("Compacto", "Negro", "Coche compacto para ciudad", "Peugot", 8000f, 12, 6, 40f, "1.2L", "Gasolina", "Brake Inspection", 15, models[3])
             };
 
-            ApplicationUser user = new ApplicationUser("1","Elena", "Navarro Martinez","elena@navarro");
+            ApplicationUser user = new ApplicationUser("1","Elena", "Navarro Martinez","elena@navarro"); //creo un usuario
 
-            var rental = new Rental("Madrid Center", DateTime.Today.AddDays(7), Rental.RentalPaymentMethodEnum.Visa, DateTime.Today, DateTime.Today.AddDays(1), new List<RentalItem>(),user);
+            var rental = new Rental("Madrid Center", DateTime.Today.AddDays(7), Rental.RentalPaymentMethodEnum.Visa, DateTime.Today, DateTime.Today.AddDays(1), new List<RentalItem>(),user); //creo un alquiler
             var rentalItems = new RentalItem(1,1,rental);
             rental.RentalItems.Add(rentalItems);
 
-            _context.Add(user);
+            _context.Add(user); //añado todo a la base de datos ficticia
             _context.AddRange(models);
             _context.AddRange(cars);
             _context.Add(rental);
@@ -45,19 +45,20 @@ namespace AppForSEII2526.UT.CarsController_test
         public static IEnumerable<object[]> TestCasesFor_GetCarsForRental_OK()
         {
 
-            var carDTOs = new List<CarForRentalDTO>() {
+            var carDTOs = new List<CarForRentalDTO>() { //creo los dtos que me tiene que devolver
                 new CarForRentalDTO(1,"Citroen c15","Gasolina","Citroen",50f,"Blanco"),
                 new CarForRentalDTO(2,"Ford F150","Diesel","Ford",80f,"Azul"),
                 new CarForRentalDTO(3,"Ferrari laFerrari","Gasolina","Ferrari",200f,"Rojo"),
                 new CarForRentalDTO(4,"Peugot 305","Gasolina","Peugot",40f,"Negro")
             };
 
+            //datos de retorno de los casos de prueba
             var carDTOsTC1 = new List<CarForRentalDTO>() { carDTOs[0], carDTOs[1], carDTOs[2], carDTOs[3] };
             var carDTOsTC2 = new List<CarForRentalDTO>() { carDTOs[2] };
             var carDTOsTC3 = new List<CarForRentalDTO>() { carDTOs[0], carDTOs[3] };
             var carDTOsTC4 = new List<CarForRentalDTO>() { carDTOs[1] };
 
-            var allTests = new List<object[]>
+            var allTests = new List<object[]> //creo las distintas pruebas
             {             
                 new object[] { null, null, carDTOsTC1,  },
                 new object[] { "Ferrari laFerrari", null,  carDTOsTC2, },
@@ -81,14 +82,14 @@ namespace AppForSEII2526.UT.CarsController_test
             var controller = new CarsController(_context, logger);
 
             // Act
-            var result = await controller.GetCars_ForRenting(filtroModel,filtroRentingprice);
+            var result = await controller.GetCars_ForRenting(filtroModel,filtroRentingprice); //realizo todas las pruebas con los distintos filtros
 
             //Assert
             //we check that the response type is OK 
             var okResult = Assert.IsType<OkObjectResult>(result);
             //and obtain the list of cars
             var carDTOsActual = Assert.IsType<List<CarForRentalDTO>>(okResult.Value);
-            Assert.Equal(expectedCars, carDTOsActual);
+            Assert.Equal(expectedCars, carDTOsActual); //compruebo si los datos de las pruebas son iguales a los esperados
 
         }
     }

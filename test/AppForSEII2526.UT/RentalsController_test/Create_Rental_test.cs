@@ -22,32 +22,32 @@ namespace AppForSEII2526.UT.RentalsController_test
 
         public Create_Rental_test()
         {
-            var models = new List<Model>
+            var models = new List<Model> //creo los distintos modelos
             {
                 new Model(car1Model),
                 new Model(car2Model)
             };
 
-            var cars = new List<Car>
+            var cars = new List<Car> //creo la lista de coches de los distintos modelos
             {
                 new Car("Furgoneta", "Blanco", "La furgoneta", "Citroen", 5000f, 10, 1, 50f, "1.4L", "Gasolina", "Oil Change", 16, models[0]),
                 new Car("Pickup", "Azul", "Pickup de gran capacidad", "Ford", 15000f, 8, 3, 80f, "3.5L", "Diesel", "Tire Rotation", 20, models[1])
             };
 
-            ApplicationUser user = new ApplicationUser("1", Name, Surname, UserName);
+            ApplicationUser user = new ApplicationUser("1", Name, Surname, UserName); //creo un usuario ficticio
 
-            var rental = new Rental(DeliveryCarDealer, DateTime.Today.AddDays(7), Rental.RentalPaymentMethodEnum.Visa, DateTime.Today.AddDays(1), DateTime.Today, new List<RentalItem>(), user);
+            var rental = new Rental(DeliveryCarDealer, DateTime.Today.AddDays(7), Rental.RentalPaymentMethodEnum.Visa, DateTime.Today.AddDays(1), DateTime.Today, new List<RentalItem>(), user); //creo un alquiler asociado al usuario
             var rentalItems = new RentalItem(1, 1, rental);
             rental.RentalItems.Add(rentalItems);
 
-            _context.Add(user);
+            _context.Add(user); //añado todo a la base de datos ficticia
             _context.AddRange(models);
             _context.AddRange(cars);
             _context.Add(rental);
             _context.SaveChanges();
         }
 
-        public static IEnumerable<object[]> TestCasesFor_CreateRentals()
+        public static IEnumerable<object[]> TestCasesFor_CreateRentals() //creo los distintos casos de prueba y los añado a una lista
         {
             var rentalNoITem = new RentalForCreateDTO(UserName, Name, Surname,
                 DeliveryCarDealer, Rental.RentalPaymentMethodEnum.Visa,
@@ -74,7 +74,7 @@ namespace AppForSEII2526.UT.RentalsController_test
                 new List<RentalItemDTO>() { new RentalItemDTO(car1Model, "Citroen",0f,1) });
 
 
-            var allTests = new List<object[]>
+            var allTests = new List<object[]> //añado las respectivas pruebas a una lista con sus respectivos errores
             {             //input for create rental- Error expected
                 
                 new object[] { rentalNoITem, "Error! You must include at least one car to be rented",  },
@@ -100,17 +100,17 @@ namespace AppForSEII2526.UT.RentalsController_test
             var controller = new RentalsController(_context, logger);
 
             // Act
-            var result = await controller.Create_Rental(rentalDTO);
+            var result = await controller.Create_Rental(rentalDTO); //intento crear el alquiler
 
             //Assert
             //we check that the response type is BadRequest and obtain the error returned
             var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
             var problemDetails = Assert.IsType<ValidationProblemDetails>(badRequestResult.Value);
 
-            var errorActual = problemDetails.Errors.First().Value[0];
+            var errorActual = problemDetails.Errors.First().Value[0]; //obtengo los datos del error
 
             //we check that the expected error message and actual are the same
-            Assert.StartsWith(errorExpected, errorActual);
+            Assert.StartsWith(errorExpected, errorActual); //compruebo si el error saliente es igual al error esperado
 
         }
 
@@ -128,24 +128,24 @@ namespace AppForSEII2526.UT.RentalsController_test
             DateTime from = DateTime.Today.AddDays(6);
             DateTime  to= DateTime.Today.AddDays(7);
 
-            var rentalDTO = new RentalForCreateDTO(UserName, Name,Surname,
+            var rentalDTO = new RentalForCreateDTO(UserName, Name,Surname, //me creo el alquiler a probar
                 DeliveryCarDealer, Rental.RentalPaymentMethodEnum.Visa,
                 from, to, from, 0f, new List<RentalItemDTO>()
                 { new RentalItemDTO(car2Model, "Ford", 0f, 1) });
 
-            var expectedrentalDetailDTO = new RentalDetailDTO(Name,Surname,DeliveryCarDealer,
+            var expectedrentalDetailDTO = new RentalDetailDTO(Name,Surname,DeliveryCarDealer, //creo el detalle esperado con respecto al alquiler
                 Rental.RentalPaymentMethodEnum.Visa,from,to,from,80f,
                 new List<RentalItemDTO> { new RentalItemDTO(car2Model, "Ford", 80f, 1) });
 
             // Act
-            var result = await controller.Create_Rental(rentalDTO);
+            var result = await controller.Create_Rental(rentalDTO); //creo el alquiler
 
             //Assert
             //we check that the response type is BadRequest and obtain the error returned
             var createdResult = Assert.IsType<CreatedAtActionResult>(result);
-            var actualRentalDetailDTO = Assert.IsType<RentalDetailDTO>(createdResult.Value);
+            var actualRentalDetailDTO = Assert.IsType<RentalDetailDTO>(createdResult.Value); //obtengo el detalle resultante
 
-            Assert.Equal(expectedrentalDetailDTO, actualRentalDetailDTO);
+            Assert.Equal(expectedrentalDetailDTO, actualRentalDetailDTO); //compruebo si el detalle esperado es igual al detalle obtenido
 
         }
     }
