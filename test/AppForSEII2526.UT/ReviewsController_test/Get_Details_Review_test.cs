@@ -12,7 +12,7 @@ namespace AppForSEII2526.UT.ReviewsController_test
     {
         public Get_Details_Review_test()
         {
-            var models = new List<Model>()
+            var models = new List<Model>() //me creo una minibase de datos
             {
                 new Model("Ferrari La Ferrari"),
                 new Model("Lamborghini Aventador"),
@@ -24,16 +24,16 @@ namespace AppForSEII2526.UT.ReviewsController_test
                 new Car("Sports","Yellow","A super fast sports car","Lamborghini",160000f,2,1,190f,"4.0L","GLP","Full Service",22,models[1]),
             };
 
-            ApplicationUser user = new ApplicationUser("1", "Elena", "Navarro Martinez", "elena@uclm.es");
+            ApplicationUser user = new ApplicationUser("1", "Elena", "Navarro Martinez", "elena@uclm.es"); //creo un usuario ficticio
 
-            var review = new Review("Spain", DateTime.Today, "Experto", new List<ReviewItem>(), user);
+            var review = new Review("Spain", DateTime.Today, "Experto", new List<ReviewItem>(), user); //creo una review y una reviewItem ficticia
             var reviewItems = new ReviewItem(1, "Amazing car", 4.5f, review);
 
 
 
             review.ReviewItems.Add(reviewItems);
 
-            _context.Add(user);
+            _context.Add(user); //los añado a la base de datos
             _context.AddRange(models);
             _context.AddRange(car);
             _context.Add(review);
@@ -71,7 +71,7 @@ namespace AppForSEII2526.UT.ReviewsController_test
             ILogger<ReviewsController> logger = mock.Object;
             var controller = new ReviewsController(_context, logger);
 
-
+            //me creo la review esperada
             var expectedReview = new ReviewDetailDTO("Elena", "Navarro Martinez", "Spain", "Experto", DateTime.Today, new List<ReviewItemDTO>());
             expectedReview.ReviewItems.Add(new ReviewItemDTO("Ferrari La Ferrari", "Ferrari", "Red", 4.5f, "Amazing car"));
 
@@ -83,7 +83,8 @@ namespace AppForSEII2526.UT.ReviewsController_test
             var okResult = Assert.IsType<OkObjectResult>(result);
             var reviewDTOActual = Assert.IsType<ReviewDetailDTO>(okResult.Value);
             var eq = expectedReview.Equals(reviewDTOActual);
-            //we check that the expected and actual are the same
+
+            //compruebo que la esperada y la actual sean la misma
             Assert.Equal(expectedReview, reviewDTOActual);
 
         }

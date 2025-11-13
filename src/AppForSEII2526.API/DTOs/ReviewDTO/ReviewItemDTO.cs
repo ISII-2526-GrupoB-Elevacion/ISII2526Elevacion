@@ -22,6 +22,10 @@
 
         public ReviewItemDTO() { }
 
+
+        /*Aquí hay 2 constructores porque uno es para el post y otro es para el detail,
+        como el detail no tiene que imprimir el fueltype, se pone como campo por defecto "G/D" y
+        no se le pasa ningún string relacionado con esto*/
         public ReviewItemDTO(string model, string manufacturer, string color, float rating, string? description)
         {
             Model = model;

@@ -25,13 +25,13 @@ namespace AppForSEII2526.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<ActionResult> Get_Details_Review(int id)
         {
-            if (_context.Review == null)
+            if (_context.Review == null) //si no encuentra la tabla Review lanzo un error
             {
                 _logger.LogError("ReviewsController || Error: Review table does not exist");
                 return NotFound();
             }
 
-            var review = await _context.Review
+            var review = await _context.Review //voy haciendo joins hasta tener todos los datos que se me piden
              .Where(p => p.Id == id)
                  .Include(p => p.ApplicationUser) //join table ApplicationUser
                  .Include(p => p.ReviewItems) //join table ReviewItem
@@ -42,7 +42,7 @@ namespace AppForSEII2526.API.Controllers
              .FirstOrDefaultAsync();
 
 
-            if (review == null)
+            if (review == null) //si el id que le paso no corresponde a ninguna review lanzo un error
             {
                 _logger.LogError($"ReviewsController || Error: Review with id {id} does not exist");
                 return NotFound();
@@ -72,7 +72,7 @@ namespace AppForSEII2526.API.Controllers
             }
 
             var user = _context.ApplicationUser.FirstOrDefault(au => au.UserName == reviewForCreate.UserName); //compruebo que el usuario que compra existe en la base de datos
-            if (user == null)
+            if (user == null) //si el usuario no existe lanzo un error
             {
                 ModelState.AddModelError("ReviewApplicationUser", "Error! UserName is not registered");
                 _logger.LogError($"ReviewsController || Error! UserName is not registered'");
@@ -83,9 +83,9 @@ namespace AppForSEII2526.API.Controllers
                 return BadRequest(new ValidationProblemDetails(ModelState));
             }
 
-            var reviewCars = reviewForCreate.ReviewItems.Select(pi => pi.Model).ToList<string>();
+            var reviewCars = reviewForCreate.ReviewItems.Select(pi => pi.Model).ToList<string>(); //hago una lista con los modelos de los coches que le he pasado
 
-            var cars = _context.Car
+            var cars = _context.Car //me saca los coches con los datos que se me han pedido
                 .Include(c => c.Model)
                 .Where(c => reviewCars.Contains(c.Model.Name))
                 .Select(c => new
@@ -95,29 +95,29 @@ namespace AppForSEII2526.API.Controllers
                 })
                 .ToList();
 
-            Review review = new Review(reviewForCreate.Country, DateTime.Today,reviewForCreate.DriverType, new List<ReviewItem>(), user);
+            Review review = new Review(reviewForCreate.Country, DateTime.Today,reviewForCreate.DriverType, new List<ReviewItem>(), user); //creo una nueva review
 
             foreach (var item in reviewForCreate.ReviewItems)
             {
-                var car = cars.FirstOrDefault(c => c.Name == item.Model);
+                var car = cars.FirstOrDefault(c => c.Name == item.Model); //saco el primer coche que me encuentra, sacando su nombre y modelo
 
-                if (car == null)
+                if (car == null) //si el nombre o modelo no existen me salta un error
                 {
                     ModelState.AddModelError("ReviewItems", $"Error! The car {item.Model} does not exist, so you cannot create a review for this car");
                     _logger.LogError($"ReviewsController || Error! The car {item.Model} does not exist, so you cannot create a review for this car");
                 }
                 else
                 {
-                    review.ReviewItems.Add(new ReviewItem(car.Id, item.Description, item.Rating, review));
+                    review.ReviewItems.Add(new ReviewItem(car.Id, item.Description, item.Rating, review)); //si todo es correcto, añade a reviewItems una nueva reviewItem
                 }
             }
 
-            if (ModelState.ErrorCount > 0)
+            if (ModelState.ErrorCount > 0) //si tiene algún error finaliza
             {
                 return BadRequest(new ValidationProblemDetails(ModelState));
             }
 
-            _context.Add(review);
+            _context.Add(review); //añade a la base de datos la review
 
             try
             {

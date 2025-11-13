@@ -23,6 +23,9 @@ namespace AppForSEII2526.API.DTOs.PurchaseDTO
 
         }
 
+        /*Aquí hay 2 constructores porque uno es para el post y otro es para el detail,
+        como el detail no tiene que imprimir la descripción, se pone como campo por defecto "description" y
+        no se le pasa ningún string relacionado con esto*/
         public PurchaseItemDTO(string model, int quantity, float purchasingPrice, string color)
         {
             Model = model;
