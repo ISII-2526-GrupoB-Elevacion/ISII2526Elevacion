@@ -2,6 +2,7 @@
 using AppForSEII2526.API.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace AppForSEII2526.API.Controllers
 {
@@ -109,6 +110,10 @@ namespace AppForSEII2526.API.Controllers
                 {
                     ModelState.AddModelError("PurchaseItems", $"Error! There are not enough units available to purchase the car {item.Model}");
                     _logger.LogError($"PurchasesController || Error! There are not enough units available to purchase the car {item.Model}");
+                }
+                else if (item.Quantity==2)
+                {
+                    ModelState.AddModelError("Purchase Items", $"Error! Estás comprando demasiados coches sin descripción");
                 }
                 else //una vez todos los criterios han sido cumplidos, acabo de rellenar la compra con los atributos necesarios y voy calculando el precio total de la compra según los atributos de la tabla coche. Multiplico el precio de un coche por la cantidad de coches que quiero comprar
                 {

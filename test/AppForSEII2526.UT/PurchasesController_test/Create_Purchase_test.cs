@@ -60,6 +60,8 @@ namespace AppForSEII2526.UT.PurchasesController_test
 
             var purchaseCarNotAvailable = new PurchaseForCreateDTO(0f, Name, Surname, UserName, DeliveryCarDealer, Purchase.PurchasePaymentMethodEnum.Visa, new List<PurchaseItemDTO>() { new PurchaseItemDTO(car1Model, 1, 0f, "Negro") }); //le paso un dto para un coche del que no quedan unidades para comprar
 
+            var purchaseTooManyCars = new PurchaseForCreateDTO(0f, Name, Surname, UserName, DeliveryCarDealer, Purchase.PurchasePaymentMethodEnum.Visa, new List<PurchaseItemDTO> { new PurchaseItemDTO(car2Model, 0f, "Blanco", 2, "Muy bonito") });
+
             var allTests = new List<object[]> //errores esperados para cada entrada de las anteriores, PUESTOS EN ORDEN
             {             //input for create purchase- Error expected
                 
@@ -67,6 +69,7 @@ namespace AppForSEII2526.UT.PurchasesController_test
                 new object[] { purchaseApplicationUser, "Error! UserName is not registered", },
                 new object[] { purchaseCarNotExists, "Error! The car Ferrari La Ferrari is not for sale at the dealership", },
                 new object[] { purchaseCarNotAvailable, "Error! There are not enough units available to purchase the car Audi A4", },
+                new object[] { purchaseTooManyCars, "Error! Estás comprando demasiados coches sin descripción", },
             };
 
             return allTests;
