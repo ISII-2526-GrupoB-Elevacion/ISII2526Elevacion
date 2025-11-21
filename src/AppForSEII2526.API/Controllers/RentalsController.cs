@@ -71,6 +71,12 @@ namespace AppForSEII2526.API.Controllers
                 ModelState.AddModelError("RentalItems", "Error! You must include at least one car to be rented");
                 _logger.LogError($"RentalsController || Error! You must include at least one car to be rented");
 
+            if (!rentalForCreate.DeliveryCarDealer.Contains("Calle"))
+            {
+                ModelState.AddModelError("DeliveryCarDealer", "Error! La dirección de envío debe empezar por la palabra Calle");
+                _logger.LogError($"RentalsController || Error! La dirección de envío debe empezar por la palabra Calle");
+            }
+
             //if (!_context.ApplicationUser.Any(au=>au.UserName == rentalFromCreate.CustomerUserName)) Es lo mismo que lo de abajo pero de otra forma
             var user = _context.ApplicationUser.FirstOrDefault(au => au.UserName == rentalForCreate.UserName);
             if (user == null) //compruebo si el usuario existe

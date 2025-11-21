@@ -14,7 +14,7 @@ namespace AppForSEII2526.UT.RentalsController_test
         private const string UserName = "elena@navarro";
         private const string Name = "Elena";
         private const string Surname = "Navarro Martinez";
-        private const string DeliveryCarDealer = "Madrid Center";
+        private const string DeliveryCarDealer = "Calle Madrid";
 
         private const string car1Model = "Citroen c15";
         private const string car2Model = "Ford F150";
@@ -68,6 +68,10 @@ namespace AppForSEII2526.UT.RentalsController_test
                 DeliveryCarDealer, Rental.RentalPaymentMethodEnum.Visa,
                 DateTime.Today.AddDays(2), DateTime.Today.AddDays(4),DateTime.Today.AddDays(3),0f, rentalItems);
 
+            var BadDirection = new RentalForCreateDTO(UserName, Name, Surname,
+                "Madrid Center", Rental.RentalPaymentMethodEnum.Visa,
+                DateTime.Today.AddDays(2), DateTime.Today.AddDays(4), DateTime.Today.AddDays(3), 0f, rentalItems);
+
             var rentalCarNotAvailable = new RentalForCreateDTO(UserName, Name,Surname,
                 DeliveryCarDealer, Rental.RentalPaymentMethodEnum.Visa,
                 DateTime.Today.AddDays(2), DateTime.Today.AddDays(5),DateTime.Today.AddDays(3),0f,
@@ -81,6 +85,7 @@ namespace AppForSEII2526.UT.RentalsController_test
                 new object[] { rentalFromBeforeToday, "Error! Your rental date must start later than today", },
                 new object[] { rentalToBeforeFrom, "Error! Your rental must end later than it starts", },
                 new object[] { RentalApplicationUser, "Error! UserName is not registered", },
+                new object [] { BadDirection, "Error! La dirección de envío debe empezar por la palabra Calle", },
                 new object[] { rentalCarNotAvailable, "Error! Car 'Citroen c15' is not available for being rented from", },
             };
 
