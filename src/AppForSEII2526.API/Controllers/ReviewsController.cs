@@ -70,7 +70,6 @@ namespace AppForSEII2526.API.Controllers
                 ModelState.AddModelError("DriverType", "Error! DriverType must be 'Novato' or 'Experto'");
                 _logger.LogError($"ReviewsController || Error! DriverType must be 'Novato' or 'Experto'");
             }
-
             var user = _context.ApplicationUser.FirstOrDefault(au => au.UserName == reviewForCreate.UserName); //compruebo que el usuario que compra existe en la base de datos
             if (user == null) //si el usuario no existe lanzo un error
             {
@@ -82,6 +81,7 @@ namespace AppForSEII2526.API.Controllers
             {
                 return BadRequest(new ValidationProblemDetails(ModelState));
             }
+
 
             var reviewCars = reviewForCreate.ReviewItems.Select(pi => pi.Model).ToList<string>(); //hago una lista con los modelos de los coches que le he pasado
 
@@ -95,12 +95,20 @@ namespace AppForSEII2526.API.Controllers
                 })
                 .ToList();
 
-            Review review = new Review(reviewForCreate.Country, DateTime.Today,reviewForCreate.DriverType, new List<ReviewItem>(), user); //creo una nueva review
+            Review review = new Review(reviewForCreate.Country, DateTime.Today,reviewForCreate.DriverType,   new List<ReviewItem>(), user); //creo una nueva review
 
             foreach (var item in reviewForCreate.ReviewItems)
             {
+
+                if (item.Description != null && !item.Description.StartsWith("Reseña para"))
+                {
+                    ModelState.AddModelError("ReviewNoValid", $"Error! La reseña debe empezar por 'Reseña para'");
+                    _logger.LogError($"ReviewsController || Error! Reseña must start with 'Reseña para'");
+                }
                 var car = cars.FirstOrDefault(c => c.Name == item.Model); //saco el primer coche que me encuentra, sacando su nombre y modelo
 
+                
+                
                 if (car == null) //si el nombre o modelo no existen me salta un error
                 {
                     ModelState.AddModelError("ReviewItems", $"Error! The car {item.Model} does not exist, so you cannot create a review for this car");

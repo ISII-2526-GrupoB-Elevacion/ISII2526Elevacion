@@ -53,13 +53,15 @@ namespace AppForSEII2526.UT.ReviewsController_test
         {
             var reviewNoITem = new ReviewForCreateDTO( Name, Surname, UserName,"Spain", "Experto", new List<ReviewItemDTO>());
 
-            var reviewItems = new List<ReviewItemDTO>() { new ReviewItemDTO(car2Model, "Lamborghini","Yellow",4.5f,"Muy bueno") };
+            var reviewItems = new List<ReviewItemDTO>() { new ReviewItemDTO(car2Model, "Lamborghini","Yellow",4.5f,"Reseña para") };
 
             var reviewDriverType = new ReviewForCreateDTO( Name, Surname, UserName,"Spain","Sin Carnet", reviewItems);
 
             var ReviewApplicationUser = new ReviewForCreateDTO( Name, Surname, "victor@lopez","Spain","Experto", reviewItems);
 
-            var reviewCarNotExist = new ReviewForCreateDTO( Name, Surname, UserName, "Spain","Experto", new List<ReviewItemDTO>() { new ReviewItemDTO("Citroen C15", "Citroen", "Esmeralda", 1f, "Muy malo")});
+            var ReviewNoValid = new ReviewForCreateDTO(Name, Surname, UserName, "Spain", "Experto", new List<ReviewItemDTO>() { new ReviewItemDTO("Ferrari La Ferrari", "Ferrari", "Red", 1f, "Hola") });
+
+            var reviewCarNotExist = new ReviewForCreateDTO( Name, Surname, UserName, "Spain","Experto", new List<ReviewItemDTO>() { new ReviewItemDTO("Citroen C15", "Citroen", "Esmeralda", 1f,"Reseña para")});
 
 
             var allTests = new List<object[]> //si hay algún error, dependiendo del caso de prueba devuelvo distintos errores
@@ -68,6 +70,7 @@ namespace AppForSEII2526.UT.ReviewsController_test
                 new object[] { reviewNoITem, "Error! You must include at least one car to be reviewed",  },
                 new object[] { reviewDriverType, "Error! DriverType must be 'Novato' or 'Experto'", },
                 new object[] { ReviewApplicationUser, "Error! UserName is not registered", },
+                new object[] { ReviewNoValid, "Error! La reseña debe empezar por 'Reseña para'", },
                 new object[] { reviewCarNotExist, "Error! The car Citroen C15 does not exist, so you cannot create a review for this car", },
             };
 
@@ -113,11 +116,11 @@ namespace AppForSEII2526.UT.ReviewsController_test
             var controller = new ReviewsController(_context, logger);
 
             var reviewDTO = new ReviewForCreateDTO(Name, Surname, UserName, "Spain","Experto", new List<ReviewItemDTO>()
-                { new ReviewItemDTO(car2Model, "Lamborghini","Yellow",4.5f,"Muy bueno") });
+                { new ReviewItemDTO(car2Model, "Lamborghini","Yellow",4.5f,"Reseña para") });
 
             //me creo el reviewDetail esperado
             var expectedReviewDetailDTO = new ReviewDetailDTO(Name, Surname, "Spain", "Experto", DateTime.Today,
-                new List<ReviewItemDTO> { new ReviewItemDTO(car2Model, "Lamborghini", "Yellow", 4.5f, "Muy bueno") });
+                new List<ReviewItemDTO> { new ReviewItemDTO(car2Model, "Lamborghini", "Yellow", 4.5f, "Reseña para") });
 
             // Act
             var result = await controller.Create_Review(reviewDTO);
