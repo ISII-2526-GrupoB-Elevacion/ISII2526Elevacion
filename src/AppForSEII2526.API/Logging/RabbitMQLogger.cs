@@ -26,10 +26,7 @@ public class RabbitMQLogger : ILogger, IDisposable
 
         var factory = new ConnectionFactory
         {
-            HostName = _config.HostName,
-            Port = _config.Port,
-            UserName = _config.UserName,
-            Password = _config.Password
+            Uri = new Uri("amqps://mbvuwsnz:4VsBT34qVIqujenBv56GIajrFlZ45Nm0@ostrich.lmq.cloudamqp.com/mbvuwsnz")
         };
 
         _connection = factory.CreateConnection();
