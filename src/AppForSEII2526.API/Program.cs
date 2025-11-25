@@ -69,7 +69,7 @@ builder.Services.AddSwaggerGen(options => {
 
 });
 
-builder.Logging.AddRabbitMQ(builder.Configuration.GetSection("RabbitMQ"));
+//builder.Logging.AddRabbitMQ(builder.Configuration.GetSection("RabbitMQ"));
 
 
 var app = builder.Build();
