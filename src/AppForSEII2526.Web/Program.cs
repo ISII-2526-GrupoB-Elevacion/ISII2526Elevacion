@@ -1,9 +1,10 @@
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using AppForSEII2526.Web.Components;
 using AppForSEII2526.Web.Components.Account;
 using AppForSEII2526.Web.Data;
+using AppForSEII2526Elevacion.Web.API;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +35,11 @@ builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.Requ
     .AddDefaultTokenProviders();
 
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+
+string? URI2API = builder.Configuration.GetValue(typeof(string), "AppForSEII2526Elevacion_API") as string;
+
+//the environment variable is defined in Portal Azure
+builder.Services.AddScoped<AppForSEII2526ElevacionAPIClient>(sp => new AppForSEII2526ElevacionAPIClient(URI2API, new HttpClient()));
 
 var app = builder.Build();
 
