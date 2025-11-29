@@ -82,7 +82,7 @@ namespace AppForSEII2526.UT.CarsController_test
             var controller = new CarsController(_context, logger);
 
             // Act
-            var result = await controller.GetCars_ForRenting(filtroModel,filtroRentingprice); //realizo todas las pruebas con los distintos filtros
+            var result = await controller.GetCarsForRenting(filtroModel,filtroRentingprice); //realizo todas las pruebas con los distintos filtros
 
             //Assert
             //we check that the response type is OK 

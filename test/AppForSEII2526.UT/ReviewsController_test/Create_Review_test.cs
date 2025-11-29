@@ -90,7 +90,7 @@ namespace AppForSEII2526.UT.ReviewsController_test
             var controller = new ReviewsController(_context, logger);
 
             // Act
-            var result = await controller.Create_Review(reviewDTO);
+            var result = await controller.CreateReview(reviewDTO);
 
             //Assert
             //we check that the response type is BadRequest and obtain the error returned
@@ -123,7 +123,7 @@ namespace AppForSEII2526.UT.ReviewsController_test
                 new List<ReviewItemDTO> { new ReviewItemDTO(car2Model, "Lamborghini", "Yellow", 4.5f, "Reseña para") });
 
             // Act
-            var result = await controller.Create_Review(reviewDTO);
+            var result = await controller.CreateReview(reviewDTO);
 
             //Assert
             //we check that the response type is BadRequest and obtain the error returned

@@ -24,7 +24,7 @@ namespace AppForSEII2526.API.Controllers
         [Route("[action]")]
         [ProducesResponseType(typeof(PurchaseDetailDTO), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public async Task<ActionResult> Get_Details_Purchase(int id)
+        public async Task<ActionResult> GetDetailsPurchase(int id)
         {
             if (_context.Purchase == null) //si no existe la tabla purchase devuelve error NotFound()
             {
@@ -58,7 +58,7 @@ namespace AppForSEII2526.API.Controllers
         [ProducesResponseType(typeof(PurchaseDetailDTO), (int)HttpStatusCode.Created)] //devuelve OK cuando consigue meter en la base de datos el código
         [ProducesResponseType(typeof(ValidationProblemDetails), (int)HttpStatusCode.BadRequest)] //devuelve BadRequest cuando hay un error durante la comprobación de la petición
         [ProducesResponseType(typeof(string), (int)HttpStatusCode.Conflict)] //devuelve Conflict cuando hay un error al añadir a la base de datos
-        public async Task<ActionResult> Create_Purchase(PurchaseForCreateDTO purchaseForCreate)
+        public async Task<ActionResult> CreatePurchase(PurchaseForCreateDTO purchaseForCreate)
         {
             if (purchaseForCreate.PurchaseItems.Count == 0) //compruebo que he seleccionado algún coche para comprar.
             {
@@ -111,7 +111,7 @@ namespace AppForSEII2526.API.Controllers
                     ModelState.AddModelError("PurchaseItems", $"Error! There are not enough units available to purchase the car {item.Model}");
                     _logger.LogError($"PurchasesController || Error! There are not enough units available to purchase the car {item.Model}");
                 }
-                else if (item.Quantity==2)
+                else if (item.Quantity==2 && string.IsNullOrEmpty(item.Description))
                 {
                     ModelState.AddModelError("Purchase Items", $"Error! Estás comprando demasiados coches sin descripción");
                 }
@@ -145,7 +145,7 @@ namespace AppForSEII2526.API.Controllers
                 purchase.PurchasingPrice, purchaseForCreate.PurchaseItems); //monto los detalles de la compra que acabo de realizar para posteriormente mostrarlos al cliente
 
             _logger.LogInformation($"PurchasesController || La compra {purchase.Id} se ha realizado correctamente");
-            return CreatedAtAction("Get_Details_Purchase", new { id = purchase.Id }, purchaseDetail); //devuelvo un return de CreatedAction indicando al usuario que el coche ya ha sido creado, a la misma vez que paso la referencia de la compra (id.) al método de detalles a la vez que la propia información que tienen que sacar por pantalla
+            return CreatedAtAction("GetDetailsPurchase", new { id = purchase.Id }, purchaseDetail); //devuelvo un return de CreatedAction indicando al usuario que el coche ya ha sido creado, a la misma vez que paso la referencia de la compra (id.) al método de detalles a la vez que la propia información que tienen que sacar por pantalla
         }
     }
 }

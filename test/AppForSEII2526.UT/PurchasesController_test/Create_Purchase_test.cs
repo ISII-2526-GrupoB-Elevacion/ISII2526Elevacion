@@ -60,7 +60,7 @@ namespace AppForSEII2526.UT.PurchasesController_test
 
             var purchaseCarNotAvailable = new PurchaseForCreateDTO(0f, Name, Surname, UserName, DeliveryCarDealer, Purchase.PurchasePaymentMethodEnum.Visa, new List<PurchaseItemDTO>() { new PurchaseItemDTO(car1Model, 1, 0f, "Negro") }); //le paso un dto para un coche del que no quedan unidades para comprar
 
-            var purchaseTooManyCars = new PurchaseForCreateDTO(0f, Name, Surname, UserName, DeliveryCarDealer, Purchase.PurchasePaymentMethodEnum.Visa, new List<PurchaseItemDTO> { new PurchaseItemDTO(car2Model, 0f, "Blanco", 2, "Muy bonito") });
+            var purchaseTooManyCars = new PurchaseForCreateDTO(0f, Name, Surname, UserName, DeliveryCarDealer, Purchase.PurchasePaymentMethodEnum.Visa, new List<PurchaseItemDTO> { new PurchaseItemDTO(car2Model, 0f, "Blanco", 2, "") });
 
             var allTests = new List<object[]> //errores esperados para cada entrada de las anteriores, PUESTOS EN ORDEN
             {             //input for create purchase- Error expected
@@ -88,7 +88,7 @@ namespace AppForSEII2526.UT.PurchasesController_test
             var controller = new PurchasesController(_context, logger);
 
             // Act
-            var result = await controller.Create_Purchase(purchaseDTO); //ejecuto el método
+            var result = await controller.CreatePurchase(purchaseDTO); //ejecuto el método
 
             //Assert
             //we check that the response type is BadRequest and obtain the error returned
@@ -117,7 +117,7 @@ namespace AppForSEII2526.UT.PurchasesController_test
             var expectedpurchaseDetailDTO = new PurchaseDetailDTO(Name, Surname, DeliveryCarDealer, DateTime.Today, 12000f, new List<PurchaseItemDTO> { new PurchaseItemDTO(car2Model, 1, 12000f, "Blanco")}); //lo que espero que se añada a la base de datos a partir de la compra válida (es decir lo que se le muestra al usuario que es el details)
 
             // Act
-            var result = await controller.Create_Purchase(purchaseDTO); //ejecuto el método
+            var result = await controller.CreatePurchase(purchaseDTO); //ejecuto el método
 
             //Assert
             var createdResult = Assert.IsType<CreatedAtActionResult>(result);

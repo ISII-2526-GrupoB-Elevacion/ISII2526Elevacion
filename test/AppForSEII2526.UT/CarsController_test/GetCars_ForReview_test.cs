@@ -82,7 +82,7 @@ namespace AppForSEII2526.UT.CarsController_test
             ILogger<CarsController> logger = mock.Object;
             var controller = new CarsController(_context, logger);
             // Act
-            var result = await controller.GetCars_ForReview(filtroManufacturer, filtroFuelType); //filtro por el manufacturer y el fueltype
+            var result = await controller.GetCarsForReview(filtroManufacturer, filtroFuelType); //filtro por el manufacturer y el fueltype
             //Assert
             //we check that the response type is OK 
             var okResult = Assert.IsType<OkObjectResult>(result);

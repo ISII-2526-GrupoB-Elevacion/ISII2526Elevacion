@@ -8,8 +8,7 @@
         [StringLength(20, ErrorMessage = "Color cannot be any longer than 20 characters, neither shorter than 1.", MinimumLength = 1)]
         public string Color { get; set; }
 
-        [StringLength(100, ErrorMessage = "Description cannot be any longer than 100 characters, neither shorter than 10.", MinimumLength = 10)]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         [Key]
         public int Id { get; set; }

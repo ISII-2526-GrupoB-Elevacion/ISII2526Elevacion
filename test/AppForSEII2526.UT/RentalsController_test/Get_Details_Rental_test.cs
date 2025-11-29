@@ -54,7 +54,7 @@ namespace AppForSEII2526.UT.RentalsController_test
             var controller = new RentalsController(_context, logger);
 
             // Act
-            var result = await controller.Get_Details_Rental(0); //intento conseguir un alquiler inexistente
+            var result = await controller.GetDetailsRental(0); //intento conseguir un alquiler inexistente
 
             //Assert
             Assert.IsType<NotFoundResult>(result); //compruebo si es correcto el resultado
@@ -80,7 +80,7 @@ namespace AppForSEII2526.UT.RentalsController_test
             }
 
             // Act 
-            var result = await controller.Get_Details_Rental(1); //busco el alquiler esperado
+            var result = await controller.GetDetailsRental(1); //busco el alquiler esperado
 
             //Assert
             //we check that the response type is OK and obtain the rental

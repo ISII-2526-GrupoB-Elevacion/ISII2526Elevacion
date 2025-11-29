@@ -249,7 +249,7 @@ namespace AppForSEII2526.API.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CarClass = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Color = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Manufacturer = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     PurchasingPrice = table.Column<float>(type: "real", nullable: false),
                     QuantityForPurchasing = table.Column<int>(type: "int", nullable: false),
