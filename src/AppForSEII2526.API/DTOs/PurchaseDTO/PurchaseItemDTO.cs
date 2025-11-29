@@ -15,8 +15,7 @@ namespace AppForSEII2526.API.DTOs.PurchaseDTO
         [Range(1, int.MaxValue, ErrorMessage = "Minimum quantity for Purchase is 1")]
         public int Quantity { get; set; }
 
-        [StringLength(100, ErrorMessage = "Description cannot be any longer than 100 characters, neither shorter than 10.", MinimumLength = 10)]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         public PurchaseItemDTO()
         {

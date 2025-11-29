@@ -111,7 +111,7 @@ namespace AppForSEII2526.API.Controllers
                     ModelState.AddModelError("PurchaseItems", $"Error! There are not enough units available to purchase the car {item.Model}");
                     _logger.LogError($"PurchasesController || Error! There are not enough units available to purchase the car {item.Model}");
                 }
-                else if (item.Quantity==2)
+                else if (item.Quantity==2 && string.IsNullOrEmpty(item.Description))
                 {
                     ModelState.AddModelError("Purchase Items", $"Error! Estás comprando demasiados coches sin descripción");
                 }
