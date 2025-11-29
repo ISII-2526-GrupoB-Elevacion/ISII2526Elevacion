@@ -29,7 +29,7 @@ namespace AppForSEII2526.API.Controllers
         [HttpGet]
         [Route("[action]")]
         [ProducesResponseType(typeof(IList<CarForPurchaseDTO>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult> GetCars_ForPurchase(string? filtroColor, string? modelo)
+        public async Task<ActionResult> GetCarsForPurchase(string? filtroColor, string? modelo)
         {
             var cars = await _context.Car
                 .Include(c => c.Model)
@@ -43,7 +43,7 @@ namespace AppForSEII2526.API.Controllers
         [HttpGet]
         [Route("[action]")]
         [ProducesResponseType(typeof(IList<CarForRentalDTO>),(int)HttpStatusCode.OK)]
-        public async Task<ActionResult> GetCars_ForRenting(string? modelname, float? rentingprice)
+        public async Task<ActionResult> GetCarsForRenting(string? modelname, float? rentingprice)
         {
             var cars = await _context.Car
                 .Include(c=>c.Model)
@@ -57,7 +57,7 @@ namespace AppForSEII2526.API.Controllers
         [HttpGet]
         [Route("[action]")]
         [ProducesResponseType(typeof(IList<CarForReviewDTO>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult> GetCars_ForReview(string? filtroManufacturer, string? filtroFuelType)
+        public async Task<ActionResult> GetCarsForReview(string? filtroManufacturer, string? filtroFuelType)
         {
             var cars = await _context.Car
                 .Include(c => c.Model)

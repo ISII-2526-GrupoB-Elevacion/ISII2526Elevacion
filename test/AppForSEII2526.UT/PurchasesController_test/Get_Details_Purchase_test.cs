@@ -56,7 +56,7 @@ namespace AppForSEII2526.UT.PurchasesController_test
             var controller = new PurchasesController(_context, logger);
 
             // Act
-            var result = await controller.Get_Details_Purchase(0);
+            var result = await controller.GetDetailsPurchase(0);
 
             //Assert
             Assert.IsType<NotFoundResult>(result); //le paso un id de una compra que no existe y compruebo que es de tipo la salida NotFound (la que se esperaría)
@@ -80,7 +80,7 @@ namespace AppForSEII2526.UT.PurchasesController_test
             }
 
             // Act 
-            var result = await controller.Get_Details_Purchase(1); //llamo al método para que devuelva los detalles de una compra que de verdad esté en la base de datos
+            var result = await controller.GetDetailsPurchase(1); //llamo al método para que devuelva los detalles de una compra que de verdad esté en la base de datos
 
             //Assert
             var okResult = Assert.IsType<OkObjectResult>(result);
