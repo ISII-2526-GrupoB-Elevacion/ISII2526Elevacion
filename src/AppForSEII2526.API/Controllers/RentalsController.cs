@@ -23,7 +23,7 @@ namespace AppForSEII2526.API.Controllers
         [Route("[action]")]
         [ProducesResponseType(typeof(RentalDetailDTO), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public async Task<ActionResult> Get_Details_Rental(int id)
+        public async Task<ActionResult> GetDetailsRental(int id)
         {
             if (_context.Rental == null) //compruebo si no existe la tabla Rental y devuelvo un error
             {
@@ -57,7 +57,7 @@ namespace AppForSEII2526.API.Controllers
         [ProducesResponseType(typeof(RentalDetailDTO),(int)HttpStatusCode.Created)]
         [ProducesResponseType(typeof(ValidationProblemDetails), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(string), (int)HttpStatusCode.Conflict)]
-        public async Task<ActionResult> Create_Rental(RentalForCreateDTO rentalForCreate)
+        public async Task<ActionResult> CreateRental(RentalForCreateDTO rentalForCreate)
         {
             if (rentalForCreate.StartDate<= DateTime.Today) //compruebo si la fecha de comienzo es anterior a hoy
                 ModelState.AddModelError("RentalDateFrom", "Error! Your rental date must start later than today");
@@ -149,7 +149,7 @@ namespace AppForSEII2526.API.Controllers
             var rentalDetail = new RentalDetailDTO(rental.ApplicationUser.Name, rental.ApplicationUser.Surname, rental.DeliveryCarDealer, rental.PaymentMethod,rental.StartDate,rental.EndDate,rental.RentingDate,rental.TotalPrice,rentalForCreate.RentalItems);
 
             _logger.LogInformation($"RentalsController || El alquiler {rental.Id} se ha creado correctamente");
-            return CreatedAtAction("Get_Details_Rental", new { id = rental.Id }, rentalDetail); //devuelvo que se ha creado el alquiler y muestro el detalle
+            return CreatedAtAction("GetDetailsRental", new { id = rental.Id }, rentalDetail); //devuelvo que se ha creado el alquiler y muestro el detalle
         }
 
     }

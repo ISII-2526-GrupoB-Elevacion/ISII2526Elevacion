@@ -78,7 +78,7 @@ namespace AppForSEII2526.UT.CarsController_test
             ILogger<CarsController> logger = mock.Object;
             var controller = new CarsController(_context, logger);
             // Act
-            var result = await controller.GetCars_ForPurchase(filtroColor, modelo); //ejecuto el método select con todas las entradas preparadas
+            var result = await controller.GetCarsForPurchase(filtroColor, modelo); //ejecuto el método select con todas las entradas preparadas
             //Assert
             //we check that the response type is OK 
             var okResult = Assert.IsType<OkObjectResult>(result);

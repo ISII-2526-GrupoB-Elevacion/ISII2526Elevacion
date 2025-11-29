@@ -53,7 +53,7 @@ namespace AppForSEII2526.UT.ReviewsController_test
             var controller = new ReviewsController(_context, logger);
 
             // Act
-            var result = await controller.Get_Details_Review(0);
+            var result = await controller.GetDetailsReview(0);
 
             //Assert
             //we check that the response type is OK and obtain the list of cars
@@ -76,7 +76,7 @@ namespace AppForSEII2526.UT.ReviewsController_test
             expectedReview.ReviewItems.Add(new ReviewItemDTO("Ferrari La Ferrari", "Ferrari", "Red", 4.5f, "Amazing car"));
 
             // Act 
-            var result = await controller.Get_Details_Review(1);
+            var result = await controller.GetDetailsReview(1);
 
             //Assert
             //we check that the response type is OK and obtain the rental

@@ -105,7 +105,7 @@ namespace AppForSEII2526.UT.RentalsController_test
             var controller = new RentalsController(_context, logger);
 
             // Act
-            var result = await controller.Create_Rental(rentalDTO); //intento crear el alquiler
+            var result = await controller.CreateRental(rentalDTO); //intento crear el alquiler
 
             //Assert
             //we check that the response type is BadRequest and obtain the error returned
@@ -143,7 +143,7 @@ namespace AppForSEII2526.UT.RentalsController_test
                 new List<RentalItemDTO> { new RentalItemDTO(car2Model, "Ford", 80f, 1) });
 
             // Act
-            var result = await controller.Create_Rental(rentalDTO); //creo el alquiler
+            var result = await controller.CreateRental(rentalDTO); //creo el alquiler
 
             //Assert
             //we check that the response type is BadRequest and obtain the error returned
