@@ -38,24 +38,24 @@ namespace AppForSEII2526.Web
             );
         }
 
-        //to delete movies from the list of selected movies
-        public void RemoveRentalItemToRent(PurchaseItemDTO item)
+        //to delete cars from the list of selected cars
+        public void RemovePurchaseItemToPurchase(PurchaseItemDTO item)
         {
             Purchase.PurchaseItems.Remove(item);
 
         }
 
-        //we eliminate all the movies from the list
-        public void ClearRentingCart()
+        //we eliminate all the cars from the list
+        public void ClearPurchasingCart()
         {
             Purchase.PurchaseItems.Clear();
 
         }
 
-        //we have already finished the process of renting, thus, we create a new Rental 
-        public void RentalProcessed()
+        //we have already finished the process of purchase, thus, we create a new Purchase 
+        public void PurchaseProcessed()
         {
-            //we have finished the rental process so we create a new object without data
+            //we have finished the purchase process so we create a new object without data
             Purchase = new PurchaseForCreateDTO()
             {
                 PurchaseItems = new List<PurchaseItemDTO>()

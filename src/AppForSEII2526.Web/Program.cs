@@ -1,3 +1,4 @@
+using AppForSEII2526.Web;
 using AppForSEII2526.Web.API;
 using AppForSEII2526.Web.Components;
 using AppForSEII2526.Web.Components.Account;
@@ -16,6 +17,7 @@ builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
+builder.Services.AddScoped<PurchaseStateContainer>();
 
 builder.Services.AddAuthentication(options =>
     {
