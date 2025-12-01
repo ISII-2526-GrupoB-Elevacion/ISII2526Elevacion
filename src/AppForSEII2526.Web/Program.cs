@@ -45,6 +45,7 @@ builder.Services.AddScoped<AppForSEII2526APIClient>(sp => new AppForSEII2526APIC
 //adding an In-memory state container service
 builder.Services.AddScoped<RentalStateContainer>();
 
+builder.Services.AddScoped<ReviewStateContainer>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

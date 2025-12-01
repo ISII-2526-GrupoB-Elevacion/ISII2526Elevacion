@@ -29,7 +29,7 @@ namespace AppForSEII2526.Web
         }
 
         //to delete movies from the list of selected movies
-        public void RemoveReviewItemToRent(ReviewItemDTO item)
+        public void RemoveReviewItemToReview(ReviewItemDTO item)
         {
             Review.ReviewItems.Remove(item);
 
