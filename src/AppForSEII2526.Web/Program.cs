@@ -1,3 +1,4 @@
+using AppForSEII2526.Web;
 using AppForSEII2526.Web.API;
 using AppForSEII2526.Web.Components;
 using AppForSEII2526.Web.Components.Account;
@@ -40,6 +41,9 @@ string? URI2API = builder.Configuration.GetValue(typeof(string), "AppForSEII2526
 
 //the environment variable is defined in Portal Azure
 builder.Services.AddScoped<AppForSEII2526APIClient>(sp => new AppForSEII2526APIClient(URI2API, new HttpClient()));
+
+//adding an In-memory state container service
+builder.Services.AddScoped<RentalStateContainer>();
 
 var app = builder.Build();
 
