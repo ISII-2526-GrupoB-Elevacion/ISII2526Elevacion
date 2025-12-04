@@ -10,6 +10,9 @@ namespace AppForSEII2526.API.DTOs.ReviewDTO
         [StringLength(100, ErrorMessage = "Surname cannot be any longer than 100 characters, neither shorter than 4.", MinimumLength = 4)]
         public string Surname { get; set; }
 
+        [StringLength(100, ErrorMessage = "UserName cannot be any longer than 100 characters, neither shorter than 4.", MinimumLength = 4)]
+        public string UserName { get; set; }
+
         [StringLength(30, ErrorMessage = "Country cannot be any longer than 30 characters, neither shorter than 3.", MinimumLength = 3)]
         public string Country { get; set; }
 
@@ -22,10 +25,11 @@ namespace AppForSEII2526.API.DTOs.ReviewDTO
 
         public IList<ReviewItemDTO> ReviewItems { get; set; }
 
-        public ReviewDetailDTO(string name, string surname, string country, string driverType, DateTime created, IList<ReviewItemDTO> reviewItems )
+        public ReviewDetailDTO(string name, string surname, string userName, string country, string driverType, DateTime created, IList<ReviewItemDTO> reviewItems)
         {
             Name = name;
             Surname = surname;
+            UserName = userName;
             Country = country;
             DriverType = driverType;
             Created = created;

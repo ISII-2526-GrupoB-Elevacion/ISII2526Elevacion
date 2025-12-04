@@ -38,7 +38,7 @@ namespace AppForSEII2526.API.Controllers
                  .Include(p => p.PurchaseItems) //join table PurchaseItem
                     .ThenInclude(pi => pi.Car) //then join table Car
                         .ThenInclude(c => c.Model) //then join table Model     
-             .Select(p => new PurchaseDetailDTO(p.ApplicationUser.Name, p.ApplicationUser.Surname, p.DeliveryCarDealer, p.PurchasingDate, p.PurchasingPrice, p.PurchaseItems
+             .Select(p => new PurchaseDetailDTO(p.ApplicationUser.Name, p.ApplicationUser.Surname, p.ApplicationUser.UserName, p.DeliveryCarDealer, p.PurchasingDate, p.PurchasingPrice, p.PurchaseItems
                         .Select(pi => new PurchaseItemDTO(pi.Car.Model.Name, pi.Quantity, pi.Car.PurchasingPrice, pi.Car.Color)).ToList<PurchaseItemDTO>()))
              .FirstOrDefaultAsync();
 
@@ -141,7 +141,7 @@ namespace AppForSEII2526.API.Controllers
                 return Conflict("Error" + ex.Message); //si ocurrió algún error inesperado, devuelvo un error Conflict()
             }
 
-            var purchaseDetail = new PurchaseDetailDTO(purchase.ApplicationUser.Name, purchase.ApplicationUser.Surname, purchase.DeliveryCarDealer, purchase.PurchasingDate,
+            var purchaseDetail = new PurchaseDetailDTO(purchase.ApplicationUser.Name, purchase.ApplicationUser.Surname, purchase.ApplicationUser.UserName, purchase.DeliveryCarDealer, purchase.PurchasingDate,
                 purchase.PurchasingPrice, purchaseForCreate.PurchaseItems); //monto los detalles de la compra que acabo de realizar para posteriormente mostrarlos al cliente
 
             _logger.LogInformation($"PurchasesController || La compra {purchase.Id} se ha realizado correctamente");
