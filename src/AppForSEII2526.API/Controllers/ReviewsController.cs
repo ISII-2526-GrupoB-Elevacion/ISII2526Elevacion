@@ -37,7 +37,7 @@ namespace AppForSEII2526.API.Controllers
                  .Include(p => p.ReviewItems) //join table ReviewItem
                     .ThenInclude(pi => pi.Car) //then join table Car
                         .ThenInclude(c => c.Model) //then join table Model     
-             .Select(p => new ReviewDetailDTO(p.ApplicationUser.Name, p.ApplicationUser.Surname, p.Country, p.DriverType, p.Created, p.ReviewItems
+             .Select(p => new ReviewDetailDTO(p.ApplicationUser.Name, p.ApplicationUser.Surname, p.ApplicationUser.UserName, p.Country, p.DriverType, p.Created, p.ReviewItems
                         .Select(pi => new ReviewItemDTO(pi.Car.Model.Name, pi.Car.Manufacturer, pi.Car.Color, pi.Rating, pi.Description)).ToList<ReviewItemDTO>()))
              .FirstOrDefaultAsync();
 
@@ -138,7 +138,7 @@ namespace AppForSEII2526.API.Controllers
                 return Conflict("Error" + ex.Message);
             }
 
-            var reviewDetail = new ReviewDetailDTO(review.ApplicationUser.Name,review.ApplicationUser.Surname, review.Country, review.DriverType, review.Created, reviewForCreate.ReviewItems);
+            var reviewDetail = new ReviewDetailDTO(review.ApplicationUser.Name,review.ApplicationUser.Surname, review.ApplicationUser.UserName, review.Country, review.DriverType, review.Created, reviewForCreate.ReviewItems);
 
             _logger.LogInformation($"ReviewsController || La reseña {review.Id} se ha guardado correctamente");
             return CreatedAtAction("GetDetailsReview", new { id = review.Id }, reviewDetail);

@@ -10,6 +10,9 @@ namespace AppForSEII2526.API.DTOs.RentalDTO
         [StringLength(100, ErrorMessage = "Surname cannot be any longer than 100 characters, neither shorter than 4.", MinimumLength = 4)]
         public string Surname { get; set; }
 
+        [StringLength(100, ErrorMessage = "UserName cannot be any longer than 100 characters, neither shorter than 4.", MinimumLength = 4)]
+        public string UserName { get; set; }
+
         [StringLength(50, ErrorMessage = "DeliveryCarDealer cannot be any longer than 50 characters, neither shorter than 1.", MinimumLength = 1)]
         public string DeliveryCarDealer { get; set; }
 
@@ -33,10 +36,11 @@ namespace AppForSEII2526.API.DTOs.RentalDTO
 
         public IList<RentalItemDTO> RentalItems { get; set; }
 
-        public RentalDetailDTO(string name, string surname, string deliveryCarDealer, Rental.RentalPaymentMethodEnum paymentMethod, DateTime startDate, DateTime endDate, DateTime rentingDate, float totalPrice, IList<RentalItemDTO> rentalItems)
+        public RentalDetailDTO(string name, string surname, string userName, string deliveryCarDealer, Rental.RentalPaymentMethodEnum paymentMethod, DateTime startDate, DateTime endDate, DateTime rentingDate, float totalPrice, IList<RentalItemDTO> rentalItems)
         {
             Name = name;
             Surname = surname;
+            UserName = userName;
             DeliveryCarDealer = deliveryCarDealer;
             PaymentMethod = paymentMethod;
             StartDate = startDate;
