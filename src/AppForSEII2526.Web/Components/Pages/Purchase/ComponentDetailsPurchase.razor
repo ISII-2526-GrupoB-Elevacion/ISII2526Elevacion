@@ -1,0 +1,108 @@
+﻿@page "/purchase/details"
+
+@using AppForSEII2526.Web.API
+@using Microsoft.AspNetCore.Authorization
+@inject AppForSEII2526APIClient apiclient
+
+<h3>Details Purchase Cars</h3>
+
+@attribute [Authorize]
+
+@if (purchase == null)
+{
+    <p>@error</p>
+}
+else
+{
+    <table class="table table-borderless table-sm">
+        <tr>
+            <th>Nombre y apellidos</th>
+            <td id="NameSurname">@purchase.Name @purchase.Surname</td>
+        </tr>
+        <tr>
+            <th>Dirección de envío</th>
+            <td id="DeliveryAddress">@purchase.DeliveryCarDealer</td>
+        </tr>
+        <tr>
+            <th>Fecha de compra</th>
+            <td id="PurchasingDate">@purchase.PurchasingDate</td>
+        </tr>
+    </table>
+
+    <h4>Coches comprados</h4>
+
+    <table class="table" id="PurchasedCars">
+        <thead>
+            <tr>
+                <th scope="col">Modelo</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Color</th>
+                <th scope="col">Cantidad</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (PurchaseItemDTO item in purchase.PurchaseItems)
+            {
+                <tr id="PurchaseItem_@item.Model">
+                    <td>@item.Model</td>
+                    <td>@item.PurchasingPrice €</td>
+                    <td>@item.Color</td>
+                    <td>@item.Quantity</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            @*colspan is used to state that TWO columns are collapsed*@
+        <th scope="row" colspan="2" class="text-end">Precio total</th>
+        <td id="TotalPrice">@purchase.PurchasingPrice €</td>
+        </tfoot>
+
+    </table>
+}
+
+@code {
+    [Parameter]
+
+    [SupplyParameterFromQuery]
+    public int PurchaseID { get; set; }
+    private PurchaseDetailDTO purchase;
+    private string error = "";
+
+    [CascadingParameter]
+    private Task<AuthenticationState>? authenticationState { get; set; }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        //we check the user is logged in
+        string userName = "";
+
+        if (authenticationState is not null)
+        {
+            var authState = await authenticationState;
+            var user = authState?.User;
+
+            //we retrieve the id of the user logged in
+            if (user is not null)
+            {
+                if (user.Identity is not null && user.Identity.IsAuthenticated && user.IsInRole("User"))
+                {
+                    userName = user.Identity.Name;
+                }
+            }
+        }
+
+        try
+        {
+            purchase = await apiclient.GetDetailsPurchaseAsync(PurchaseID);
+        }
+        catch (ApiException exception)
+        {
+            purchase = null;
+        }
+        if ((purchase == null) || (purchase.UserName != userName))
+        {
+            error = $"Error! No estás autorizado para ver esa compra o no hay una compra con id = {PurchaseID}";
+        }
+    }
+}
