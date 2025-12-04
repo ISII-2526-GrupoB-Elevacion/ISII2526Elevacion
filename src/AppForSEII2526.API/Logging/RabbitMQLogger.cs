@@ -26,7 +26,10 @@ public class RabbitMQLogger : ILogger, IDisposable
 
         var factory = new ConnectionFactory
         {
-            Uri = new Uri("amqps://mbvuwsnz:4VsBT34qVIqujenBv56GIajrFlZ45Nm0@ostrich.lmq.cloudamqp.com/mbvuwsnz")
+            HostName = _config.HostName,
+            Port = _config.Port,
+            UserName = _config.UserName,
+            Password = _config.Password
         };
 
         _connection = factory.CreateConnection();
@@ -91,7 +94,7 @@ public class RabbitMQLogger : ILogger, IDisposable
 
             _channel.BasicPublish(
                 exchange: _config.Exchange,
-                routingKey: "",
+                routingKey: $"logs.{logLevel.ToString()}",
                 basicProperties: _properties,
                 body: body);
         }
