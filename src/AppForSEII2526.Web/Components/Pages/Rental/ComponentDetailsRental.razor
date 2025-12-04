@@ -1,0 +1,118 @@
+﻿@page "/rental/details"
+
+
+@using AppForSEII2526.Web.API
+@using Microsoft.AspNetCore.Authorization
+@inject AppForSEII2526APIClient apiclient
+
+@attribute [Authorize]
+
+<h3>Rental Details</h3>
+
+@if (rental == null)
+{
+    <p>@error</p>
+}
+else
+{
+    <table class="table table-borderless table-sm">
+        <tr>
+            <th>Name and Surname</th>
+            <td id="NameSurname">@rental.Name @rental.Surname</td>
+        </tr>
+        <tr>
+            <th>Delivery Car Dealer</th>
+            <td id="DeliveryCarDealer">@rental.DeliveryCarDealer</td>
+        </tr>
+        <tr>
+            <th>Payment Method</th>
+            <td id="PaymentMethod">@rental.PaymentMethod</td>
+        </tr>
+        <tr>
+            <th>Rental Date</th>
+            <td id="RentalDate">@rental.RentingDate.ToString("dd/MM/yyyy hh:mm:ss")</td>
+        </tr>
+        <tr>
+            <th>Rental period</th>
+            <td id="RentalPeriod">@rental.StartDate.DateTime.ToString("dd/MM/yyyy") - @rental.EndDate.DateTime.ToString("dd/MM/yyyy")</td>
+        </tr>
+    </table>
+
+    <h4>Rented Movies</h4>
+
+    <table class="table" id="RentedMovies">
+        <thead>
+            <tr>
+                <th scope="col">Model</th>
+                <th scope="col">Manufacturer</th>
+                <th scope="col">Renting Price</th>
+                <th scope="col">Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (RentalItemDTO item in rental.RentalItems)
+            {
+                <tr id="RentalItem_@item.Model">
+                    <td>@item.Model</td>
+                    <td>@item.Manufacturer</td>
+                    <td>@item.RentingPrice €</td>
+                    <td>@item.Quantity</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            @*colspan is used to state that TWO columns are collapsed*@
+        <th scope="row" colspan="2" class="text-end">Total Price</th>
+        <td id="TotalPrice">@rental.TotalPrice €</td>
+        </tfoot>
+
+    </table>
+}
+
+@code {
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public int RentalID { get; set; }
+    private RentalDetailDTO rental;
+    private string error = "";
+
+    [CascadingParameter]
+    private Task<AuthenticationState>? authenticationState { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        //we check the user is logged in
+        string userName = "";
+        if (authenticationState is not null)
+        {
+            var authState = await authenticationState;
+            var user = authState?.User;
+
+            //we retrieve the id of the user logged in
+            if (user is not null)
+            {
+                if (user.Identity is not null && user.Identity.IsAuthenticated && user.IsInRole("User"))
+                {
+                    userName = user.Identity.Name;
+                }
+            }
+        }
+
+        try
+        {
+            rental = await apiclient.GetDetailsRentalAsync(RentalID);
+        }
+        catch (ApiException exception)
+        {
+            rental = null;
+        }
+        if ((rental == null) || (rental.UserName != userName))
+        {
+            error = $"Error! You are not authorized to see this rental or there is not a rental with id={RentalID}";
+        }
+
+
+    }
+
+}
