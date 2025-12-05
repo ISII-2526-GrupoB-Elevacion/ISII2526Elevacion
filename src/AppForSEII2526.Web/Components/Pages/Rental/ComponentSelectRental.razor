@@ -2,11 +2,13 @@
 
 
 @using AppForSEII2526.Web.API
+@using Microsoft.AspNetCore.Authorization
 @inject AppForSEII2526APIClient apiclient
 @inject ILogger<ComponentSelectRental> logger
 @inject RentalStateContainer rentalState
 @inject NavigationManager navigation
 
+@attribute [Authorize]
 
 <h3>Select cars for Rental</h3>
 <div class="container-fluid">
@@ -28,7 +30,8 @@
                         <input type="text" id="rentingprice" @bind=rentingprice class="form-control" placeholder="RentingPrice" aria-label="RentingPrice" aria-describedby="basic-addon1">
                     </div>
                 </div>
-                <div class="col">
+                <!-- Esto se queda comentado por si luego hace falta para el post
+                    <div class="col">
                     <div class="input-group mb-3">
                         <span class="input-group-text">From</span>
                         <InputDate @bind-Value="@From" id="fromDate" />
@@ -39,7 +42,7 @@
                     <InputDate id="toDate" @bind-Value="@To" />
 
                 </div>
-
+                -->
                 <div class="col">
                     <button type="button" class="btn btn-primary" @onclick=@SearchCars id="searchCars">Search Cars</button>
                 </div>
@@ -58,11 +61,11 @@
                         <table class="table table-condensed table-hover" id="TableOfCars">
                             <thead>
                                 <tr>
-                                    <th>Title</th>
-                                    <th>Genre</th>
-                                    <th>Release Date</th>
-                                    <th>Price For Renting</th>
-                                    <th>Rent</th>
+                                    <th>Model</th>
+                                    <th>Fuel Type</th>
+                                    <th>Manufacturer</th>
+                                    <th>Renting Price</th>
+                                    <th>Color</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -109,7 +112,8 @@
     private bool hideErrors { get { return errors.Length == 0; } }
     private string errors = "";
     private string modelname { get; set; }
-    private float rentingprice { get; set; }
+    private float? rentingprice { get; set; }
+    /* Esto se queda comentado por si luego hace falta para el post
     private DateTime _from;
     private DateTime From
     {
@@ -141,6 +145,7 @@
             }
         }
     }
+    */
 
     private RentalForCreateDTO rental => rentalState.Rental;
 
@@ -159,6 +164,7 @@
 
     public async void SearchCars()
     {
+        /* Esto se queda comentado por si luego hace falta para el post
         if (rental.StartDate > rental.EndDate)
         {
             errors = "Your rental must end after than its starts";
@@ -170,7 +176,7 @@
             errors = "Your rental period must be later";
             return;
         }
-
+        */
         try
         {
             cars = await apiclient.GetCarsForRentingAsync(modelname, rentingprice);
@@ -186,6 +192,7 @@
 
     protected override Task OnInitializedAsync()
     {
+        /* Esto se queda comentado por si luego hace falta para el post
         //the type of RentalDateFrom is DateTimeOffset, it is required a conversion
         _from = (_from == new DateTime(1, 1, 1)) ?
             DateTime.SpecifyKind(DateTime.Today.AddDays(1), DateTimeKind.Utc)
@@ -197,7 +204,7 @@
             : _to;
 
         rental.EndDate = _to;
-
+        */
         SearchCars();
 
         return base.OnInitializedAsync();

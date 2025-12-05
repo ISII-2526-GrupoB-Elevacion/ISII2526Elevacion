@@ -792,6 +792,12 @@
             "type": "string",
             "nullable": true
           },
+          "userName": {
+            "maxLength": 100,
+            "minLength": 4,
+            "type": "string",
+            "nullable": true
+          },
           "deliveryCarDealer": {
             "maxLength": 50,
             "minLength": 1,
@@ -886,8 +892,6 @@
             "format": "int32"
           },
           "description": {
-            "maxLength": 100,
-            "minLength": 10,
             "type": "string",
             "nullable": true
           }
@@ -911,6 +915,12 @@
             "nullable": true
           },
           "surname": {
+            "maxLength": 100,
+            "minLength": 4,
+            "type": "string",
+            "nullable": true
+          },
+          "userName": {
             "maxLength": 100,
             "minLength": 4,
             "type": "string",
@@ -1053,6 +1063,12 @@
             "nullable": true
           },
           "surname": {
+            "maxLength": 100,
+            "minLength": 4,
+            "type": "string",
+            "nullable": true
+          },
+          "userName": {
             "maxLength": 100,
             "minLength": 4,
             "type": "string",

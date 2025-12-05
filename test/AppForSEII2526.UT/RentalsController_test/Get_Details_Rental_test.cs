@@ -72,7 +72,7 @@ namespace AppForSEII2526.UT.RentalsController_test
             var controller = new RentalsController(_context, logger);
 
             //creo el dto esperado a la salida
-            var expectedRental = new RentalDetailDTO("Elena", "Navarro Martinez", "Madrid Center", Rental.RentalPaymentMethodEnum.Visa, DateTime.Today, DateTime.Today.AddDays(7), DateTime.Today.AddDays(1), 0,new List<RentalItemDTO>());
+            var expectedRental = new RentalDetailDTO("Elena", "Navarro Martinez", "elena@navarro", "Madrid Center", Rental.RentalPaymentMethodEnum.Visa, DateTime.Today, DateTime.Today.AddDays(7), DateTime.Today.AddDays(1), 0,new List<RentalItemDTO>());
             expectedRental.RentalItems.Add(new RentalItemDTO("Citroen c15", "Citroen", 50f,1));
             foreach (var item in expectedRental.RentalItems)
             {
