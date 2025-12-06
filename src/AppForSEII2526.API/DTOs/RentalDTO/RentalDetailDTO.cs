@@ -4,6 +4,8 @@ namespace AppForSEII2526.API.DTOs.RentalDTO
 {
     public class RentalDetailDTO
     {
+        public int Id { get; set; }
+
         [StringLength(20, ErrorMessage = "Name cannot be any longer than 20 characters, neither shorter than 2.", MinimumLength = 2)]
         public string Name { get; set; }
 
@@ -36,8 +38,9 @@ namespace AppForSEII2526.API.DTOs.RentalDTO
 
         public IList<RentalItemDTO> RentalItems { get; set; }
 
-        public RentalDetailDTO(string name, string surname, string userName, string deliveryCarDealer, Rental.RentalPaymentMethodEnum paymentMethod, DateTime startDate, DateTime endDate, DateTime rentingDate, float totalPrice, IList<RentalItemDTO> rentalItems)
+        public RentalDetailDTO(int id,  string name, string surname, string userName, string deliveryCarDealer, Rental.RentalPaymentMethodEnum paymentMethod, DateTime startDate, DateTime endDate, DateTime rentingDate, float totalPrice, IList<RentalItemDTO> rentalItems)
         {
+            Id = id;
             Name = name;
             Surname = surname;
             UserName = userName;
