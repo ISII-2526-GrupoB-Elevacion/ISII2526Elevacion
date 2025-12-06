@@ -114,7 +114,7 @@ namespace AppForSEII2526.UT.PurchasesController_test
 
             var purchaseDTO = new PurchaseForCreateDTO(0f, Name, Surname, UserName, DeliveryCarDealer, Purchase.PurchasePaymentMethodEnum.Visa, new List<PurchaseItemDTO>() { new PurchaseItemDTO(car2Model, 1, 0f, "Blanco") }); //creo una compra valida
 
-            var expectedpurchaseDetailDTO = new PurchaseDetailDTO(Name, Surname, UserName, DeliveryCarDealer, DateTime.Today, 12000f, new List<PurchaseItemDTO> { new PurchaseItemDTO(car2Model, 1, 12000f, "Blanco")}); //lo que espero que se añada a la base de datos a partir de la compra válida (es decir lo que se le muestra al usuario que es el details)
+            var expectedpurchaseDetailDTO = new PurchaseDetailDTO(1, Name, Surname, UserName, DeliveryCarDealer, DateTime.Today, 12000f, new List<PurchaseItemDTO> { new PurchaseItemDTO(car2Model, 1, 12000f, "Blanco")}); //lo que espero que se añada a la base de datos a partir de la compra válida (es decir lo que se le muestra al usuario que es el details)
 
             // Act
             var result = await controller.CreatePurchase(purchaseDTO); //ejecuto el método

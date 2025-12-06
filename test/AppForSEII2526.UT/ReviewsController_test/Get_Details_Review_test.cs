@@ -72,7 +72,7 @@ namespace AppForSEII2526.UT.ReviewsController_test
             var controller = new ReviewsController(_context, logger);
 
             //me creo la review esperada
-            var expectedReview = new ReviewDetailDTO("Elena", "Navarro Martinez", "elena@uclm.es", "Spain", "Experto", DateTime.Today, new List<ReviewItemDTO>());
+            var expectedReview = new ReviewDetailDTO(1, "Elena", "Navarro Martinez", "elena@uclm.es", "Spain", "Experto", DateTime.Today, new List<ReviewItemDTO>());
             expectedReview.ReviewItems.Add(new ReviewItemDTO("Ferrari La Ferrari", "Ferrari", "Red", 4.5f, "Amazing car"));
 
             // Act 

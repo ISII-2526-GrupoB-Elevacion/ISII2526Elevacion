@@ -4,6 +4,8 @@ namespace AppForSEII2526.API.DTOs.ReviewDTO
 {
     public class ReviewDetailDTO
     {
+        public int Id { get; set; }
+
         [StringLength(20, ErrorMessage = "Name cannot be any longer than 20 characters, neither shorter than 2.", MinimumLength = 2)]
         public string Name { get; set; }
 
@@ -25,8 +27,9 @@ namespace AppForSEII2526.API.DTOs.ReviewDTO
 
         public IList<ReviewItemDTO> ReviewItems { get; set; }
 
-        public ReviewDetailDTO(string name, string surname, string userName, string country, string driverType, DateTime created, IList<ReviewItemDTO> reviewItems)
+        public ReviewDetailDTO(int id, string name, string surname, string userName, string country, string driverType, DateTime created, IList<ReviewItemDTO> reviewItems)
         {
+            Id = id;
             Name = name;
             Surname = surname;
             UserName = userName;

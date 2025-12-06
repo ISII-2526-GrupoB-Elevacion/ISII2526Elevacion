@@ -138,7 +138,7 @@ namespace AppForSEII2526.UT.RentalsController_test
                 from, to, from, 0f, new List<RentalItemDTO>()
                 { new RentalItemDTO(car2Model, "Ford", 0f, 1) });
 
-            var expectedrentalDetailDTO = new RentalDetailDTO(Name,Surname,UserName,DeliveryCarDealer, //creo el detalle esperado con respecto al alquiler
+            var expectedrentalDetailDTO = new RentalDetailDTO(1, Name,Surname,UserName,DeliveryCarDealer, //creo el detalle esperado con respecto al alquiler
                 Rental.RentalPaymentMethodEnum.Visa,from,to,from,80f,
                 new List<RentalItemDTO> { new RentalItemDTO(car2Model, "Ford", 80f, 1) });
 

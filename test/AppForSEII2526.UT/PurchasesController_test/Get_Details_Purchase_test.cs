@@ -72,7 +72,7 @@ namespace AppForSEII2526.UT.PurchasesController_test
             ILogger<PurchasesController> logger = mock.Object;
             var controller = new PurchasesController(_context, logger);
 
-            var expectedPurchase = new PurchaseDetailDTO("Elena", "Navarro Martinez", "elena@uclm.es", "C/Prim nº 7", DateTime.Today, 0, new List<PurchaseItemDTO>()); //creo un details que espero que me devuelva el programa, de una compra en concreto
+            var expectedPurchase = new PurchaseDetailDTO(1, "Elena", "Navarro Martinez", "elena@uclm.es", "C/Prim nº 7", DateTime.Today, 0, new List<PurchaseItemDTO>()); //creo un details que espero que me devuelva el programa, de una compra en concreto
             expectedPurchase.PurchaseItems.Add(new PurchaseItemDTO("Audi A4", 1, 18000f, "Negro"));
             foreach(var item in expectedPurchase.PurchaseItems)
             {
