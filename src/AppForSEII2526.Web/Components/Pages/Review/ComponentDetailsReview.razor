@@ -5,10 +5,9 @@
 @using Microsoft.AspNetCore.Authorization
 @inject AppForSEII2526APIClient apiclient
 
-
+@attribute [Authorize]
 
 <h3>Review</h3>
-@attribute [Authorize]
 
 @if (review == null)
 {
