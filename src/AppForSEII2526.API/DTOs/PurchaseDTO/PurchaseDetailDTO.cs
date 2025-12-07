@@ -42,8 +42,10 @@ namespace AppForSEII2526.API.DTOs.PurchaseDTO
         public override bool Equals(object? obj)
         {
             return obj is PurchaseDetailDTO dTO &&
+                   Id == dTO.Id &&
                    Name == dTO.Name &&
                    Surname == dTO.Surname &&
+                   UserName == dTO.UserName &&
                    DeliveryCarDealer == dTO.DeliveryCarDealer &&
                    PurchasingDate == dTO.PurchasingDate &&
                    PurchasingPrice == dTO.PurchasingPrice &&

@@ -1,4 +1,5 @@
 ﻿using AppForSEII2526.API.DTOs.PurchaseDTO;
+using AppForSEII2526.API.Models;
 
 namespace AppForSEII2526.API.DTOs.ReviewDTO
 {
@@ -42,8 +43,10 @@ namespace AppForSEII2526.API.DTOs.ReviewDTO
         public override bool Equals(object? obj)
         {
             return obj is ReviewDetailDTO dTO &&
+                   Id == dTO.Id &&
                    Name == dTO.Name &&
                    Surname == dTO.Surname &&
+                   UserName == dTO.UserName &&
                    Country == dTO.Country &&
                    DriverType == dTO.DriverType &&
                    Created == dTO.Created &&

@@ -10,6 +10,8 @@
         [StringLength(20, ErrorMessage = "Color cannot be any longer than 20 characters, neither shorter than 1.", MinimumLength = 1)]
         public string Color { get; set; }
 
+        public string? Description { get; set; }
+
         [StringLength(15, ErrorMessage = "FuelType cannot be any longer than 15 characters, neither shorter than 1.", MinimumLength = 1)]
         public string FuelType { get; set; }
 
@@ -20,11 +22,12 @@
         [Range(3000, 20000, ErrorMessage = "Minimum is 3000 and maximum 20000")]
         public float PurchasingPrice { get; set; }
 
-        public CarForPurchaseDTO(int id, string model, string color, string fuelType, string manufacturer, float purchasingPrice)
+        public CarForPurchaseDTO(int id, string model, string color, string description, string fuelType, string manufacturer, float purchasingPrice)
         {
             Id = id;
             Model = model;
             Color = color;
+            Description = description;
             FuelType = fuelType;
             Manufacturer = manufacturer;
             PurchasingPrice = purchasingPrice;
@@ -36,6 +39,7 @@
                    Id == dTO.Id &&
                    Model == dTO.Model &&
                    Color == dTO.Color &&
+                   Description == dTO.Description &&
                    FuelType == dTO.FuelType &&
                    Manufacturer == dTO.Manufacturer &&
                    PurchasingPrice == dTO.PurchasingPrice;
