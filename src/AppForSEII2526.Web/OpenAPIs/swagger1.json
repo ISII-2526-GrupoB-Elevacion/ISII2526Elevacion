@@ -780,6 +780,10 @@
       "PurchaseDetailDTO": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
           "name": {
             "maxLength": 20,
             "minLength": 2,
@@ -908,6 +912,10 @@
       "RentalDetailDTO": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
           "name": {
             "maxLength": 20,
             "minLength": 2,
@@ -1056,6 +1064,10 @@
       "ReviewDetailDTO": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
           "name": {
             "maxLength": 20,
             "minLength": 2,
