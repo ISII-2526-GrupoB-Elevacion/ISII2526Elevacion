@@ -119,7 +119,7 @@ namespace AppForSEII2526.UT.ReviewsController_test
                 { new ReviewItemDTO(car2Model, "Lamborghini","Yellow",4.5f,"Reseña para") });
 
             //me creo el reviewDetail esperado
-            var expectedReviewDetailDTO = new ReviewDetailDTO(1, Name, Surname,UserName,"Spain", "Experto", DateTime.Today,
+            var expectedReviewDetailDTO = new ReviewDetailDTO(2, Name, Surname,UserName,"Spain", "Experto", DateTime.Today,
                 new List<ReviewItemDTO> { new ReviewItemDTO(car2Model, "Lamborghini", "Yellow", 4.5f, "Reseña para") });
 
             // Act

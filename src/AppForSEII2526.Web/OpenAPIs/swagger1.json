@@ -649,6 +649,10 @@
             "type": "string",
             "nullable": true
           },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
           "fuelType": {
             "maxLength": 15,
             "minLength": 1,
