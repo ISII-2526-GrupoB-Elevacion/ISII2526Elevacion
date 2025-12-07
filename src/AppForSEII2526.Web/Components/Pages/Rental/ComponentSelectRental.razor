@@ -29,9 +29,8 @@
                         <span class="input-group-text" id="basic-addon1">Renting Price</span>
                         <input type="text" id="rentingprice" @bind=rentingprice class="form-control" placeholder="RentingPrice" aria-label="RentingPrice" aria-describedby="basic-addon1">
                     </div>
-                </div>
-                <!-- Esto se queda comentado por si luego hace falta para el post
-                    <div class="col">
+                </div
+                <div class="col">
                     <div class="input-group mb-3">
                         <span class="input-group-text">From</span>
                         <InputDate @bind-Value="@From" id="fromDate" />
@@ -40,9 +39,11 @@
                 <div class="col">
                     <span class="input-group-text">To</span>
                     <InputDate id="toDate" @bind-Value="@To" />
-
                 </div>
-                -->
+                <div class="col">
+                    <span class="input-group-text">RentingDate</span>
+                    <InputDate id="RentingDate" @bind-Value="@Renting" />
+                </div>
                 <div class="col">
                     <button type="button" class="btn btn-primary" @onclick=@SearchCars id="searchCars">Search Cars</button>
                 </div>
@@ -113,7 +114,6 @@
     private string errors = "";
     private string modelname { get; set; }
     private float? rentingprice { get; set; }
-    /* Esto se queda comentado por si luego hace falta para el post
     private DateTime _from;
     private DateTime From
     {
@@ -145,7 +145,21 @@
             }
         }
     }
-    */
+    private DateTime _renting;
+    private DateTime Renting
+    {
+        get { return _renting; }
+        set
+        {
+            if (_renting != value)
+            {
+                //the rentingcart is cleared to ensure that only cars available for the selected period are selected
+                _renting = value;
+                rental.EndDate = DateTime.SpecifyKind(_renting, DateTimeKind.Utc);
+                rentalState.ClearRentingCart();
+            }
+        }
+    }
 
     private RentalForCreateDTO rental => rentalState.Rental;
 
@@ -164,7 +178,6 @@
 
     public async void SearchCars()
     {
-        /* Esto se queda comentado por si luego hace falta para el post
         if (rental.StartDate > rental.EndDate)
         {
             errors = "Your rental must end after than its starts";
@@ -176,7 +189,6 @@
             errors = "Your rental period must be later";
             return;
         }
-        */
         try
         {
             cars = await apiclient.GetCarsForRentingAsync(modelname, rentingprice);
@@ -192,25 +204,29 @@
 
     protected override Task OnInitializedAsync()
     {
-        /* Esto se queda comentado por si luego hace falta para el post
         //the type of RentalDateFrom is DateTimeOffset, it is required a conversion
         _from = (_from == new DateTime(1, 1, 1)) ?
             DateTime.SpecifyKind(DateTime.Today.AddDays(1), DateTimeKind.Utc)
             : _from;
         rental.StartDate = _from;
         //the type of RentalDateFrom is DateTimeOffset, it is required a conversion
+
         _to = (_to == new DateTime(1, 1, 1)) ?
             DateTime.SpecifyKind(DateTime.Today.AddDays(2), DateTimeKind.Utc)
             : _to;
-
         rental.EndDate = _to;
-        */
+
+        _renting = (_renting == new DateTime(1, 1, 1)) ?
+            DateTime.SpecifyKind(DateTime.Today.AddDays(2), DateTimeKind.Utc)
+            : _renting;
+        rental.RentingDate = _renting;
+
         SearchCars();
 
         return base.OnInitializedAsync();
     }
     private void RentCars()
     {
-        navigation.NavigateTo("/rental/createrental");
+        navigation.NavigateTo("/rental/post");
     }
 }

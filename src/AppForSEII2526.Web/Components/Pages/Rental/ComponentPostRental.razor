@@ -1,0 +1,195 @@
+﻿@page "/rental/post"
+
+@using AppForSEII2526.Web.Components.Shared
+@using AppForSEII2526.Web.API
+@using Microsoft.AspNetCore.Authorization
+@inject NavigationManager navigation
+@inject AppForSEII2526APIClient apiclient
+@inject ILogger<ComponentPostRental> logger
+@inject RentalStateContainer rentalState
+
+@attribute [Authorize]
+
+<h3>Create Rental</h3>
+
+<EditForm Model="rental" OnValidSubmit="OpenDialog">
+    <div class="row">
+        <DataAnnotationsValidator />
+        <ValidationSummary class="row alert alert-danger" />
+    </div>
+    <div class="row alert alert-danger" role="alert" hidden="@hideErrors">
+        <p id="ErrorsShown">Errors: @messageError</p>
+    </div>
+    <div class="row g-3">
+        <div class="col-md">
+            <div class="form-floating mb-3">
+                <InputText @bind-Value="rental.Name" class="form-control" id="Name" />
+                <label for="Name">Name </label>
+            </div>
+        </div>
+        <div class="col-md">
+            <div class="form-floating mb-3">
+                <InputText @bind-Value="rental.Surname" class="form-control" id="Surname" />
+                <label for="Surname">Surname </label>
+            </div>
+        </div>
+        <div class="col-md">
+            <div class="form-floating mb-3">
+                <InputText @bind-Value="rental.DeliveryCarDealer" class="form-control" id="DeliveryCarDealer" />
+                <label for="DeliveryCarDealer">Delivery Car Dealer</label>
+            </div>
+        </div>
+    </div>
+    <div class="row g-2">
+        <div class="col-md">
+            <div class="form-floating">
+                @*a dropdown for selecting the payment method*@
+                <InputSelect class="form-select" @bind-Value="@rental.PaymentMethod" id="PaymentMethod">
+                    <option value="@RentalPaymentMethodEnum.Visa" default>Visa</option>
+                    <option value="@RentalPaymentMethodEnum.GooglePay"> GooglePay</option>
+                    <option value="@RentalPaymentMethodEnum.PayPal"> PayPal</option>
+                </InputSelect>
+                <label for="PaymentMethod">Payment Method</label>
+            </div>
+        </div>
+        <div class="col-md">
+            <div class="form-floating">
+                @*this button will be used to ask the user if he want to proceed to rent the cars*@
+                <button class="btn btn-primary" type="submit" id="Submit" disabled="@rentalButtonDisabled">
+                    Rent your cars
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <h4>Rental detail</h4>
+    <p><b>Date from:</b> @rental.StartDate.ToString("dd/MM/yyyy") <b>to:</b> @rental.EndDate.ToString("dd/MM/yyyy")</p>
+    <p><b>Renting Date:</b> @rental.RentingDate.ToString("dd/MM/yyyy")</p>
+    <p>
+        <b>Total price:</b> @TotalCost €
+        <button class="btn btn-outline-primary" type="submit" @onclick="ModifyRentalItems" id="ModifyCars">
+            Modify cars
+        </button>
+    </p>
+    <div class="mh-100 table-responsive">
+        <table class="table table-condensed table-hover" id="TableOfRentalItems">
+            <thead>
+                <tr>
+                    <th>Model</th>
+                    <th>Manufacturar</th>
+                    <th>Renting Price</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in rental.RentalItems)
+                {
+                    <tr id="CarData_@item.Model">
+                        <td>@item.Model</td>
+                        <td>@item.Manufacturer</td>
+                        <td>@item.RentingPrice €</td>
+                        <td><InputNumber @bind-Value="item.Quantity" class="form-control" id="@($"quantity_{item.Quantity}")" /></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</EditForm>
+
+@if (DialogIsOpen)
+{
+    <DialogRental Caption="Rent Cars"
+                  Message="Do you want to rent these cars?"
+                  OnClose="@OnDialogClose"
+                  Type="DialogRental.Category.SaveNot">
+    </DialogRental>
+}
+
+@code {
+    private string messageError = "";
+    private bool hideErrors { get { return messageError.Length == 0; } }
+    private bool rentalButtonDisabled { get { return (rental.RentalItems == null || rental.RentalItems.Count == 0); } }
+    private bool DialogIsOpen;
+    private RentalForCreateDTO rental => rentalState.Rental;
+
+    private void OpenDialog()
+    {
+        DialogIsOpen = true;
+    }
+
+    private async Task OnDialogClose(bool isOk)
+    {
+
+        DialogIsOpen = false;
+        if (isOk)
+        {
+            // Process the data introduced by the user if they are valid
+            if (rental.RentalItems.Count > 0)
+            {
+                try
+                {
+                    var rented = await apiclient.CreateRentalAsync(rental);
+                    rentalState.RentalProcessed();
+                    navigation.NavigateTo($"/rental/details/?RentalID={rented.Id}");
+                }
+                catch (ApiException<ValidationProblemDetails> apiexceptionvalidation)
+                {
+
+                    if (apiexceptionvalidation.Result.Errors.Values != null)
+                    {
+                        messageError = "";
+                        foreach (var errors in apiexceptionvalidation.Result.Errors.Values)
+                            //https://learn.microsoft.com/en-us/dotnet/api/system.string.join?view=net-7.0
+                            messageError = string.Join("(*) ", messageError, string.Join(" (*) ", errors));
+                    }
+                }
+                catch (ApiException apiexception)
+                {
+                    //we need to inform user that there was some other error while processing the request
+                    messageError = "Error while processing your request, please try again later!";
+
+                }
+
+            }
+        }
+    }
+
+    private decimal TotalCost
+    {
+        get
+        {
+            int days = (rental.EndDate.DateTime - rental.StartDate.DateTime).Days;
+            double price = rental.RentalItems.Sum(ri => ri.RentingPrice * days * ri.Quantity);
+            return Convert.ToDecimal(price);
+        }
+    }
+    private void ModifyRentalItems()
+    {
+        navigation.NavigateTo("/rental/select");
+    }
+    protected override async Task OnInitializedAsync()
+    {
+
+        if (authenticationState is not null)
+        {
+            var authState = await authenticationState;
+            var user = authState?.User;
+
+            if (user is not null)
+            {
+                if (user.Identity is not null && user.Identity.IsAuthenticated)
+                {
+                    rental.UserName = user.Identity.Name;
+                }
+            }
+            rental.Name = rental.Name == null ? "" : rental.Name;
+            rental.Surname = rental.Surname == null ? "" : rental.Surname;
+            rental.DeliveryCarDealer = rental.DeliveryCarDealer == null ? "" : rental.DeliveryCarDealer;
+
+        }
+    }
+
+
+    [CascadingParameter]
+    private Task<AuthenticationState>? authenticationState { get; set; }
+}
