@@ -37,7 +37,7 @@ namespace AppForSEII2526.API.Controllers
                  .Include(r => r.RentalItems) //join table RentalItem
                     .ThenInclude(ri => ri.Car) //then join table Car
                         .ThenInclude(c => c.Model) //then join table Model     
-             .Select(r => new RentalDetailDTO(r.ApplicationUser.Name, r.ApplicationUser.Surname, r.ApplicationUser.UserName, r.DeliveryCarDealer, r.PaymentMethod,r.StartDate,r.EndDate,r.RentingDate,r.TotalPrice,r.RentalItems
+             .Select(r => new RentalDetailDTO(r.Id, r.ApplicationUser.Name, r.ApplicationUser.Surname, r.ApplicationUser.UserName, r.DeliveryCarDealer, r.PaymentMethod,r.StartDate,r.EndDate,r.RentingDate,r.TotalPrice,r.RentalItems
                         .Select(ri => new RentalItemDTO(ri.Car.Model.Name, ri.Car.Manufacturer, ri.Car.RentingPrice, ri.Quantity)).ToList<RentalItemDTO>()))
              .FirstOrDefaultAsync();
 
@@ -146,7 +146,7 @@ namespace AppForSEII2526.API.Controllers
             }
 
             //creo el detalle del alquiler para mostrarlo por pantalla
-            var rentalDetail = new RentalDetailDTO(rental.ApplicationUser.Name, rental.ApplicationUser.Surname, rental.ApplicationUser.UserName, rental.DeliveryCarDealer, rental.PaymentMethod,rental.StartDate,rental.EndDate,rental.RentingDate,rental.TotalPrice,rentalForCreate.RentalItems);
+            var rentalDetail = new RentalDetailDTO(rental.Id, rental.ApplicationUser.Name, rental.ApplicationUser.Surname, rental.ApplicationUser.UserName, rental.DeliveryCarDealer, rental.PaymentMethod,rental.StartDate,rental.EndDate,rental.RentingDate,rental.TotalPrice,rentalForCreate.RentalItems);
 
             _logger.LogInformation($"RentalsController || El alquiler {rental.Id} se ha creado correctamente");
             return CreatedAtAction("GetDetailsRental", new { id = rental.Id }, rentalDetail); //devuelvo que se ha creado el alquiler y muestro el detalle

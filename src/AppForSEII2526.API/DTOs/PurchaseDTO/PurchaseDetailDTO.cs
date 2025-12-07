@@ -3,6 +3,8 @@ namespace AppForSEII2526.API.DTOs.PurchaseDTO
 {
     public class PurchaseDetailDTO
     {
+        public int Id { get; set; }
+
         [StringLength(20, ErrorMessage = "Name cannot be any longer than 20 characters, neither shorter than 2.", MinimumLength = 2)]
         public string Name { get; set; }
 
@@ -25,8 +27,9 @@ namespace AppForSEII2526.API.DTOs.PurchaseDTO
 
         public IList<PurchaseItemDTO> PurchaseItems { get; set; }
 
-        public PurchaseDetailDTO(string name, string surname, string userName, string deliveryCarDealer, DateTime purchasingDate, float purchasingPrice, IList<PurchaseItemDTO> purchaseItems)
+        public PurchaseDetailDTO(int id,  string name, string surname, string userName, string deliveryCarDealer, DateTime purchasingDate, float purchasingPrice, IList<PurchaseItemDTO> purchaseItems)
         {
+            Id = id;
             Name = name;
             Surname = surname;
             UserName = userName;
