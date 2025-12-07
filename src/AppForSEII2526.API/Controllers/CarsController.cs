@@ -34,7 +34,7 @@ namespace AppForSEII2526.API.Controllers
             var cars = await _context.Car
                 .Include(c => c.Model)
                 .Where(c => (c.Color.Contains(filtroColor) || filtroColor == null) && (c.Model.Name.Contains(modelo) || modelo == null))
-                .Select(c => new CarForPurchaseDTO(c.Id, c.Model.Name, c.Color, c.FuelType, c.Manufacturer, c.PurchasingPrice))
+                .Select(c => new CarForPurchaseDTO(c.Id, c.Model.Name, c.Color, c.Description, c.FuelType, c.Manufacturer, c.PurchasingPrice))
                 .ToListAsync();
             _logger.LogInformation($"CarsController || Coches para compra encontrados con los parametros {filtroColor} y {modelo}");
             return Ok(cars);

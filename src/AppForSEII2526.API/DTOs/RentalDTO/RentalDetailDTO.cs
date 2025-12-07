@@ -56,8 +56,10 @@ namespace AppForSEII2526.API.DTOs.RentalDTO
         public override bool Equals(object? obj)
         {
             return obj is RentalDetailDTO dTO &&
+                   Id == dTO.Id &&
                    Name == dTO.Name &&
                    Surname == dTO.Surname &&
+                   UserName == dTO.UserName &&
                    DeliveryCarDealer == dTO.DeliveryCarDealer &&
                    PaymentMethod == dTO.PaymentMethod &&
                    StartDate == dTO.StartDate &&
@@ -65,7 +67,6 @@ namespace AppForSEII2526.API.DTOs.RentalDTO
                    RentingDate == dTO.RentingDate &&
                    TotalPrice == dTO.TotalPrice &&
                    RentalItems.SequenceEqual(dTO.RentalItems);
-
         }
     }
 }
