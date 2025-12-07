@@ -45,10 +45,10 @@ namespace AppForSEII2526.UT.CarsController_test
         public static IEnumerable<object[]> TestCasesFor_GetCarsForPurchase_OK()
         {
             var carDTOs = new List<CarForPurchaseDTO>() { //me creo los propios dtos que me va a sacar el método select
-                new CarForPurchaseDTO(1,"Audi A4","Negro","Gasolina","Audi",18000f),
-                new CarForPurchaseDTO(2,"Citroen C15","Blanco","Diesel","Citroen",12000f),
-                new CarForPurchaseDTO(3,"Seat Leon","Rojo","Gasolina","Seat",15000f),
-                new CarForPurchaseDTO(4,"Peugeot 308","Rojo","Diesel","Peugeot",17000f),
+                new CarForPurchaseDTO(1,"Audi A4","Negro","Auto elegante y cómodo ideal para viajes largos.","Gasolina","Audi",18000f),
+                new CarForPurchaseDTO(2,"Citroen C15","Blanco","Vehiculo espacioso y resistente para transporte de carga.","Diesel","Citroen",12000f),
+                new CarForPurchaseDTO(3,"Seat Leon","Rojo","Auto urbano agil con excelente eficiencia de combustible.","Gasolina","Seat",15000f),
+                new CarForPurchaseDTO(4,"Peugeot 308","Rojo","Coche moderno con gran rendimiento y confort interior.","Diesel","Peugeot",17000f),
             };
 
             var carDTOsTC1 = new List<CarForPurchaseDTO>() { carDTOs[0], carDTOs[1], carDTOs[2], carDTOs[3] }; //según las entradas que tengo pensado meterle me tiene que salir esto
