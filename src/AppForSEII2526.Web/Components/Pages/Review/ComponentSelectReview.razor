@@ -8,7 +8,7 @@
 @inject ReviewStateContainer reviewStateContainer
 @inject NavigationManager navigation
 
-@attribute [Authorize]
+
 
 <h3>Review</h3>
 <div class="container-fluid">
@@ -46,6 +46,7 @@
                             <thead>
                                 <tr>
                                     <th>Model</th>
+                                    <th>Car Class</th>
                                     <th>Manufacturer</th>
                                     <th>Color</th>
                                     <th>Fuel Type</th>
@@ -56,6 +57,7 @@
                                 {
                                     <tr id="CarData_@car.Model">
                                         <td>@car.Model</td>
+                                        <td>@car.CarClass</td>
                                         <td>@car.Manufacturer</td>
                                         <td>@car.Color</td>
                                         <td>@car.FuelType</td>
