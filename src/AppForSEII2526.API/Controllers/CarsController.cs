@@ -20,7 +20,7 @@ namespace AppForSEII2526.API.Controllers
         {
             _context = context;
             _logger = logger;
-            _logger.LogInformation("Controller 'CarsController' inicializado");
+            _logger.LogInformation("Controller 'CarsController' initialized");
         }
 
         /*si no se le pasan parámetros imprime todos los coches, si se la pasa uno imprime aquellos
@@ -36,7 +36,7 @@ namespace AppForSEII2526.API.Controllers
                 .Where(c => (c.Color.Contains(filtroColor) || filtroColor == null) && (c.Model.Name.Contains(modelo) || modelo == null))
                 .Select(c => new CarForPurchaseDTO(c.Id, c.Model.Name, c.Color, c.Description, c.FuelType, c.Manufacturer, c.PurchasingPrice))
                 .ToListAsync();
-            _logger.LogInformation($"CarsController || Coches para compra encontrados con los parametros {filtroColor} y {modelo}");
+            _logger.LogInformation($"CarsController || Cars for purchase found with the parameters {filtroColor} and {modelo}");
             return Ok(cars);
         }
         
@@ -47,10 +47,10 @@ namespace AppForSEII2526.API.Controllers
         {
             var cars = await _context.Car
                 .Include(c=>c.Model)
-                .Where(c => (c.Model.Name.Contains(modelname) || modelname == null )&&( c.RentingPrice < rentingprice || rentingprice == null))
+                .Where(c => (c.Model.Name.Contains(modelname) || modelname == null )&&( c.RentingPrice <= rentingprice || rentingprice == null))
                 .Select(c=>new CarForRentalDTO(c.Id,c.Model.Name,c.FuelType,c.Manufacturer,c.RentingPrice,c.Color))
                 .ToListAsync();
-            _logger.LogInformation($"CarsController || Coches para alquiler encontrados con los parametros {modelname} y {rentingprice}");
+            _logger.LogInformation($"CarsController || Cars for renting found with the parameters {modelname} and {rentingprice}");
             return Ok(cars);
         }
         
@@ -64,7 +64,7 @@ namespace AppForSEII2526.API.Controllers
                 .Where(c => (c.Manufacturer.Contains(filtroManufacturer) || filtroManufacturer == null) && (c.FuelType.Contains(filtroFuelType) || (filtroFuelType == null)))
                 .Select(c => new CarForReviewDTO(c.Id, c.Model.Name, c.CarClass, c.Manufacturer, c.FuelType, c.Color)) 
                 .ToListAsync();
-            _logger.LogInformation($"CarsController || Coches para reseñar encontrados con los parametros {filtroManufacturer} y {filtroFuelType}");
+            _logger.LogInformation($"CarsController ||  Cars for review found with the parameters {filtroManufacturer} and {filtroFuelType}");
             return Ok(cars);
         }
     }

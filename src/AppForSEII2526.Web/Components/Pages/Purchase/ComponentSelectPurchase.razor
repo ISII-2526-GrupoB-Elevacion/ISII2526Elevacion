@@ -19,18 +19,18 @@
             <div class="row">
                 <div class="col" style="min-width: 300px;">
                     <div class="input-group mb-3">
-                        <span class="input-group-text" id="basic-addon1">Filtro de Color</span>
-                        <input type="text" id="inputTitle" @bind=filtroColor class="form-control" placeholder="Filtro de Color" aria-label="Filtro de Color" aria-describedby="basic-addon1">
+                        <span class="input-group-text" id="basic-addon1">Color</span>
+                        <input type="text" id="inputTitle" @bind=filtroColor class="form-control" placeholder="Color" aria-label="Color" aria-describedby="basic-addon1">
                     </div>
                 </div>
                 <div class="col" style="min-width: 300px;">
                     <div class="input-group mb-3">
-                        <span class="input-group-text" id="basic-addon1">Filtro de Modelo</span>
-                        <input type="text" id="inputTitle" @bind=modelo class="form-control" placeholder="Modelo" aria-label="Modelo" aria-describedby="basic-addon1">
+                        <span class="input-group-text" id="basic-addon1">Model</span>
+                        <input type="text" id="inputTitle" @bind=modelo class="form-control" placeholder="Model" aria-label="Modelo" aria-describedby="basic-addon1">
                     </div>
                 </div>
                 <div class="col">
-                    <button type="button" class="btn btn-primary" @onclick=@SearchCars id="searchCars">Buscar coches</button>
+                    <button type="button" class="btn btn-primary" @onclick=@SearchCars id="searchCars">Search Cars</button>
                 </div>
             </div>
             <div class="row">
@@ -44,11 +44,11 @@
                         <table class="table table-condensed table-hover" id="TableOfCars">
                             <thead>
                                 <tr>
-                                    <th>Modelo</th>
+                                    <th>Model</th>
                                     <th>Color</th>
-                                    <th>Tipo de gasoil</th>
-                                    <th>Fabricante</th>
-                                    <th>Precio</th>
+                                    <th>Fuel Type</th>
+                                    <th>Manufacturer</th>
+                                    <th>Purchasing Price</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -59,9 +59,9 @@
                                         <td>@car.Color</td>
                                         <td>@car.FuelType</td>
                                         <td>@car.Manufacturer</td>
-                                        <td>@car.PurchasingPrice</td>
+                                        <td>@car.PurchasingPrice €</td>
                                         <td>
-                                            <button class="btn btn-outline-secondary" id="carToPurchase_@car.Model" @onclick="@(() => AddCar(car))">Añadir</button>
+                                            <button class="btn btn-outline-secondary" id="carToPurchase_@car.Model" @onclick="@(() => AddCar(car))">Add</button>
                                         </td>
                                     </tr>
                                 }
@@ -82,7 +82,7 @@
                 </div>
             }
             <div class="row">
-                <button type="button" class="btn btn-primary" id="purchaseCarButton" @onclick=@PurchaseCars>Comprar coche</button>
+                <button type="button" class="btn btn-primary" id="purchaseCarButton" @onclick=@PurchaseCars>Purchase Cars</button>
             </div>
         </div>
     </div>
@@ -120,22 +120,22 @@
 
             if (cars.Count == 0 && !string.IsNullOrEmpty(filtroColor) && !string.IsNullOrEmpty(modelo))
             {
-                errors = $"Error al buscar coches de color '{filtroColor}' y modelo '{modelo}'. Intente de nuevo.";
+                errors = $"Error! There are not cars of color '{filtroColor}' and model '{modelo}'. Please apply other filters.";
             }
             else if (cars.Count == 0 && !string.IsNullOrEmpty(filtroColor))
             {
-                errors = $"Error al buscar coches de color '{filtroColor}'. Intente de nuevo.";
+                errors = $"Error! There are not cars of color '{filtroColor}'. Please apply other filters.";
             }
             else if (cars.Count == 0 && !string.IsNullOrEmpty(modelo))
             {
-                errors = $"Error al buscar coches de modelo '{modelo}'. Intente de nuevo.";
+                errors = $"Error! There are not cars of model '{modelo}'. Please apply other filters";
             }
 
         }
         catch (ApiException ex)
         {
             logger.LogError($"{DateTime.Now} Error: {ex}");
-            errors = "Error al conectarse al sistema";
+            errors = "Error while connecting the system";
         }
         StateHasChanged();
     }

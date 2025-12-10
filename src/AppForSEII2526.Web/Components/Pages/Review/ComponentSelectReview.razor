@@ -134,4 +134,10 @@
         StateHasChanged();
     }
 
+    protected override  Task OnInitializedAsync()
+    {
+        SearchCars();
+        return base.OnInitializedAsync();
+    }
+
 }

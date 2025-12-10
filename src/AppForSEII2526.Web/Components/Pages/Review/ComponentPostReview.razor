@@ -10,7 +10,7 @@
 
 @attribute [Authorize]
 
-<h3>PostReseña</h3>
+<h3>Create Review</h3>
 
 <EditForm Model="review" OnValidSubmit="OpenDialog">
     <div class="row">
@@ -56,7 +56,7 @@
         </div>
     </div>
 
-    <h4>Rental detail</h4>
+    <h4>Review Detail</h4>
     <p>
         <button class="btn btn-outline-primary" type="submit" @onclick="ModifyReviewItems" id="ModifyCar">
             Modify cars
@@ -97,8 +97,8 @@
 
 @if (DialogIsOpen)
 {
-    <DialogReview Caption="Reseñar coches"
-            Message="¿Seguro que quieres reseñar los coches seleccionados?"
+    <DialogReview Caption="Review Cars"
+            Message="¿Do you want to review the selected cars?"
             OnClose="@OnDialogClose"
             Type=DialogReview.Category.SaveNot>
     </DialogReview>

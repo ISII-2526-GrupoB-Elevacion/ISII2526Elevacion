@@ -18,25 +18,25 @@
         <ValidationSummary class="row alert alert-danger" />
     </div>
     <div class="row alert alert-danger" role="alert" hidden="@hideErrors">
-        <p id="ErrorsShown">Errores: @messageError</p>
+        <p id="ErrorsShown">Errors: @messageError</p>
     </div>
     <div class="row g-3">
         <div class="col-md">
             <div class="form-floating mb-3">
                 <InputText @bind-Value="purchase.Name" class="form-control" id="Nombre" />
-                <label for="Name">Nombre </label>
+                <label for="Name">Name </label>
             </div>
         </div>
         <div class="col-md">
             <div class="form-floating mb-3">
                 <InputText @bind-Value="purchase.Surname" class="form-control" id="Apellidos" />
-                <label for="Name">Apellidos </label>
+                <label for="Name">Surname </label>
             </div>
         </div>
         <div class="col-md">
             <div class="form-floating mb-3">
                 <InputText @bind-Value="purchase.DeliveryCarDealer" class="form-control" id="DeliveryAddress" />
-                <label for="DeliveryAddress">Dirección de entrega</label>
+                <label for="DeliveryAddress">DeliveryCarDealer</label>
             </div>
         </div>
     </div>
@@ -55,27 +55,27 @@
             <div class="form-floating">
                 @*this button will be used to ask the user if he want to proceed to purchase the cars*@
                 <button class="btn btn-primary" type="submit" id="Submit" disabled="@purchaseButtonDisabled">
-                    Compra tus coches
+                    Purchase your cars
                 </button>
             </div>
         </div>
     </div>
-    <h4>Detalles de compra</h4>
+    <h4>Purchase Detail</h4>
     <p>
         <b>Precio total:</b> @TotalCost €
         <button class="btn btn-outline-primary" type="submit" @onclick="ModifyPurchaseItems" id="ModifyCars">
-            Modificar coches
+            Modify your cars
         </button>
     </p>
     <div class="mh-100 table-responsive">
         <table class="table table-condensed table-hover" id="TableOfPurchaseItems">
             <thead>
                 <tr>
-                    <th>Modelo</th>
+                    <th>Model</th>
                     <th>Color</th>
-                    <th>Descripción</th>
-                    <th>Precio</th>
-                    <th>Cantidad</th>
+                    <th>Description</th>
+                    <th>Purchasing Price</th>
+                    <th>Quantity</th>
                 </tr>
             </thead>
             <tbody>
@@ -97,8 +97,8 @@
 @*a modal popup dialog for checking if user wants to proceed to purchase*@
 @if (DialogIsOpen)
 {
-    <DialogPurchase Caption="Comprar coches"
-    Message="¿Seguro que quieres comprar los coches seleccionados?"
+    <DialogPurchase Caption="Purchase cars"
+    Message="¿Do you want to buy your selected cars?"
     OnClose="@OnDialogClose"
     Type=DialogPurchase.Category.SaveNot>   
     </DialogPurchase>

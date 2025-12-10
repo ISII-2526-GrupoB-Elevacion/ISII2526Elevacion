@@ -55,7 +55,7 @@ namespace AppForSEII2526.UT.CarsController_test
             //datos de retorno de los casos de prueba
             var carDTOsTC1 = new List<CarForRentalDTO>() { carDTOs[0], carDTOs[1], carDTOs[2], carDTOs[3] };
             var carDTOsTC2 = new List<CarForRentalDTO>() { carDTOs[2] };
-            var carDTOsTC3 = new List<CarForRentalDTO>() { carDTOs[0], carDTOs[3] };
+            var carDTOsTC3 = new List<CarForRentalDTO>() { carDTOs[0], carDTOs[1], carDTOs[3] };
             var carDTOsTC4 = new List<CarForRentalDTO>() { carDTOs[1] };
 
             var allTests = new List<object[]> //creo las distintas pruebas

@@ -102,8 +102,8 @@ namespace AppForSEII2526.API.Controllers
 
                 if (item.Description != null && !item.Description.StartsWith("Reseña para"))
                 {
-                    ModelState.AddModelError("ReviewNoValid", $"Error! La reseña debe empezar por 'Reseña para'");
-                    _logger.LogError($"ReviewsController || Error! Reseña must start with 'Reseña para'");
+                    ModelState.AddModelError("ReviewNoValid", $"Error! Review must start with 'Reseña para'");
+                    _logger.LogError($"ReviewsController || Error! Review must start with 'Reseña para'");
                 }
                 var car = cars.FirstOrDefault(c => c.Name == item.Model); //saco el primer coche que me encuentra, sacando su nombre y modelo
 
@@ -140,7 +140,7 @@ namespace AppForSEII2526.API.Controllers
 
             var reviewDetail = new ReviewDetailDTO(review.Id, review.ApplicationUser.Name,review.ApplicationUser.Surname, review.ApplicationUser.UserName, review.Country, review.DriverType, review.Created, reviewForCreate.ReviewItems);
 
-            _logger.LogInformation($"ReviewsController || La reseña {review.Id} se ha guardado correctamente");
+            _logger.LogInformation($"ReviewsController || The review {review.Id} has been done correctly");
             return CreatedAtAction("GetDetailsReview", new { id = review.Id }, reviewDetail);
         }
     }

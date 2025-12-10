@@ -155,7 +155,7 @@
             {
                 //the rentingcart is cleared to ensure that only cars available for the selected period are selected
                 _renting = value;
-                rental.EndDate = DateTime.SpecifyKind(_renting, DateTimeKind.Utc);
+                rental.RentingDate = DateTime.SpecifyKind(_renting, DateTimeKind.Utc);
                 rentalState.ClearRentingCart();
             }
         }
