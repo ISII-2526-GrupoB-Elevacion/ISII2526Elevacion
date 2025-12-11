@@ -69,7 +69,7 @@ namespace AppForSEII2526.UT.PurchasesController_test
                 new object[] { purchaseApplicationUser, "Error! UserName is not registered", },
                 new object[] { purchaseCarNotExists, "Error! The car Ferrari La Ferrari is not for sale at the dealership", },
                 new object[] { purchaseCarNotAvailable, "Error! There are not enough units available to purchase the car Audi A4", },
-                new object[] { purchaseTooManyCars, "Error! Estás comprando demasiados coches sin descripción", },
+                new object[] { purchaseTooManyCars, "Error! You're buying too many cars without description", },
             };
 
             return allTests;

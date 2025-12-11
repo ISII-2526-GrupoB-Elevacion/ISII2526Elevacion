@@ -73,8 +73,8 @@ namespace AppForSEII2526.API.Controllers
 
             if (!rentalForCreate.DeliveryCarDealer.Contains("Calle"))
             {
-                ModelState.AddModelError("DeliveryCarDealer", "Error! La dirección de envío debe empezar por la palabra Calle");
-                _logger.LogError($"RentalsController || Error! La dirección de envío debe empezar por la palabra Calle");
+                ModelState.AddModelError("DeliveryCarDealer", "Error! the delivery direction must start with the word Calle");
+                _logger.LogError($"RentalsController || Error! the delivery direction must start with the word Calle");
             }
 
             //if (!_context.ApplicationUser.Any(au=>au.UserName == rentalFromCreate.CustomerUserName)) Es lo mismo que lo de abajo pero de otra forma
@@ -148,7 +148,7 @@ namespace AppForSEII2526.API.Controllers
             //creo el detalle del alquiler para mostrarlo por pantalla
             var rentalDetail = new RentalDetailDTO(rental.Id, rental.ApplicationUser.Name, rental.ApplicationUser.Surname, rental.ApplicationUser.UserName, rental.DeliveryCarDealer, rental.PaymentMethod,rental.StartDate,rental.EndDate,rental.RentingDate,rental.TotalPrice,rentalForCreate.RentalItems);
 
-            _logger.LogInformation($"RentalsController || El alquiler {rental.Id} se ha creado correctamente");
+            _logger.LogInformation($"RentalsController || The rental {rental.Id} has been done correctly");
             return CreatedAtAction("GetDetailsRental", new { id = rental.Id }, rentalDetail); //devuelvo que se ha creado el alquiler y muestro el detalle
         }
 

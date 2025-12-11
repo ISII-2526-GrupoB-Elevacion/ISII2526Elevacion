@@ -70,7 +70,7 @@ namespace AppForSEII2526.UT.ReviewsController_test
                 new object[] { reviewNoITem, "Error! You must include at least one car to be reviewed",  },
                 new object[] { reviewDriverType, "Error! DriverType must be 'Novato' or 'Experto'", },
                 new object[] { ReviewApplicationUser, "Error! UserName is not registered", },
-                new object[] { ReviewNoValid, "Error! La reseña debe empezar por 'Reseña para'", },
+                new object[] { ReviewNoValid, "Error! Review must start with 'Reseña para'", },
                 new object[] { reviewCarNotExist, "Error! The car Citroen C15 does not exist, so you cannot create a review for this car", },
             };
 

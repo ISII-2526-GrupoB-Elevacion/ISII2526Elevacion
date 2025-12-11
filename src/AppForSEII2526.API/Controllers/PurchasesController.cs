@@ -17,7 +17,7 @@ namespace AppForSEII2526.API.Controllers
         {
             _context = context;
             _logger = logger;
-            _logger.LogInformation("Controller 'PurchasesController' inicializado");
+            _logger.LogInformation("Controller 'PurchasesController' initialized");
         }
 
         [HttpGet]
@@ -113,7 +113,7 @@ namespace AppForSEII2526.API.Controllers
                 }
                 else if (item.Quantity==2 && string.IsNullOrEmpty(item.Description))
                 {
-                    ModelState.AddModelError("Purchase Items", $"Error! Estás comprando demasiados coches sin descripción");
+                    ModelState.AddModelError("Purchase Items", $"Error! You're buying too many cars without description");
                 }
                 else //una vez todos los criterios han sido cumplidos, acabo de rellenar la compra con los atributos necesarios y voy calculando el precio total de la compra según los atributos de la tabla coche. Multiplico el precio de un coche por la cantidad de coches que quiero comprar
                 {
@@ -144,7 +144,7 @@ namespace AppForSEII2526.API.Controllers
             var purchaseDetail = new PurchaseDetailDTO(purchase.Id, purchase.ApplicationUser.Name, purchase.ApplicationUser.Surname, purchase.ApplicationUser.UserName, purchase.DeliveryCarDealer, purchase.PurchasingDate,
                 purchase.PurchasingPrice, purchaseForCreate.PurchaseItems); //monto los detalles de la compra que acabo de realizar para posteriormente mostrarlos al cliente
 
-            _logger.LogInformation($"PurchasesController || La compra {purchase.Id} se ha realizado correctamente");
+            _logger.LogInformation($"PurchasesController || The purchase {purchase.Id} Has been done correctly");
             return CreatedAtAction("GetDetailsPurchase", new { id = purchase.Id }, purchaseDetail); //devuelvo un return de CreatedAction indicando al usuario que el coche ya ha sido creado, a la misma vez que paso la referencia de la compra (id.) al método de detalles a la vez que la propia información que tienen que sacar por pantalla
         }
     }

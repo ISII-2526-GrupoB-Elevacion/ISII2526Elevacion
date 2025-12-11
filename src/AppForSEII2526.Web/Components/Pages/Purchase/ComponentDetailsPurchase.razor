@@ -16,28 +16,28 @@ else
 {
     <table class="table table-borderless table-sm">
         <tr>
-            <th>Nombre y apellidos</th>
+            <th>Name and Surname</th>
             <td id="NameSurname">@purchase.Name @purchase.Surname</td>
         </tr>
         <tr>
-            <th>Dirección de envío</th>
+            <th>Delivery Car Dealer</th>
             <td id="DeliveryAddress">@purchase.DeliveryCarDealer</td>
         </tr>
         <tr>
-            <th>Fecha de compra</th>
+            <th>Purchasing Date</th>
             <td id="PurchasingDate">@purchase.PurchasingDate</td>
         </tr>
     </table>
 
-    <h4>Coches comprados</h4>
+    <h4>Purchased Cars</h4>
 
     <table class="table" id="PurchasedCars">
         <thead>
             <tr>
-                <th scope="col">Modelo</th>
-                <th scope="col">Precio</th>
+                <th scope="col">Model</th>
+                <th scope="col">Purchasing Price</th>
                 <th scope="col">Color</th>
-                <th scope="col">Cantidad</th>
+                <th scope="col">Quantity</th>
             </tr>
         </thead>
         <tbody>
@@ -53,7 +53,7 @@ else
         </tbody>
         <tfoot>
             @*colspan is used to state that TWO columns are collapsed*@
-        <th scope="row" colspan="2" class="text-end">Precio total</th>
+        <th scope="row" colspan="2" class="text-end">Total Price</th>
         <td id="TotalPrice">@purchase.PurchasingPrice €</td>
         </tfoot>
 
@@ -102,7 +102,7 @@ else
         }
         if ((purchase == null) || (purchase.UserName != userName))
         {
-            error = $"Error! No estás autorizado para ver esa compra o no hay una compra con id = {PurchaseID}";
+            error = $"Error! You are not authorized to see this purchase or there is not a purchase with id = {PurchaseID}";
         }
     }
 }

@@ -62,7 +62,7 @@
         </div>
     </div>
 
-    <h4>Rental detail</h4>
+    <h4>Rental Detail</h4>
     <p><b>Date from:</b> @rental.StartDate.ToString("dd/MM/yyyy") <b>to:</b> @rental.EndDate.ToString("dd/MM/yyyy")</p>
     <p><b>Renting Date:</b> @rental.RentingDate.ToString("dd/MM/yyyy")</p>
     <p>
@@ -99,7 +99,7 @@
 @if (DialogIsOpen)
 {
     <DialogRental Caption="Rent Cars"
-                  Message="Do you want to rent these cars?"
+                  Message="Do you want to rent the selected cars?"
                   OnClose="@OnDialogClose"
                   Type="DialogRental.Category.SaveNot">
     </DialogRental>

@@ -85,7 +85,7 @@ namespace AppForSEII2526.UT.RentalsController_test
                 new object[] { rentalFromBeforeToday, "Error! Your rental date must start later than today", },
                 new object[] { rentalToBeforeFrom, "Error! Your rental must end later than it starts", },
                 new object[] { RentalApplicationUser, "Error! UserName is not registered", },
-                new object [] { BadDirection, "Error! La dirección de envío debe empezar por la palabra Calle", },
+                new object [] { BadDirection, "Error! the delivery direction must start with the word Calle", },
                 new object[] { rentalCarNotAvailable, "Error! Car 'Citroen c15' is not available for being rented from", },
             };
 
