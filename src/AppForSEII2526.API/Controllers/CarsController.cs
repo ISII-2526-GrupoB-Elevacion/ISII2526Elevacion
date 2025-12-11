@@ -33,7 +33,7 @@ namespace AppForSEII2526.API.Controllers
         {
             var cars = await _context.Car
                 .Include(c => c.Model)
-                .Where(c => (c.Color.Contains(filtroColor) || filtroColor == null) && (c.Model.Name.Contains(modelo) || modelo == null))
+                .Where(c => (c.Color.Contains(filtroColor) || filtroColor == null) && (c.Model.Name.Contains(modelo) || modelo == null) && c.QuantityForPurchasing>0)
                 .Select(c => new CarForPurchaseDTO(c.Id, c.Model.Name, c.Color, c.Description, c.FuelType, c.Manufacturer, c.PurchasingPrice))
                 .ToListAsync();
             _logger.LogInformation($"CarsController || Cars for purchase found with the parameters {filtroColor} and {modelo}");
@@ -47,7 +47,7 @@ namespace AppForSEII2526.API.Controllers
         {
             var cars = await _context.Car
                 .Include(c=>c.Model)
-                .Where(c => (c.Model.Name.Contains(modelname) || modelname == null )&&( c.RentingPrice <= rentingprice || rentingprice == null))
+                .Where(c => (c.Model.Name.Contains(modelname) || modelname == null )&&( c.RentingPrice <= rentingprice || rentingprice == null) && c.QuantityForRenting > 0)
                 .Select(c=>new CarForRentalDTO(c.Id,c.Model.Name,c.FuelType,c.Manufacturer,c.RentingPrice,c.Color))
                 .ToListAsync();
             _logger.LogInformation($"CarsController || Cars for renting found with the parameters {modelname} and {rentingprice}");

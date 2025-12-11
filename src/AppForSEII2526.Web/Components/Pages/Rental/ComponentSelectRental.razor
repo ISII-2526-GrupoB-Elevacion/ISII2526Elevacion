@@ -56,6 +56,10 @@
                 {
                     <p>Loading cars....</p>
                 }
+                else if (cars.Count == 0)
+                {
+                    <p><em>There are no cars available for being rented.</em></p>
+                }
                 else
                 {
                     <div class="mh-100 table-responsive">
@@ -192,6 +196,7 @@
         try
         {
             cars = await apiclient.GetCarsForRentingAsync(modelname, rentingprice);
+            Console.WriteLine(cars.Count);
             errors = "";
         }
         catch (ApiException ex)
