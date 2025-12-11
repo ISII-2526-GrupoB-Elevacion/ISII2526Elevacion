@@ -21,18 +21,18 @@
                         break;
                     case Category.SaveNot:
                         <button type="button" class="btn btn-primary" @onclick=@Ok id="Button_DialogOK">
-                            Guardar
+                            Save
                         </button>
                         <button type="button" class="btn btn-warning" @onclick="@Cancel" id="Button_DialogCancel">
-                            No guardar
+                            Don't Save
                         </button>
                         break;
                     case Category.DeleteNot:
                         <button type="button" class="btn btn-danger" @onclick=@Ok id="Button_DialogOK">
-                            Eliminar
+                            Delete
                         </button>
                         <button type="button" class="btn btn-warning" @onclick="@Cancel" id="Button_DialogCancel">
-                            No eliminar
+                            Don't Delete
                         </button>
                         break;
                 }
