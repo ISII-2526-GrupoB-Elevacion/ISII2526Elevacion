@@ -36,7 +36,11 @@
             <div class="row">
                 @if (cars == null)
                 {
-                    <p>Loading cars....</p>
+                    <p>Loading cars...</p>
+                }
+                else if (cars.Count == 0 && string.IsNullOrEmpty(filtroColor) && string.IsNullOrEmpty(modelo))
+                {
+                    <p><em>There are no cars available for being purchased.</em></p>
                 }
                 else
                 {
@@ -117,6 +121,8 @@
         {
             cars = await apiclient.GetCarsForPurchaseAsync(filtroColor, modelo);
             errors = "";
+
+            Console.WriteLine(cars.Count);
 
             if (cars.Count == 0 && !string.IsNullOrEmpty(filtroColor) && !string.IsNullOrEmpty(modelo))
             {
