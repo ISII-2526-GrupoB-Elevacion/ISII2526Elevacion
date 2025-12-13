@@ -20,17 +20,17 @@
                 <div class="col" style="min-width: 300px;">
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1">Color</span>
-                        <input type="text" id="inputTitle" @bind=filtroColor class="form-control" placeholder="Color" aria-label="Color" aria-describedby="basic-addon1">
+                        <input type="text" id="inputColor" @bind=filtroColor class="form-control" placeholder="Color" aria-label="Color" aria-describedby="basic-addon1">
                     </div>
                 </div>
                 <div class="col" style="min-width: 300px;">
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1">Model</span>
-                        <input type="text" id="inputTitle" @bind=modelo class="form-control" placeholder="Model" aria-label="Modelo" aria-describedby="basic-addon1">
+                        <input type="text" id="inputModel" @bind=modelo class="form-control" placeholder="Model" aria-label="Modelo" aria-describedby="basic-addon1">
                     </div>
                 </div>
                 <div class="col">
-                    <button type="button" class="btn btn-primary" @onclick=@SearchCars id="searchCars">Search Cars</button>
+                    <button type="button" class="btn btn-primary" @onclick=@SearchCars id="searchCarsButton">Search Cars</button>
                 </div>
             </div>
             <div class="row">
