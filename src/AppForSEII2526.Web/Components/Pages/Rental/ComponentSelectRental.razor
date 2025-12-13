@@ -196,7 +196,6 @@
         try
         {
             cars = await apiclient.GetCarsForRentingAsync(modelname, rentingprice);
-            Console.WriteLine(cars.Count);
             errors = "";
         }
         catch (ApiException ex)
