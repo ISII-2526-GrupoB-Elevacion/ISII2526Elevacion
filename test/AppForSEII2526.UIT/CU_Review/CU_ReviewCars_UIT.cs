@@ -17,13 +17,13 @@ namespace AppForSEII2526.UIT.CU_Review
         private const string carModel1 = "Audi A4";
         private const string carCarClass1 = "Berlina";
         private const string carManufacturer1 = "Audi";
-        private const string carFuelype1 = "Gasolina";
+        private const string carFuelType1 = "Gasolina";
         private const string carColor1 = "Gris";
 
         private const string carModel2 = "Toyota Corolla";
         private const string carCarClass2 = "Familiar";
         private const string carManufacturer2 = "Toyota";
-        private const string carFuelype2 = "Diesel";
+        private const string carFuelType2 = "Diesel";
         private const string carColor2 = "Rojo";
 
         public CU_ReviewCars_UIT(ITestOutputHelper output) : base(output) {
@@ -62,14 +62,16 @@ namespace AppForSEII2526.UIT.CU_Review
         }
 
         [Theory]
-        [InlineData(carModel1, carCarClass1, carManufacturer1, carFuelype1,carColor1, "Audi", "")]
-        [InlineData(carModel2, carCarClass2, carManufacturer2, carFuelype2, carColor2, "", "Diesel")]
+        [InlineData(carModel1, carCarClass1, carManufacturer1, carFuelType1,carColor1, "Audi", "")]
+        [InlineData(carModel2, carCarClass2, carManufacturer2, carFuelType2, carColor2, "", "Diesel")]
         [Trait("LevelTesting", "Funcional Testing")]
-        public void UC4_AF0_UC4_2_3_filtering(string carModel, string carCarClass,string carManufacturer, string carFuelype, string carColor, string filterManufacturer, string filterFuelType)
+        public void UC4_AF0_UC4_2_3_filtering(string carModel, string carCarClass,string carManufacturer, string carFuelType, string carColor, string filterManufacturer, string filterFuelType)
         {
             //Arrange
             InitialStepsForReviewCars();
-            var expectedCars = new List<string[]> { new string[] {carModel,carCarClass,carManufacturer,carFuelype,carColor }, };
+            var expectedCars = new List<string[]> {
+                new string[] { carModel, carCarClass, carManufacturer, carColor, carFuelType }
+            };
 
             //Act
             selectCarsForReview_PO.SearchCars(filterManufacturer, filterFuelType);
