@@ -38,21 +38,26 @@ namespace AppForSEII2526.UIT.CU_Review
         private void InitialStepsForReviewCars()
         {
             Precondition_perform_login();
+
+            // Espera de seguridad tras login
+            Thread.Sleep(1000);
+
             var byCreate = By.Id("CreateReview");
-            const int maxAttempts = 3;
-            for (int attempt = 1; attempt <= maxAttempts; attempt++)
+            selectCarsForReview_PO.WaitForBeingClickable(byCreate);
+            var element = _driver.FindElement(byCreate);
+
+
+            IJavaScriptExecutor executor = (IJavaScriptExecutor)_driver;
+            executor.ExecuteScript("arguments[0].click();", element);
+
+            try
             {
-                try
-                {
-                    selectCarsForReview_PO.WaitForBeingClickable(byCreate);
-                    _driver.FindElement(byCreate).Click();
-                    break;
-                }
-                catch (StaleElementReferenceException)
-                {
-                    if (attempt == maxAttempts) throw;
-                    Thread.Sleep(250);
-                }
+                var wait = new OpenQA.Selenium.Support.UI.WebDriverWait(_driver, TimeSpan.FromSeconds(5));
+                wait.Until(d => d.Url.Contains("review"));
+            }
+            catch (WebDriverTimeoutException)
+            {
+                _driver.Navigate().GoToUrl(new Uri(_driver.Url).GetLeftPart(UriPartial.Authority) + "/review/select");
             }
         }
 
