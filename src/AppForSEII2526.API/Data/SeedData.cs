@@ -141,7 +141,7 @@ namespace AppForSEII2526.API.Data
 
         public static void SeedModelsAndCars(ApplicationDbContext dbcontext)
         {
-            string[] modelsnames = ["Audi A4", "Toyota Corolla", "Renaul Clio"];
+            string[] modelsnames = ["Audi A4", "Toyota Corolla", "Renault Clio"];
             List<Model> models = [];
             Car car;
             foreach (string modelname in modelsnames)
