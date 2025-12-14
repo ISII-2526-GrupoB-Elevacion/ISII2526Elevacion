@@ -1,4 +1,5 @@
-﻿using AppForSEII2526.UIT.Shared;
+﻿using AppForSEII2526.UIT.CU_Purchase;
+using AppForSEII2526.UIT.Shared;
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
@@ -52,24 +53,12 @@ namespace AppForSEII2526.UIT.CU_Review
             Perform_login("elena@uclm.es", "Password1234%");
         }
 
-        private void InitialStepsForReviewCars()
+        private void InitialStepsForPurchaseCars()
         {
             Precondition_perform_login();
             Thread.Sleep(1000);
-
             selectCarsForReview_PO.WaitForBeingVisible(By.Id("CreateReview"));
             _driver.FindElement(By.Id("CreateReview")).Click();
-
-            // Bloque try-catch para manejar la navegación si es necesaria una espera explícita como en tu borrador
-            try
-            {
-                var wait = new OpenQA.Selenium.Support.UI.WebDriverWait(_driver, TimeSpan.FromSeconds(5));
-                wait.Until(d => d.Url.Contains("review"));
-            }
-            catch (WebDriverTimeoutException)
-            {
-                // Fallback de seguridad
-            }
         }
 
         [Theory]
