@@ -78,6 +78,12 @@ namespace AppForSEII2526.UIT.CU_Review
             _driver.FindElement(buttonRemoveBy).Click();
         }
 
+        public void ReviewCars()
+        {
+            WaitForBeingClickable(buttonReviewCars);
+            _driver.FindElement(buttonReviewCars).Click();
+        }
+
         public bool ReviewNotAvailable()
         {
             // Lógica robusta:
