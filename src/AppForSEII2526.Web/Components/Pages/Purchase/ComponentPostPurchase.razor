@@ -62,7 +62,7 @@
     </div>
     <h4>Purchase Detail</h4>
     <p>
-        <b>Precio total:</b> @TotalCost €
+        <b>Total Price:</b> <span id="TotalPrice">@TotalCost</span> €
         <button class="btn btn-outline-primary" type="submit" @onclick="ModifyPurchaseItems" id="ModifyCars">
             Modify your cars
         </button>
@@ -86,7 +86,7 @@
                         <td>@item.Color</td>
                         <td>@item.Description</td>
                         <td>@item.PurchasingPrice</td>
-                        <td><InputNumber @bind-Value="item.Quantity" class="form-control" id="@($"quantity_{item.Quantity}")" /></td>
+                        <td><InputNumber @bind-Value="item.Quantity" class="form-control" id="@($"quantity_{item.Model}")" /></td>
                     </tr>
                 }
             </tbody>
@@ -98,9 +98,9 @@
 @if (DialogIsOpen)
 {
     <DialogPurchase Caption="Purchase cars"
-    Message="¿Do you want to buy your selected cars?"
-    OnClose="@OnDialogClose"
-    Type=DialogPurchase.Category.SaveNot>   
+                    Message="¿Do you want to buy your selected cars?"
+                    OnClose="@OnDialogClose"
+                    Type=DialogPurchase.Category.SaveNot>
     </DialogPurchase>
 }
 
