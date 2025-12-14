@@ -46,11 +46,11 @@ namespace AppForSEII2526.UIT.CU_Review
         }
 
         // Rellena la descripción y el rating del coche en la tabla
-        public void FillInCarDetails(string description, int rating, int carId)
+        public void FillInCarDetails(string description, int rating, string carId)
         {
             // Definimos los selectores dinámicos basados en el ID del coche
-            By descriptionBy = By.Id("Description_" + carId);
-            By ratingBy = By.Id("Rating_" + carId);
+            By descriptionBy = By.Id("description_" + carId);
+            By ratingBy = By.Id("rating_" + carId);
 
             WaitForBeingVisible(descriptionBy);
 

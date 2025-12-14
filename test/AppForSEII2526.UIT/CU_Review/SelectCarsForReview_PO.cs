@@ -63,7 +63,7 @@ namespace AppForSEII2526.UIT.CU_Review
         {
             // CORRECCIÓN: Usamos XPath para soportar espacios en el ID (ej: "Audi A4")
             // By.Id a veces falla con espacios, XPath es más seguro aquí.
-            By buttonAddBy = By.XPath($"//button[@id='carToReview_{carModel}']");
+            By buttonAddBy = By.Id("carToReview_" + carModel);
 
             WaitForBeingClickable(buttonAddBy);
             _driver.FindElement(buttonAddBy).Click();
@@ -72,7 +72,7 @@ namespace AppForSEII2526.UIT.CU_Review
         public void RemoveCarFromReviewCart(string carModel)
         {
             // Misma corrección para el botón de borrar para soportar espacios
-            By buttonRemoveBy = By.XPath($"//button[@id='removeCar_{carModel}']");
+            By buttonRemoveBy = By.Id("removeCar_" + carModel);
 
             WaitForBeingClickable(buttonRemoveBy);
             _driver.FindElement(buttonRemoveBy).Click();

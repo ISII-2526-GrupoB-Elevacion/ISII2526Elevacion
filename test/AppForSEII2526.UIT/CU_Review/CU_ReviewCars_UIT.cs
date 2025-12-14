@@ -138,7 +138,7 @@ namespace AppForSEII2526.UIT.CU_Review
             createReview_PO.FillInReviewInfo(name, surname, country, driverType);
 
             // Si el ID es correcto (1) y el page object espera visibilidad, esto funcionará
-            createReview_PO.FillInCarDetails(description, rating, carId1);
+            createReview_PO.FillInCarDetails(description, rating, carModel1);
 
             createReview_PO.PressReviewYourCars();
 
@@ -159,15 +159,15 @@ namespace AppForSEII2526.UIT.CU_Review
             selectCarsForReview_PO.ReviewCars();
 
             createReview_PO.FillInReviewInfo(name, surname, country, driverType);
-            createReview_PO.FillInCarDetails(descriptionValid, ratingValid, carId1);
-            createReview_PO.FillInCarDetails(descriptionValid, ratingValid, carId2);
+            createReview_PO.FillInCarDetails(descriptionValid, ratingValid, carModel1);
+            createReview_PO.FillInCarDetails(descriptionValid, ratingValid, carModel2);
 
             createReview_PO.PressModifyCars();
 
             selectCarsForReview_PO.RemoveCarFromReviewCart(carModel2);
             selectCarsForReview_PO.ReviewCars();
 
-            createReview_PO.FillInCarDetails(descriptionValid, ratingValid, carId1);
+            //createReview_PO.FillInCarDetails(descriptionValid, ratingValid, carModel1);
 
             //Assert
             var expectedReviewItems = new List<string[]> {
