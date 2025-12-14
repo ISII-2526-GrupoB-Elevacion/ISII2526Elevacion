@@ -23,19 +23,19 @@
     <div class="row g-3">
         <div class="col-md">
             <div class="form-floating mb-3">
-                <InputText @bind-Value="rental.Name" class="form-control" id="Name" />
+                <InputText @bind-Value="rental.Name" class="form-control" id="RentalName" />
                 <label for="Name">Name </label>
             </div>
         </div>
         <div class="col-md">
             <div class="form-floating mb-3">
-                <InputText @bind-Value="rental.Surname" class="form-control" id="Surname" />
+                <InputText @bind-Value="rental.Surname" class="form-control" id="RentalSurname" />
                 <label for="Surname">Surname </label>
             </div>
         </div>
         <div class="col-md">
             <div class="form-floating mb-3">
-                <InputText @bind-Value="rental.DeliveryCarDealer" class="form-control" id="DeliveryCarDealer" />
+                <InputText @bind-Value="rental.DeliveryCarDealer" class="form-control" id="RentalDeliveryCarDealer" />
                 <label for="DeliveryCarDealer">Delivery Car Dealer</label>
             </div>
         </div>
@@ -44,7 +44,7 @@
         <div class="col-md">
             <div class="form-floating">
                 @*a dropdown for selecting the payment method*@
-                <InputSelect class="form-select" @bind-Value="@rental.PaymentMethod" id="PaymentMethod">
+                <InputSelect class="form-select" @bind-Value="@rental.PaymentMethod" id="RentalPaymentMethod">
                     <option value="@RentalPaymentMethodEnum.Visa" default>Visa</option>
                     <option value="@RentalPaymentMethodEnum.GooglePay"> GooglePay</option>
                     <option value="@RentalPaymentMethodEnum.PayPal"> PayPal</option>
@@ -55,7 +55,7 @@
         <div class="col-md">
             <div class="form-floating">
                 @*this button will be used to ask the user if he want to proceed to rent the cars*@
-                <button class="btn btn-primary" type="submit" id="Submit" disabled="@rentalButtonDisabled">
+                <button class="btn btn-primary" type="submit" id="RentalSubmit" disabled="@rentalButtonDisabled">
                     Rent your cars
                 </button>
             </div>
@@ -66,8 +66,8 @@
     <p><b>Date from:</b> @rental.StartDate.ToString("dd/MM/yyyy") <b>to:</b> @rental.EndDate.ToString("dd/MM/yyyy")</p>
     <p><b>Renting Date:</b> @rental.RentingDate.ToString("dd/MM/yyyy")</p>
     <p>
-        <b>Total price:</b> @TotalCost €
-        <button class="btn btn-outline-primary" type="submit" @onclick="ModifyRentalItems" id="ModifyCars">
+        <b>Total price:</b> <span id="RentalTotalPrice"> @TotalCost </span> €
+        <button class="btn btn-outline-primary" type="submit" @onclick="ModifyRentalItems" id="ModifyRental">
             Modify cars
         </button>
     </p>
@@ -88,7 +88,7 @@
                         <td>@item.Model</td>
                         <td>@item.Manufacturer</td>
                         <td>@item.RentingPrice €</td>
-                        <td><InputNumber @bind-Value="item.Quantity" class="form-control" id="@($"quantity_{item.Quantity}")" /></td>
+                        <td><InputNumber @bind-Value="item.Quantity" class="form-control" id="@($"quantity_{item.Model}")" /></td>
                     </tr>
                 }
             </tbody>
