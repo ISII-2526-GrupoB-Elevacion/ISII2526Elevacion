@@ -37,11 +37,13 @@ namespace AppForSEII2526.UIT.CU_Purchase
 
         private SelectCarsForPurchase_PO selectCarsForPurchase_PO;
         private CreatePurchase_PO createPurchase_PO;
+        private DetailPurchase_PO detailPurchase_PO;
 
         public CU_PurchaseCars_UIT(ITestOutputHelper output) : base(output)
         {
             selectCarsForPurchase_PO = new SelectCarsForPurchase_PO(_driver, _output);
             createPurchase_PO = new CreatePurchase_PO(_driver, _output);
+            detailPurchase_PO = new DetailPurchase_PO(_driver, _output);
         }
 
         private void Precondition_perform_login()
@@ -49,12 +51,6 @@ namespace AppForSEII2526.UIT.CU_Purchase
             Perform_login("elena@uclm.es", "Password1234%");
         }
 
-        /*
-         * Gran parte de la función InitialStepsForPurchaseCars() está sacado de ChatGPT
-         * debido a que, con el código del repositorio de ejemplo,
-         * cuando hace el login algunas veces se quedaba pillado intentando hacer click en el botón de Purchase
-         * para acceder a la sección del select, por algún tipo de click falso o precarga rara
-         */
         private void InitialStepsForPurchaseCars()
         {
             Precondition_perform_login();
@@ -63,19 +59,46 @@ namespace AppForSEII2526.UIT.CU_Purchase
             _driver.FindElement(By.Id("CreatePurchase")).Click();
         }
 
-
-        [Fact]
+        [Theory]
+        [InlineData(model1, name, surname, deliveryCarDealer, paymentMethod1, quantity)]
+        [InlineData(model1, name, surname, deliveryCarDealer, paymentMethod2, quantity)]
         [Trait("LevelTesting", "Funcional Testing")]
-        public void CU1_FA0_CU1_3_CarsNotAvailable()
+        public void UC1_CU1_2_BasicFlow(string model, string name, string surname, string deliveryCarDealer, string paymentMethod, string quantity)
         {
             //Arrange
             InitialStepsForPurchaseCars();
+            var expectedPurchaseItems = new List<string[]> { new string[] { model1, purchasingPrice1, color1, quantity }, };
+
+            //Act
+            selectCarsForPurchase_PO.AddCarToShoppingCart(model);
+            selectCarsForPurchase_PO.PurchaseCars();
+
+            createPurchase_PO.FillInPurchaseInfo(name, surname, deliveryCarDealer, paymentMethod);
+            createPurchase_PO.FillInPurchaseQuantity(quantity, model);
+            createPurchase_PO.PressPurchaseYourCars();
+            createPurchase_PO.PressOkModalDialog();
+
+            //Assert
+            Assert.True(detailPurchase_PO.CheckPurchaseDetail(name + " " + surname,
+               deliveryCarDealer, DateTime.Now, purchasingPrice1),
+               "Error: detail purchase is not as expected");
+
+            Assert.True(detailPurchase_PO.CheckListOfPurchase(expectedPurchaseItems),
+                "Error: purchase items are not as expected");
+        }
+
+        [Fact]
+        [Trait("LevelTesting", "Funcional Testing")]
+        public void UC1_FA0_CU1_3_CarsNotAvailable()
+        {
+            //Arrange
+            InitialStepsForPurchaseCars();
+            var expectedMessage = "There are no cars available for being purchased.";
 
             //Act
             selectCarsForPurchase_PO.SearchCars("", "");
 
             //Assert
-            var expectedMessage = "There are no cars available for being purchased.";
             Assert.True(selectCarsForPurchase_PO.CheckMessageErrorNotAvailableCars(expectedMessage));
         }
 
@@ -84,7 +107,7 @@ namespace AppForSEII2526.UIT.CU_Purchase
         [InlineData(model2, color2, fuelType2, manufacturer2, purchasingPrice2, "", "Audi A4")]
         [InlineData(model2, color2, fuelType2, manufacturer2, purchasingPrice2, "Gris", "Audi A4")]
         [Trait("LevelTesting", "Funcional Testing")]
-        public void CU1_FA1_CU1_4_5_6_Filtering(string model, string color, string fuelType, string manufacturer, string purchasingPrice, string filterColor, string filterModel)
+        public void UC1_FA1_CU1_4_5_6_Filtering(string model, string color, string fuelType, string manufacturer, string purchasingPrice, string filterColor, string filterModel)
         {
             //Arrange
             InitialStepsForPurchaseCars();
@@ -100,7 +123,7 @@ namespace AppForSEII2526.UIT.CU_Purchase
         [Theory]
         [InlineData(model1, model2, color1, color2, fuelType1, fuelType2, manufacturer1, manufacturer2, purchasingPrice1, purchasingPrice2, "", "")]
         [Trait("LevelTesting", "Funcional Testing")]
-        public void CU1_FA1_CU1_7_Filtering(string model1, string model2, string color1, string color2, string fuelType1, string fuelType2, string manufacturer1, string manufacturer2, string purchasingPrice1, string purchasingPrice2, string filterColor, string filterModel)
+        public void UC1_FA1_CU1_7_Filtering(string model1, string model2, string color1, string color2, string fuelType1, string fuelType2, string manufacturer1, string manufacturer2, string purchasingPrice1, string purchasingPrice2, string filterColor, string filterModel)
         {
             //Arrange
             InitialStepsForPurchaseCars();
@@ -115,7 +138,7 @@ namespace AppForSEII2526.UIT.CU_Purchase
 
         [Fact]
         [Trait("LevelTesting", "Funcional Testing")]
-        public void CU1_FA2_CU1_8_PurchaseNotAvailable()
+        public void UC1_FA2_CU1_8_PurchaseNotAvailable()
         {
             //Arrange
             InitialStepsForPurchaseCars();
@@ -130,10 +153,11 @@ namespace AppForSEII2526.UIT.CU_Purchase
 
         [Fact]
         [Trait("LevelTesting", "Funcional Testing")]
-        public void CU1_FA3_CU1_9_DeleteSelectedCars()
+        public void UC1_FA3_CU1_9_DeleteSelectedCars()
         {
             //Arrange
             InitialStepsForPurchaseCars();
+            var expectedTotalPrice = "5000";
 
             //Act
             selectCarsForPurchase_PO.AddCarToShoppingCart(model1);
@@ -148,7 +172,6 @@ namespace AppForSEII2526.UIT.CU_Purchase
             selectCarsForPurchase_PO.PurchaseCars();
 
             //Assert
-            var expectedTotalPrice = "5000";
             Assert.True(createPurchase_PO.CheckTotalPrice(expectedTotalPrice));
         }
 
@@ -158,7 +181,7 @@ namespace AppForSEII2526.UIT.CU_Purchase
         [InlineData(model1, name, surname, "", paymentMethod1, quantity, "The field DeliveryCarDealer must be a string with a minimum length of 1 and a maximum length of 20.")]
         [InlineData(model1, name, surname, deliveryCarDealer, paymentMethod1, "", "The Quantity field must be a number.")]
         [Trait("LevelTesting", "Funcional Testing")]
-        public void CU1_FA4_CU1_10_11_12_13_Testing_Errors_Mandatory_Data(string model, string name, string surname, string deliveryCarDealer, string paymentMethod, string quantity, string expectedMessageError)
+        public void UC1_FA4_CU1_10_11_12_13_Testing_Errors_Mandatory_Data(string model, string name, string surname, string deliveryCarDealer, string paymentMethod, string quantity, string expectedMessageError)
         {
             //Arrange
             InitialStepsForPurchaseCars();
@@ -178,10 +201,11 @@ namespace AppForSEII2526.UIT.CU_Purchase
 
         [Fact]
         [Trait("LevelTesting", "Funcional Testing")]
-        public void CU1_FA5_CU1_15_ModifySelectedCars()
+        public void UC1_FA5_CU1_15_ModifySelectedCars()
         {
             //Arrange
             InitialStepsForPurchaseCars();
+            var expectedPurchaseItems = new List<string[]> { new string[] { model1, color1, description1, purchasingPrice1.Trim(' ', '€') }, };
 
             //Act
             selectCarsForPurchase_PO.AddCarToShoppingCart(model1);
@@ -197,7 +221,6 @@ namespace AppForSEII2526.UIT.CU_Purchase
             selectCarsForPurchase_PO.PurchaseCars();
 
             //Assert
-            var expectedPurchaseItems = new List<string[]> { new string[] { model1, color1, description1, purchasingPrice1.Trim(' ', '€') }, };
             Assert.True(createPurchase_PO.CheckListOfPurchaseItems(expectedPurchaseItems, quantity, model1));
         }
     }
