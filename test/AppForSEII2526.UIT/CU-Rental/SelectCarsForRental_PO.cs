@@ -63,5 +63,14 @@ namespace AppForSEII2526.UIT.CU_RentalCars
 
             return _driver.FindElement(buttonRentCar).Displayed == false;
         }
+        public void RentCars()
+        {
+            WaitForBeingClickable(buttonRentCar);
+            _driver.FindElement(buttonRentCar).Click();
+        }
+        public bool CheckMessageError(string error)
+        {
+            return _driver.PageSource.Contains(error);
+        }
     }
 }
