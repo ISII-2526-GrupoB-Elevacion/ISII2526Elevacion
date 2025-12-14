@@ -3,7 +3,7 @@ using AppForSEII2526.UIT.Shared;
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
-using System.Threading;
+using System.Threading; // Necesario para Thread.Sleep
 using Xunit;
 using Xunit.Abstractions;
 
@@ -11,14 +11,13 @@ namespace AppForSEII2526.UIT.CU_Review
 {
     public class CU_ReviewCars_UIT : UC_UIT
     {
+        // IDs alineados con la lógica que funciona
         private const int carId1 = 1;
         private const string carModel1 = "Audi A4";
         private const string carClass1 = "Berlina";
         private const string carManufacturer1 = "Audi";
         private const string carFuelType1 = "Gasolina";
         private const string carColor1 = "Gris";
-
-
 
         private const int carId2 = 2;
         private const string carModel2 = "Toyota Corolla";
@@ -27,14 +26,12 @@ namespace AppForSEII2526.UIT.CU_Review
         private const string carFuelType2 = "Diesel";
         private const string carColor2 = "Rojo";
 
-
-
         private const string name = "Elena";
-        private const string surname = "Navarro Martínez"; 
+        private const string surname = "Navarro Martínez";
         private const string country = "Spain";
         private const string driverType = "Experto";
 
-        // Datos de la Reseña (Input)
+        // Datos de la Reseña
         private const string descriptionValid = "Reseña para";
         private const int ratingValid = 5;
 
@@ -52,11 +49,12 @@ namespace AppForSEII2526.UIT.CU_Review
         {
             Perform_login("elena@uclm.es", "Password1234%");
         }
-
-        private void InitialStepsForPurchaseCars()
+        private void InitialStepsForReviewCars()
         {
             Precondition_perform_login();
+
             Thread.Sleep(1000);
+
             selectCarsForReview_PO.WaitForBeingVisible(By.Id("CreateReview"));
             _driver.FindElement(By.Id("CreateReview")).Click();
         }
@@ -88,7 +86,6 @@ namespace AppForSEII2526.UIT.CU_Review
             InitialStepsForReviewCars();
 
             //Act
-            // Seleccionamos y Deseleccionamos el coche
             selectCarsForReview_PO.AddCarToReviewCart(carModel1);
             selectCarsForReview_PO.RemoveCarFromReviewCart(carModel1);
 
@@ -104,10 +101,9 @@ namespace AppForSEII2526.UIT.CU_Review
             InitialStepsForReviewCars();
 
             //Act
-            // 1. Seleccionar Audi y Toyota
             selectCarsForReview_PO.AddCarToReviewCart(carModel1);
             selectCarsForReview_PO.AddCarToReviewCart(carModel2);
-            selectCarsForReview_PO.ReviewCars(); 
+            selectCarsForReview_PO.ReviewCars();
 
             createReview_PO.FillInReviewInfo(name, surname, country, driverType);
 
@@ -135,11 +131,14 @@ namespace AppForSEII2526.UIT.CU_Review
             //Arrange
             InitialStepsForReviewCars();
 
+            //Act
             selectCarsForReview_PO.AddCarToReviewCart(carModel1);
             selectCarsForReview_PO.ReviewCars();
 
             createReview_PO.FillInReviewInfo(name, surname, country, driverType);
-            createReview_PO.FillInCarDetails(description, rating, carId1); 
+
+            // Si el ID es correcto (1) y el page object espera visibilidad, esto funcionará
+            createReview_PO.FillInCarDetails(description, rating, carId1);
 
             createReview_PO.PressReviewYourCars();
 
@@ -147,8 +146,6 @@ namespace AppForSEII2526.UIT.CU_Review
             Assert.True(createReview_PO.CheckValidationError(expectedMessageError), $"Expected error: {expectedMessageError}");
         }
 
-        // Caso equivalente a: CU1_FA5_CU1_15_ModifySelectedCars
-        // Este caso en Purchase es casi idéntico al de Delete, sirve para verificar flujo completo correcto tras modificar
         [Fact]
         [Trait("LevelTesting", "Funcional Testing")]
         public void UC4_AF4_10ModifyCars()
@@ -166,6 +163,7 @@ namespace AppForSEII2526.UIT.CU_Review
             createReview_PO.FillInCarDetails(descriptionValid, ratingValid, carId2);
 
             createReview_PO.PressModifyCars();
+
             selectCarsForReview_PO.RemoveCarFromReviewCart(carModel2);
             selectCarsForReview_PO.ReviewCars();
 
