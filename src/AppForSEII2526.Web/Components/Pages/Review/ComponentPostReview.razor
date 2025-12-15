@@ -83,10 +83,10 @@
                         <td>@item.Manufacturer</td>
                         <td>@item.Color</td>
                         <td>
-                            <InputText @bind-Value="item.Description" class="form-control" id="@($"description_{item.Description}")" />
+                            <InputText @bind-Value="item.Description" class="form-control" id="@($"description_{item.Model}")" />
                         </td>
                         <td>
-                            <InputNumber @bind-Value="item.Rating" class="form-control" id="@($"rating_{item.Rating}")" />
+                            <InputNumber @bind-Value="item.Rating" class="form-control" id="@($"rating_{item.Model}")" />
                         </td>
                     </tr>
                 }
