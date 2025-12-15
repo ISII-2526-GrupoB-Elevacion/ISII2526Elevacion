@@ -83,7 +83,7 @@ namespace AppForSEII2526.UIT.CU_Review
         // Verificación de errores de validación
         public bool CheckValidationError(string expectedError)
         {
-            Thread.Sleep(500); // Pequeña espera para asegurar que el error se renderizó
+            Thread.Sleep(2000); // Pequeña espera para asegurar que el error se renderizó
             return _driver.PageSource.Contains(expectedError);
         }
     }

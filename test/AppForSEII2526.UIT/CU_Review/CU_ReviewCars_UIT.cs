@@ -1,4 +1,5 @@
 ﻿using AppForSEII2526.UIT.CU_Purchase;
+using AppForSEII2526.UIT.CU_Review;
 using AppForSEII2526.UIT.Shared;
 using OpenQA.Selenium;
 using System;
@@ -122,9 +123,9 @@ namespace AppForSEII2526.UIT.CU_Review
 
         [Theory]
         [InlineData("", surname, country, driverType, descriptionValid, ratingValid, "The field Name must be a string with a minimum length of 2 and a maximum length of 20.")]
-        [InlineData(name, surname, "", driverType, descriptionValid, ratingValid, "The field Country must be a string with a minimum length of 3 and a maximum length of 30.")]
-        [InlineData(name, surname, country, "", descriptionValid, ratingValid, "The field DriverType must be a string with a minimum length of 3 and a maximum length of 30.")]
-        [InlineData(name, surname, country, driverType, descriptionValid, 6, "The Rating field must be a number")]
+        [InlineData(name, surname, " ", driverType, descriptionValid, ratingValid, "The field Country must be a string with a minimum length of 3 and a maximum length of 30.")]
+        [InlineData(name, surname, country, " ", descriptionValid, ratingValid, "The field DriverType must be a string with a minimum length of 3 and a maximum length of 30.")]
+        [InlineData(name, surname, country, driverType, descriptionValid, -1, "The field Rating must be between 1 and 5.")]
         [Trait("LevelTesting", "Funcional Testing")]
         public void UC4_AF3_UC4_6_7_8_9_Testing_Errors_Mandatory_Data(string name, string surname, string country, string driverType, string description, int rating, string expectedMessageError)
         {
