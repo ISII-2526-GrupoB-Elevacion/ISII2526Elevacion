@@ -5,8 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Reflection.Metadata;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 
 namespace AppForSEII2526.UIT.CU_RentalCars
@@ -15,6 +18,7 @@ namespace AppForSEII2526.UIT.CU_RentalCars
     {
         private SelectCarsForRental_PO selectCarsForRental_PO;
         private CreateRental_PO createRental_PO;
+        private DetailRental_PO detailRental_PO;
 
         private const string Name = "Elena";
         private const string SurName = "Navarro Martínez";
@@ -40,6 +44,8 @@ namespace AppForSEII2526.UIT.CU_RentalCars
         {
             selectCarsForRental_PO = new SelectCarsForRental_PO(_driver, _output);
             createRental_PO = new CreateRental_PO(_driver, _output);
+            detailRental_PO = new DetailRental_PO(_driver, _output);
+
         }
         private void Precondition_perform_login()
         {
@@ -72,6 +78,49 @@ namespace AppForSEII2526.UIT.CU_RentalCars
 
 
         }
+        [Theory]
+        [InlineData(CarModel2, Name, SurName, DeliveryCarDealer, PaymentMethod, Quantity)]
+        [Trait("LevelTesting", "Funcional Testing")]
+        public void CU2_1_BasicFlow(string model, string name, string surname, string deliveryCarDealer, string paymentMethod,string quantity)
+        {
+            //Arrange
+            InitialStepsForRentalCars();
+            var expectedPurchaseItems = new List<string[]> { new string[] { CarModel2, Manufacturer2,RentingPrice2 + " €", quantity}, };
+            var from = DateTime.Today.AddDays(1);
+            var to = DateTime.Today.AddDays(2);
+            var renting = DateTime.Today.AddDays(1);
+            //Act
+            selectCarsForRental_PO.SearchCars("", null, from.ToString("dd-MM-yyyy"), to.ToString("dd-MM-yyyy"), renting.ToString("dd-MM-yyyy"));
+            selectCarsForRental_PO.AddCarToRentingCart(model);
+            selectCarsForRental_PO.RentCars();
+
+            createRental_PO.FillInRentalInfo(name, surname, deliveryCarDealer, paymentMethod);
+            createRental_PO.FillInRentalQuantity(quantity, model);
+            createRental_PO.PressRentYourCars();
+            createRental_PO.PressOkModalDialog();
+
+            //Assert
+            Thread.Sleep(1000);
+            Assert.True(detailRental_PO.CheckRentalDetail(name, surname, deliveryCarDealer, paymentMethod, renting, from, to, "60 €"),"Error: rental details are not as expected");
+
+            Assert.True(detailRental_PO.CheckListOfCars(expectedPurchaseItems),"Error: purchase items are not as expected");
+        }
+
+        [Fact]
+        [Trait("LevelTesting", "Funcional Testing")]
+        public void UC2_FA0_CU2_2_CarsNotAvailable()
+        {
+            //Arrange
+            InitialStepsForRentalCars();
+            var expectedMessage = "There are no cars available for being rented.";
+
+            //Act
+            selectCarsForRental_PO.SearchCars("", null, "","","");
+
+            //Assert
+            Assert.True(selectCarsForRental_PO.CheckMessageErrorNotAvailableCars(expectedMessage));
+        }
+
         [Theory]
         [InlineData(CarModel1, FuelType1, Manufacturer1, RentingPrice1, Color1, "Audi A4", null)]
         [InlineData(CarModel2, FuelType2, Manufacturer2, RentingPrice2, Color2, "", 60f)]
@@ -127,8 +176,8 @@ namespace AppForSEII2526.UIT.CU_RentalCars
             selectCarsForRental_PO.AddCarToRentingCart(CarModel2);
             selectCarsForRental_PO.RentCars();
 
-            createRental_PO.FillInPurchaseQuantity(Quantity, CarModel1);
-            createRental_PO.FillInPurchaseQuantity(Quantity, CarModel2);
+            createRental_PO.FillInRentalQuantity(Quantity, CarModel1);
+            createRental_PO.FillInRentalQuantity(Quantity, CarModel2);
             createRental_PO.PressModifyCars();
 
             selectCarsForRental_PO.RemoveCarFromRentingCart(CarModel2);
@@ -200,6 +249,7 @@ namespace AppForSEII2526.UIT.CU_RentalCars
             selectCarsForRental_PO.AddCarToRentingCart(CarModel1);
             selectCarsForRental_PO.AddCarToRentingCart(CarModel2);
             selectCarsForRental_PO.RentCars();
+            Thread.Sleep(1000);
             createRental_PO.PressModifyCars();
             //we remove movietitle2 from the rentingcart
             selectCarsForRental_PO.RemoveCarFromRentingCart(CarModel1);
