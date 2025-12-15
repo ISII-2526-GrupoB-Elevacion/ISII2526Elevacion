@@ -28,9 +28,9 @@ namespace AppForSEII2526.UIT.CU_Purchase
             return result;
         }
 
-        public bool CheckListOfPurchase(List<string[]> expectedRentalItems)
+        public bool CheckListOfPurchase(List<string[]> expectedPurchaseItems)
         {
-            return CheckBodyTable(expectedRentalItems, By.Id("PurchasedCars"));
+            return CheckBodyTable(expectedPurchaseItems, By.Id("PurchasedCars"));
         }
     }
 }
