@@ -4,6 +4,7 @@ using AppForSEII2526.UIT.Shared;
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Threading; // Necesario para Thread.Sleep
 using Xunit;
 using Xunit.Abstractions;
@@ -39,11 +40,13 @@ namespace AppForSEII2526.UIT.CU_Review
         // Page Objects
         private SelectCarsForReview_PO selectCarsForReview_PO;
         private CreateReview_PO createReview_PO;
+        private DetailReview_PO detailReview_PO;
 
         public CU_ReviewCars_UIT(ITestOutputHelper output) : base(output)
         {
             selectCarsForReview_PO = new SelectCarsForReview_PO(_driver, _output);
             createReview_PO = new CreateReview_PO(_driver, _output);
+            detailReview_PO = new DetailReview_PO(_driver, _output);
         }
 
         private void Precondition_perform_login()
@@ -59,6 +62,8 @@ namespace AppForSEII2526.UIT.CU_Review
             selectCarsForReview_PO.WaitForBeingVisible(By.Id("CreateReview"));
             _driver.FindElement(By.Id("CreateReview")).Click();
         }
+
+        
 
         [Theory]
         [InlineData(carModel1, carClass1, carManufacturer1, carFuelType1, carColor1, "Audi", "")]
@@ -122,6 +127,42 @@ namespace AppForSEII2526.UIT.CU_Review
         }
 
         [Theory]
+        [InlineData(carModel1, name, surname, country, driverType, descriptionValid, ratingValid)]
+        [Trait("LevelTesting", "Funcional Testing")]
+        public void UC4_1_BasicFlow(string model, string name, string surname, string country, string driverType, string description, int rating)
+        {
+            //Arrange
+            InitialStepsForReviewCars();
+            var expectedReviewItems = new List<string[]> {
+            new string[] {
+                model,
+                "G/D", 
+                carManufacturer1,
+                carColor1,
+                rating.ToString(), 
+                description       
+            }
+            };
+
+            //Act
+            selectCarsForReview_PO.AddCarToReviewCart(model);
+            selectCarsForReview_PO.ReviewCars();
+
+            createReview_PO.FillInReviewInfo(name, surname, country, driverType);
+            createReview_PO.FillInCarDetails(description, rating, model);
+            createReview_PO.PressReviewYourCars();
+            createReview_PO.PressOkModalDialog(); 
+
+            //Assert
+            Assert.True(detailReview_PO.CheckReviewDetail(name + " " + surname,
+               country, driverType, DateTime.Now),
+               "Error: detail review is not as expected");
+
+            Assert.True(detailReview_PO.CheckListOfReview(expectedReviewItems),
+                "Error: review items are not as expected");
+        }
+
+        [Theory]
         [InlineData("", surname, country, driverType, descriptionValid, ratingValid, "The field Name must be a string with a minimum length of 2 and a maximum length of 20.")]
         [InlineData(name, surname, " ", driverType, descriptionValid, ratingValid, "The field Country must be a string with a minimum length of 3 and a maximum length of 30.")]
         [InlineData(name, surname, country, " ", descriptionValid, ratingValid, "The field DriverType must be a string with a minimum length of 3 and a maximum length of 30.")]
@@ -146,6 +187,9 @@ namespace AppForSEII2526.UIT.CU_Review
             //Assert
             Assert.True(createReview_PO.CheckValidationError(expectedMessageError), $"Expected error: {expectedMessageError}");
         }
+
+
+
 
         [Fact]
         [Trait("LevelTesting", "Funcional Testing")]
