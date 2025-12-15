@@ -23,7 +23,7 @@ namespace AppForSEII2526.UIT.CU_Rental
 
         }
 
-        public void FillInPurchaseQuantity(string quantity, string model)
+        public void FillInRentalQuantity(string quantity, string model)
         {
             WaitForBeingClickable(By.Id("quantity_" + model));
             _driver.FindElement(By.Id("quantity_" + model)).Clear();

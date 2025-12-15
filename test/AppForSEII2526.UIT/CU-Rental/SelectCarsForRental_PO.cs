@@ -72,5 +72,10 @@ namespace AppForSEII2526.UIT.CU_RentalCars
         {
             return _driver.PageSource.Contains(error);
         }
+        public bool CheckMessageErrorNotAvailableCars(string expectedError)
+        {
+            return _driver.PageSource.Contains(expectedError);
+        }
+
     }
 }

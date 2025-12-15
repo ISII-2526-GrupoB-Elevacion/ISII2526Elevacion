@@ -17,8 +17,12 @@ else
 {
     <table class="table table-borderless table-sm">
         <tr>
-            <th>Name and Surname</th>
-            <td id="NameSurname">@rental.Name @rental.Surname</td>
+            <th>Name</th>
+            <td id="Name">@rental.Name</td>
+        </tr>
+        <tr>
+            <th>Surname</th>
+            <td id="Surname">@rental.Surname</td>
         </tr>
         <tr>
             <th>Delivery Car Dealer</th>
@@ -40,7 +44,7 @@ else
 
     <h4>Rented Movies</h4>
 
-    <table class="table" id="RentedMovies">
+    <table class="table" id="RentedCars">
         <thead>
             <tr>
                 <th scope="col">Model</th>
@@ -63,7 +67,7 @@ else
         <tfoot>
             @*colspan is used to state that TWO columns are collapsed*@
         <th scope="row" colspan="2" class="text-end">Total Price</th>
-        <td id="TotalPrice">@rental.TotalPrice €</td>
+        <td id="RentalTotalPrice">@rental.TotalPrice €</td>
         </tfoot>
 
     </table>
