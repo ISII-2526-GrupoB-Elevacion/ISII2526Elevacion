@@ -18,8 +18,8 @@ namespace AppForSEII2526.UIT.CU_Review
         private By _driverTypeBy = By.Id("DriverType");
 
         // Selectores de botones
-        private By _reviewCarsBtnBy = By.Id("ReviewCars");
-        private By _modifyCarsBtnBy = By.Id("ModifyCars");
+        private By _reviewCarsBtnBy = By.Id("Submit");
+        private By _modifyCarsBtnBy = By.Id("ModifyCar");
         private By _tableReviewItemsBy = By.Id("TableOfReviewItems");
 
         // Elementos web (helpers)
@@ -52,10 +52,11 @@ namespace AppForSEII2526.UIT.CU_Review
             By descriptionBy = By.Id("description_" + carId);
             By ratingBy = By.Id("rating_" + carId);
 
-            WaitForBeingVisible(descriptionBy);
+            WaitForBeingClickable(descriptionBy);
 
             _driver.FindElement(descriptionBy).SendKeys(description);
 
+            WaitForBeingClickable(ratingBy);
             var ratingInput = _driver.FindElement(ratingBy);
             ratingInput.Clear();
             ratingInput.SendKeys(rating.ToString());
@@ -64,28 +65,25 @@ namespace AppForSEII2526.UIT.CU_Review
         // Botón "Review your cars" (Confirmar)
         public void PressReviewYourCars()
         {
-            WaitForBeingVisible(_reviewCarsBtnBy);
             _driver.FindElement(_reviewCarsBtnBy).Click();
         }
 
         // Botón "Modify cars" (Volver atrás)
         public void PressModifyCars()
         {
-            WaitForBeingVisible(_modifyCarsBtnBy);
             _driver.FindElement(_modifyCarsBtnBy).Click();
         }
 
         // Chequeo de la tabla resumen
         public bool CheckListOfReviewItems(List<string[]> expectedReviewItems)
         {
-            // Esperamos a que la tabla de resultados se renderice
-            WaitForBeingVisible(_tableReviewItemsBy);
             return CheckBodyTable(expectedReviewItems, _tableReviewItemsBy);
         }
 
         // Verificación de errores de validación
         public bool CheckValidationError(string expectedError)
         {
+            Thread.Sleep(500); // Pequeña espera para asegurar que el error se renderizó
             return _driver.PageSource.Contains(expectedError);
         }
     }

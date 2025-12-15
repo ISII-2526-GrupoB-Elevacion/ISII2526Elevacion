@@ -121,10 +121,10 @@ namespace AppForSEII2526.UIT.CU_Review
         }
 
         [Theory]
-        [InlineData("", surname, country, driverType, descriptionValid, ratingValid, "Name cannot be any longer than 20 characters, neither shorter than 2.")]
-        [InlineData(name, surname, "", driverType, descriptionValid, ratingValid, "Country cannot be any longer than 30 characters, neither shorter than 3.")]
-        [InlineData(name, surname, country, "", descriptionValid, ratingValid, "DriverType cannot be any longer than 30 characters, neither shorter than 3.")]
-        [InlineData(name, surname, country, driverType, descriptionValid, 6, "Minimum is 1 and maximum 5")]
+        [InlineData("", surname, country, driverType, descriptionValid, ratingValid, "The field Name must be a string with a minimum length of 2 and a maximum length of 20.")]
+        [InlineData(name, surname, "", driverType, descriptionValid, ratingValid, "The field Country must be a string with a minimum length of 3 and a maximum length of 30.")]
+        [InlineData(name, surname, country, "", descriptionValid, ratingValid, "The field DriverType must be a string with a minimum length of 3 and a maximum length of 30.")]
+        [InlineData(name, surname, country, driverType, descriptionValid, 6, "The Rating field must be a number")]
         [Trait("LevelTesting", "Funcional Testing")]
         public void UC4_AF3_UC4_6_7_8_9_Testing_Errors_Mandatory_Data(string name, string surname, string country, string driverType, string description, int rating, string expectedMessageError)
         {

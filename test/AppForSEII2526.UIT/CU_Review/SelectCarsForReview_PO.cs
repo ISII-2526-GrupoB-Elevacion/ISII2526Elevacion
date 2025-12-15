@@ -28,19 +28,16 @@ namespace AppForSEII2526.UIT.CU_Review
         {
             // 1. Llenar Fabricante
             WaitForBeingClickable(inputManufacturer);
+            WaitForBeingClickable(inputFuelType);
             var manuElement = _driver.FindElement(inputManufacturer);
-            manuElement.Clear();
             manuElement.SendKeys(manufacturer);
 
             // 2. Llenar Tipo de Combustible (Corregido: es un Input, no un Select)
             var fuelElement = _driver.FindElement(inputFuelType);
-            fuelElement.Clear();
 
-            // Si el test pasa un valor vacío (""), asumimos que no quiere filtrar
-            if (!string.IsNullOrEmpty(fueltype))
-            {
-                fuelElement.SendKeys(fueltype);
-            }
+            
+             fuelElement.SendKeys(fueltype);
+            
 
             // 3. Click en buscar
             _driver.FindElement(buttonSearchCars).Click();
