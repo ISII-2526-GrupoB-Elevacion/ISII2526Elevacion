@@ -101,7 +101,7 @@ namespace AppForSEII2526.UIT.CU_Review
 
         [Fact]
         [Trait("LevelTesting", "Funcional Testing")]
-        public void UC4_AF2_UC4_5_10_DeleteSelectedCars()
+        public void UC4_AF2_UC4_5_DeleteSelectedCars()
         {
             //Arrange
             InitialStepsForReviewCars();
@@ -193,7 +193,7 @@ namespace AppForSEII2526.UIT.CU_Review
 
         [Fact]
         [Trait("LevelTesting", "Funcional Testing")]
-        public void UC4_AF4_10ModifyCars()
+        public void UC4_AF4_UC4_10ModifyCars()
         {
             //Arrange
             InitialStepsForReviewCars();

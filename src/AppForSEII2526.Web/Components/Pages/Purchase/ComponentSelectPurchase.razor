@@ -121,9 +121,6 @@
         {
             cars = await apiclient.GetCarsForPurchaseAsync(filtroColor, modelo);
             errors = "";
-
-            Console.WriteLine(cars.Count);
-
             if (cars.Count == 0 && !string.IsNullOrEmpty(filtroColor) && !string.IsNullOrEmpty(modelo))
             {
                 errors = $"Error! There are not cars of color '{filtroColor}' and model '{modelo}'. Please apply other filters.";
@@ -155,6 +152,6 @@
 
     private void PurchaseCars()
     {
-        navigation.NavigateTo("/purchase/post"); //lo referencia a el mismo esto luego se cambiará cuando se cree la página del post
+        navigation.NavigateTo("/purchase/post"); 
     }
 }
