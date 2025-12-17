@@ -15,7 +15,7 @@ namespace AppForSEII2526.UIT.CU_Purchase
 
         public bool CheckPurchaseDetail(string nameSurname, string deliveryCarDealer, DateTime purchasingDate, string totalPrice)
         {
-            Thread.Sleep(500);
+            Thread.Sleep(750);
             WaitForBeingVisible(By.Id("TotalPrice"));
             bool result = true;
             result = result && _driver.FindElement(By.Id("NameSurname")).Text.Contains(nameSurname);

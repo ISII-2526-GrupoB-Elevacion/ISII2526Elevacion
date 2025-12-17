@@ -50,7 +50,7 @@
     <div class="col-md">
         <div class="form-floating">
             @*this button will be used to ask the user if he want to proceed to review the cars*@
-            <button class="btn btn-primary" type="submit" id="Submit">
+            <button class="btn btn-primary" type="submit" id="Submit" disabled="@reviewButtonDisabled">
                 Review your cars
             </button>
         </div>
@@ -105,11 +105,12 @@
 }
 
 @code {
-    // ... (El código C# se mantiene exactamente igual, no se ha tocado nada)
+
     private string messageError = "";
     private bool hideErrors { get { return messageError.Length == 0; } }
     private bool DialogIsOpen;
     private object? errors;
+    private bool reviewButtonDisabled;
 
     private void ModifyReviewItems()
     {

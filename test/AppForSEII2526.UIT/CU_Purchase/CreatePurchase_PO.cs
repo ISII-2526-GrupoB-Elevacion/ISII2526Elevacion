@@ -13,7 +13,6 @@ namespace AppForSEII2526.UIT.CU_Purchase
         private By inputDeliveryAddress = By.Id("DeliveryAddress");
         private By inputPaymentMethod = By.Id("PaymentMethod");
         private By totalPrice = By.Id("TotalPrice");
-        private By errorContainer = By.XPath("//div[@class='row alert alert-danger'][@role='alert']");
 
         private IWebElement nameElement() => _driver.FindElement(inputName);
         private IWebElement surnameElement() => _driver.FindElement(inputApellidos);
