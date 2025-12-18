@@ -127,6 +127,55 @@ namespace AppForSEII2526.UIT.CU_Review
         }
 
         [Theory]
+        [InlineData("Audi","Diesel",name, surname, country, driverType, descriptionValid, ratingValid)]
+        [Trait("LevelTesting", "Funcional Testing")]
+        public void UC4_Examen_BF_AF0_AF0(string filterManufacturer,string filterFuelType,string name, string surname, string country, string driverType, string description, int rating)
+        {
+            
+            InitialStepsForReviewCars();
+
+            selectCarsForReview_PO.SearchCars(filterManufacturer, "");
+            selectCarsForReview_PO.AddCarToReviewCart(carModel1);
+
+            selectCarsForReview_PO.SearchCars("",filterFuelType);
+            selectCarsForReview_PO.AddCarToReviewCart(carModel2);
+
+          
+            selectCarsForReview_PO.ReviewCars();
+            createReview_PO.FillInReviewInfo(name, surname, country, driverType);
+
+            createReview_PO.PressModifyCars();
+
+            selectCarsForReview_PO.RemoveCarFromReviewCart(carModel1);
+            selectCarsForReview_PO.ReviewCars();
+
+
+            createReview_PO.FillInCarDetails(description, rating, carModel2);
+            createReview_PO.PressReviewYourCars();
+            createReview_PO.PressOkModalDialog();
+
+            //Assert
+            var expectedReviewItems = new List<string[]> {
+            new string[] {
+                carModel2,
+                "G/D",
+                carManufacturer2,
+                carColor2,
+                rating.ToString(),
+                description
+            }
+            };
+
+            Assert.True(detailReview_PO.CheckReviewDetail(name + " " + surname,
+               country, driverType, DateTime.Now),
+               "Error: detail review is not as expected");
+
+            Assert.True(detailReview_PO.CheckListOfReview(expectedReviewItems),
+                "Error: review items are not as expected");
+        }
+
+
+        [Theory]
         [InlineData(carModel1, name, surname, country, driverType, descriptionValid, ratingValid)]
         [Trait("LevelTesting", "Funcional Testing")]
         public void UC4_1_BasicFlow(string model, string name, string surname, string country, string driverType, string description, int rating)
