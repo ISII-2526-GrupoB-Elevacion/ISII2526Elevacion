@@ -25,6 +25,8 @@ namespace AppForSEII2526.UIT.CU_Purchase
             //wait for the webelement to be clickable
             WaitForBeingClickable(carColor);
             WaitForBeingClickable(carModel);
+            _driver.FindElement(carColor).Clear();
+            _driver.FindElement(carColor).Clear();
             _driver.FindElement(carColor).SendKeys(filterColor);
             _driver.FindElement(carModel).SendKeys(filterModel);
             _driver.FindElement(buttonSearchCars).Click();
