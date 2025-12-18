@@ -38,6 +38,28 @@ namespace AppForSEII2526.UIT.CU_RentalCars
             _driver.FindElement(buttonSearchCars).Click();
         }
 
+        public void SearchCars2(string model, float? rentingprice)
+        {
+            //wait for the webelement to be clickable
+            WaitForBeingClickable(ModelName);
+            _driver.FindElement(ModelName).SendKeys(model);
+            _driver.FindElement(RentingPrice).SendKeys(rentingprice.ToString());
+
+            _driver.FindElement(buttonSearchCars).Click();
+        }
+
+        public void vaciarmodelo()
+        {
+            WaitForBeingClickable(ModelName);
+            _driver.FindElement(ModelName).Clear();
+        }
+
+        public void vaciarrentingprice()
+        {
+            WaitForBeingClickable(RentingPrice);
+            _driver.FindElement(RentingPrice).Clear();
+        }
+
         public bool CheckListOfCars(List<string[]> expectedCars)
         {
 

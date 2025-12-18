@@ -106,6 +106,42 @@ namespace AppForSEII2526.UIT.CU_RentalCars
             Assert.True(detailRental_PO.CheckListOfCars(expectedPurchaseItems),"Error: purchase items are not as expected");
         }
 
+        [Theory]
+        [InlineData(CarModel1, 60f, CarModel2, Name, SurName, DeliveryCarDealer, PaymentMethod, Quantity)]
+        [Trait("LevelTesting", "Funcional Testing")]
+        public void CU2_prueba_parcial_2(string model1, float? rentingprice, string model2, string name, string surname, string deliveryCarDealer, string paymentMethod, string quantity)
+        {
+            //Arrange
+            InitialStepsForRentalCars();
+            var expectedPurchaseItems = new List<string[]> { new string[] { CarModel2, Manufacturer2, RentingPrice2 + " €", quantity }, };
+            var from = DateTime.Today.AddDays(1);
+            var to = DateTime.Today.AddDays(2);
+            var renting = DateTime.Today.AddDays(1);
+            //Act
+            selectCarsForRental_PO.SearchCars(model1, null, from.ToString("dd-MM-yyyy"), to.ToString("dd-MM-yyyy"), renting.ToString("dd-MM-yyyy"));
+            selectCarsForRental_PO.AddCarToRentingCart(model1);
+            Thread.Sleep(1000);
+            selectCarsForRental_PO.vaciarmodelo();
+            selectCarsForRental_PO.vaciarrentingprice();
+            Thread.Sleep(1000);
+            selectCarsForRental_PO.SearchCars2("", rentingprice);
+            selectCarsForRental_PO.AddCarToRentingCart(model2);
+            Thread.Sleep(1000);
+            selectCarsForRental_PO.RemoveCarFromRentingCart(model1);
+            selectCarsForRental_PO.RentCars();
+
+            createRental_PO.FillInRentalInfo(name, surname, deliveryCarDealer, paymentMethod);
+            createRental_PO.FillInRentalQuantity(quantity, model2);
+            createRental_PO.PressRentYourCars();
+            createRental_PO.PressOkModalDialog();
+
+            //Assert
+            Thread.Sleep(1000);
+            Assert.True(detailRental_PO.CheckRentalDetail(name, surname, deliveryCarDealer, paymentMethod, renting, from, to, "60 €"), "Error: rental details are not as expected");
+
+            Assert.True(detailRental_PO.CheckListOfCars(expectedPurchaseItems), "Error: purchase items are not as expected");
+        }
+
         [Fact]
         [Trait("LevelTesting", "Funcional Testing")]
         public void UC2_FA0_CU2_2_CarsNotAvailable()
