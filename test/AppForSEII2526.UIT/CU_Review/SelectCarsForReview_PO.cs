@@ -31,12 +31,14 @@ namespace AppForSEII2526.UIT.CU_Review
             WaitForBeingClickable(inputFuelType);
             var manuElement = _driver.FindElement(inputManufacturer);
             manuElement.SendKeys(manufacturer);
+            manuElement.Clear();
 
             // 2. Llenar Tipo de Combustible (Corregido: es un Input, no un Select)
             var fuelElement = _driver.FindElement(inputFuelType);
 
             
-             fuelElement.SendKeys(fueltype);
+            fuelElement.SendKeys(fueltype);
+            fuelElement.Clear();
             
 
             // 3. Click en buscar
